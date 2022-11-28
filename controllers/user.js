@@ -1,44 +1,91 @@
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
+const jwt = require("../services/auth-service");
 
 const test = (req, res) => {
-    res.status(200).send({ message: 'Test' });
-}
+  res.status(200).send({ message: "Test" });
+};
 
 const saveUser = (req, res) => {
-    const user = new User();
-    const params = req.body;
+  const user = new User();
+  const params = req.body;
 
-    user.name = params.name;
-    user.surname = params.surname;
-    user.email = params.email;
-    user.role = 'ROLE_USER';
-    user.image = null;
+  user.name = params.name;
+  user.surname = params.surname;
+  user.email = params.email;
+  user.role = "ROLE_USER";
+  user.image = null;
 
-    if (params.password) {
-        bcrypt.hash(params.password, 10, (err, hash) => {
-            user.password = hash;
-            if(user.name !== null && user.surname !== null && user.email !== null) {
-                user.save((err, userStored) => {
-                    if (err) {
-                        res.status(500).send({ message: 'Error saving user' });
-                    } else {
-                        if (!userStored) {
-                            res.status(404).send({ message: 'User not registered' });
-                        } else {
-                            res.status(200).send({ user: userStored });
-                        }
-                    }     
-                });
+  if (params.password) {
+    bcrypt.hash(params.password, 10, (err, hash) => {
+      user.password = hash;
+      if (user.name !== null && user.surname !== null && user.email !== null) {
+        user.save((err, userStored) => {
+          if (err) {
+            res.status(500).send({ message: "Error saving user" });
+          } else {
+            if (!userStored) {
+              res.status(404).send({ message: "User not registered" });
             } else {
-                res.status(200).send({ message: 'Fill all fields' });
+              res.status(200).send({ user: userStored });
             }
+          }
         });
+      } else {
+        res.status(200).send({ message: "Fill all fields" });
+      }
+    });
+  } else {
+    res.status(200).send({ message: "Introduce your password" });
+  }
+};
 
+const loginUser = (req, res) => {
+  const params = req.body;
+
+  const email = params.email;
+  const password = params.password;
+
+  User.findOne({ email: email?.toLowerCase() }, (err, user) => {
+    if (err) {
+      res.status(500).send({ message: "Error in the request" });
     } else {
-        res.status(200).send({ message: 'Introduce your password' });
+      if (!user) {
+        res.status(404).send({ message: "User not found" });
+      } else {
+        bcrypt.compare(password, user.password, (err, check) => {
+          if (check) {
+            if (params.gethash) {
+              res.status(200).send({
+                token: jwt.createToken(user),
+              });
+            } else {
+              res.status(200).send({ user });
+            }
+          } else {
+            res.status(404).send({ message: "User not logged in" });
+          }
+        });
+      }
     }
-   }
+  });
+};
 
+const updateUser = (req, res) => {
+  const userId = req.params.id;
+  const update = req.body;
 
-module.exports = { test };
+  User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+    if (err) {
+      res.status(500).send({ message: "Error updating user" });
+    } else {
+      if (!userUpdated) {
+        res.status(404).send({ message: "User not updated" });
+      } else {
+        res.status(200).send({ user: userUpdated });
+      }
+    }
+  });
+};
+
+module.exports = { test, saveUser, loginUser, updateUser };
