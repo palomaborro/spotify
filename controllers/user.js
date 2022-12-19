@@ -30,11 +30,11 @@ const saveUser = (req, res) => {
           }
         });
       } else {
-        res.status(200).send({ message: "Fill all fields" });
+        res.status(400).send({ message: "Fill all fields" });
       }
     });
   } else {
-    res.status(200).send({ message: "Introduce your password" });
+    res.status(400).send({ message: "Introduce your password" });
   }
 };
 
@@ -116,10 +116,10 @@ const uploadImage = (req, res) => {
         }
       );
     } else {
-      res.status(200).send({ message: "Invalid extension" });
+      res.status(415).send({ message: "Invalid extension" });
     }
   } else {
-    res.status(200).send({ message: "You have not uploaded any image" });
+    res.status(404).send({ message: "You have not uploaded any image" });
   }
 };
 
