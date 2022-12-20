@@ -6,6 +6,7 @@ const app = express();
 
 // routes
 const user_routes = require("./routes/user");
+const artist_routes = require("./routes/artist");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -14,5 +15,6 @@ app.use(bodyParser.json());
 
 // base routes
 app.use("/", user_routes);
+app.use("/", artist_routes);
 
 module.exports = app;

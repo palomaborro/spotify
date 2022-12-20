@@ -7,7 +7,6 @@ const api = express.Router();
 
 const middlewareUpload = multipart({ uploadDir: "./uploads/users" });
 
-// User routes
 api.get("/get-image-user/:imageFile", UserController.getImageFile);
 
 api.post("/register", UserController.saveUser);
