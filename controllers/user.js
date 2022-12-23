@@ -88,7 +88,6 @@ const updateUser = (req, res) => {
 
 const uploadImage = (req, res) => {
   const userId = req.params.id;
-  let file_name = "Not uploaded...";
 
   if (req.files) {
     const file_path = req.files.image.path;
