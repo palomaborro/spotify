@@ -133,7 +133,7 @@ const deleteArtist = (req, res) => {
       if (!artistRemoved) {
         res.status(404).send({ message: "Artist not removed" });
       } else {
-        res.status(200).send({ message: "Artist removed" });
+        res.status(200).send({ artistRemoved });
       }
     }
   });
