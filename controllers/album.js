@@ -1,8 +1,5 @@
-const Artist = require("../models/artist");
 const Album = require("../models/album");
-const User = require("../models/user");
-const mongoose = require("mongoose");
-const mongoosePaginate = require("mongoose-paginate-v2");
+const Song = require("../models/song");
 const fs = require("fs");
 const path = require("path");
 
@@ -88,43 +85,27 @@ const updateAlbum = (req, res) => {
   });
 };
 
-// const deleteAlbum = (req, res) => {
-//   const albumId = req.params.id;
-
-//   Album.findByIdAndDelete(albumId, (err, albumRemoved) => {
-//     if (err) {
-//       res.status(500).send({ message: "Error in the request" });
-//     } else {
-//       if (!albumRemoved) {
-//         res.status(404).send({ message: "Album not found" });
-//       } else {
-//         Song.find({ album: albumRemoved._id }).remove((err, songRemoved) => {
-//           if (err) {
-//             res.status(500).send({ message: "Error in the request" });
-//           } else {
-//             if (!songRemoved) {
-//               res.status(404).send({ message: "Song not found" });
-//             } else {
-//               res.status(200).send({ album: albumRemoved });
-//             }
-//           }
-//         });
-//       }
-//     }
-//   });
-// };
-
 const deleteAlbum = (req, res) => {
   const albumId = req.params.id;
 
   Album.findByIdAndDelete(albumId, (err, albumRemoved) => {
     if (err) {
-      res.status(500).send({ message: "Error removing album" });
+      res.status(500).send({ message: "Error in the request" });
     } else {
       if (!albumRemoved) {
-        res.status(404).send({ message: "Album not removed" });
+        res.status(404).send({ message: "Album not found" });
       } else {
-        res.status(200).send({ albumRemoved });
+        Song.find({ album: albumRemoved._id }).remove((err, songRemoved) => {
+          if (err) {
+            res.status(500).send({ message: "Error in the request" });
+          } else {
+            if (!songRemoved) {
+              res.status(404).send({ message: "Song not found" });
+            } else {
+              res.status(200).send({ album: albumRemoved });
+            }
+          }
+        });
       }
     }
   });

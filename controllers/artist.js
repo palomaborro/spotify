@@ -1,6 +1,6 @@
 const Artist = require("../models/artist");
 const Album = require("../models/album");
-const User = require("../models/user");
+const Song = require("../models/song");
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const fs = require("fs");
@@ -84,45 +84,6 @@ const updateArtist = (req, res) => {
   });
 };
 
-// const deleteArtist = (req, res) => {
-//   const artistId = req.params.id;
-
-//   Artist.findByIdAndDelete(artistId, (err, artistRemoved) => {
-//     if (err) {
-//       res.status(500).send({ message: "Error removing artist" });
-//     } else {
-//       if (!artistRemoved) {
-//         res.status(404).send({ message: "Artist not removed" });
-//       } else {
-//         Album.find({ artist: artistRemoved._id }).deleteOne(
-//           (err, albumRemoved) => {
-//             if (err) {
-//               res.status(500).send({ message: "Error removing album" });
-//             } else {
-//               if (!albumRemoved) {
-//                 res.status(404).send({ message: "Album not removed" });
-//               } else {
-//                 Song?.find({ album: albumRemoved._id }).deleteOne(
-//                   (err, songRemoved) => {
-//                     if (err) {
-//                       res.status(500).send({ message: "Error removing song" });
-//                     } else {
-//                       if (!songRemoved) {
-//                         res.status(404).send({ message: "Song not removed" });
-//                       } else {
-//                         res.status(200).send({ artistRemoved });
-//                       }
-//                     }
-//                   }
-//                 );
-//               }
-//             }
-//           }
-//         );
-//       }
-//     }
-//   });
-// };
 const deleteArtist = (req, res) => {
   const artistId = req.params.id;
 
@@ -133,7 +94,31 @@ const deleteArtist = (req, res) => {
       if (!artistRemoved) {
         res.status(404).send({ message: "Artist not removed" });
       } else {
-        res.status(200).send({ artistRemoved });
+        Album.find({ artist: artistRemoved._id }).deleteOne(
+          (err, albumRemoved) => {
+            if (err) {
+              res.status(500).send({ message: "Error removing album" });
+            } else {
+              if (!albumRemoved) {
+                res.status(404).send({ message: "Album not removed" });
+              } else {
+                Song?.find({ album: albumRemoved._id }).deleteOne(
+                  (err, songRemoved) => {
+                    if (err) {
+                      res.status(500).send({ message: "Error removing song" });
+                    } else {
+                      if (!songRemoved) {
+                        res.status(404).send({ message: "Song not removed" });
+                      } else {
+                        res.status(200).send({ artistRemoved });
+                      }
+                    }
+                  }
+                );
+              }
+            }
+          }
+        );
       }
     }
   });
