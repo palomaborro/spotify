@@ -8,7 +8,6 @@ const api = express.Router();
 const middlewareUpload = multipart({ uploadDir: "./uploads/albums" });
 
 api.get("/album/:id", middlewareAuth.isAuthenticated, AlbumController.getAlbum);
-
 api.get(
   "/albums/:artist?",
   middlewareAuth.isAuthenticated,
