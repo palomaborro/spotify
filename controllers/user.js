@@ -80,7 +80,7 @@ const updateUser = (req, res) => {
       if (!userUpdated) {
         res.status(404).send({ message: "User not updated" });
       } else {
-        res.status(200).send({ user: userUpdated });
+        res.status(200).send({ image: file_name, user: userUpdated });
       }
     }
   });
