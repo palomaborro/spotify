@@ -1,6 +1,6 @@
 const Album = require("../models/album");
 const Song = require("../models/song");
-const fs = require("fs");
+const { existsSync } = require("fs");
 const path = require("path");
 
 const getAlbum = (req, res) => {
@@ -151,7 +151,7 @@ const getImageFile = (req, res) => {
   const imageFile = req.params.imageFile;
   const path_file = `./uploads/albums/${imageFile}`;
 
-  if (fs.existsSync(path_file)) {
+  if (existsSync(path_file)) {
     res.sendFile(path.resolve(path_file));
   } else {
     res.status(404).send({ message: "Image does not exist" });

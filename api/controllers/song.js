@@ -1,5 +1,4 @@
 const Artist = require("../models/artist");
-const Album = require("../models/album");
 const Song = require("../models/song");
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
@@ -66,6 +65,7 @@ const getSongs = (req, res) => {
         model: "Artist",
       },
     })
+    .populate({ path: "featuredArtists" })
     .exec((err, songs) => {
       if (err) {
         res.status(500).send({ message: "Error in the request" });
