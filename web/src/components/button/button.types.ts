@@ -1,0 +1,5 @@
+export type ButtonProps = {
+  label: string;
+  isFetching?: boolean;
+  style?: React.CSSProperties;
+};

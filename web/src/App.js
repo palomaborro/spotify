@@ -1,9 +1,15 @@
-function App() {
+import React from "react";
+
+import { Routes, Route } from "react-router-dom";
+
+import Main from "./pages/Main/index.tsx";
+
+const App = () => {
   return (
-    <div className="App">
-      hello
-    </div>
+    <Routes>
+      <Route path="/" element={<Main />} />
+    </Routes>
   );
-}
+};
 
 export default App;
