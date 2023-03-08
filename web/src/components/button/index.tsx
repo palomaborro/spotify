@@ -1,11 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 
 import { CircularProgress } from "@mui/material";
 
 import { ButtonWrapper } from "./button.styled";
 import { ButtonProps } from "./button.types";
 
-const Button: React.FC<ButtonProps> = ({ label, isFetching }) => {
+const Button: FC<ButtonProps> = ({ label, isFetching }) => {
   return (
     <ButtonWrapper>
       {isFetching ? (
