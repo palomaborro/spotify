@@ -22,47 +22,9 @@ export const Header = styled.h1`
   margin-bottom: 3rem;
 `;
 
-export const OrTextContainer = styled.p`
-  display: table;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  letter-spacing: 0.2rem;
-  margin: 0px auto 1em;
-  color: var(--light-white);
-  position: relative;
-  text-align: center;
-  width: 40rem;
-  margin: 2rem 0;
-
-  &::before {
-    border-top: 1px solid var(--light-white);
-    content: "";
-    display: table-cell;
-    position: relative;
-    top: 0.8em;
-    width: 42%;
-  }
-
-  &::after {
-    border-top: 1px solid var(--light-white);
-    content: "";
-    display: table-cell;
-    position: relative;
-    top: 0.8em;
-    width: 42%;
-  }
-`;
-
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
-`;
-
-export const FormHeader = styled.h2`
-  font-size: 1.8rem;
-  line-height: 2.6rem;
-  text-align: center;
-  margin-top: 0;
 `;
 
 export const InputContainer = styled.div`

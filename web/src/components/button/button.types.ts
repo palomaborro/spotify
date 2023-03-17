@@ -3,4 +3,5 @@ export type ButtonProps = {
   isFetching?: boolean;
   style?: React.CSSProperties;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 };
