@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "joi-password-complexity": "^5.1.0"
+  }
+}
