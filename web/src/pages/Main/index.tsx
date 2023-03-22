@@ -64,7 +64,7 @@ const Main = () => {
     <MainContainer>
       <NavbarContainer>
         <Link to="/" className="nav-logo">
-          <WhiteLogoIcon />
+          <WhiteLogoIcon width={150} />
         </Link>
         <NavLinks>
           {navLinks.map((link, index) => (
@@ -89,7 +89,7 @@ const Main = () => {
       <Footer>
         <FooterFirstElement>
           <Link to="/" className="footer_logo">
-            <WhiteLogoIcon />
+            <WhiteLogoIcon width={150} />
           </Link>
           <FooterFirstElementLinks>
             <FooterHeading>Company</FooterHeading>

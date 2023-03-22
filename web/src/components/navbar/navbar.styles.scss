@@ -1,0 +1,13 @@
+.icon {
+  margin-left: 2rem;
+  cursor: pointer;
+
+  svg {
+    background-color: var(--light-black);
+    color: var(--white);
+    padding: 0.5rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+  }
+}

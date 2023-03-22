@@ -1,8 +1,13 @@
-import React from "react";
+import React, { FC } from "react";
 
-const BlackLogoIcon = () => {
+interface BlackLogoIconProps {
+  width: number;
+}
+
+const BlackLogoIcon: FC<BlackLogoIconProps> = ({ width }) => {
   return (
     <svg
+      width={width}
       fill="#000"
       viewBox="0 0 63 20"
       xmlns="http://www.w3.org/2000/svg"

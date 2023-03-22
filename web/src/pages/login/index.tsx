@@ -60,7 +60,7 @@ const Login = () => {
     <Container>
       <LogoWrapper>
         <Link to="/">
-          <BlackLogoIcon />
+          <BlackLogoIcon width={150} />
         </Link>
       </LogoWrapper>
       <Main>
