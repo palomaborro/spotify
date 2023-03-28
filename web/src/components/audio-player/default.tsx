@@ -5,7 +5,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 
-import Like from "../like/index";
+import Like from "../like/default";
 
 import {
   Container,

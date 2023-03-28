@@ -9,9 +9,9 @@ import FacebookRoundedIcon from "@mui/icons-material/FacebookRounded";
 import AppleIcon from "@mui/icons-material/Apple";
 import GoogleIcon from "@mui/icons-material/Google";
 
-import TextField from "../../components/inputs/text-field/index";
-import Checkbox from "../../components/inputs/checkbox";
-import Button from "../../components/button";
+import TextField from "../../components/inputs/text-field/default";
+import Checkbox from "../../components/inputs/checkbox/default";
+import Button from "../../components/button/default";
 import BlackLogoIcon from "../../images/black-logo";
 import {
   Container,

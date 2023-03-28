@@ -6,11 +6,11 @@ import { Link } from "react-router-dom";
 import Joi from "joi";
 import passwordComplexity from "joi-password-complexity";
 
-import TextField from "../../components/inputs/text-field/index";
-import Select from "../../components/inputs/select/index";
-import Radio from "../../components/inputs/radio/index";
-import Checkbox from "../../components/inputs/checkbox/index";
-import Button from "../../components/button";
+import TextField from "../../components/inputs/text-field/default";
+import Select from "../../components/inputs/select/default";
+import Radio from "../../components/inputs/radio/default";
+import Checkbox from "../../components/inputs/checkbox/default";
+import Button from "../../components/button/default";
 import BlackLogoIcon from "../../images/black-logo";
 import {
   Container,

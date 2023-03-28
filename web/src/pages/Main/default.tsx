@@ -7,7 +7,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import CopyrightIcon from "@mui/icons-material/Copyright";
 
-import Button from "../../components/button";
+import Button from "../../components/button/default";
 import WhiteLogoIcon from "../../images/white-logo";
 import {
   MainContainer,
