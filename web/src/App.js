@@ -11,6 +11,7 @@ import Search from "./pages/search/default";
 import Library from "./pages/library/default";
 import LikedSongs from "./pages/liked-songs/default";
 import Playlist from "./pages/playlist/default";
+import Profile from "./pages/profile/default";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
       <Route path="/library" element={<Library />} />
       <Route path="/liked-songs" element={<LikedSongs />} />
       <Route path="/playlist" element={<Playlist />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 };
