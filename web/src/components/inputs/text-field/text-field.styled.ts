@@ -5,6 +5,19 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  .input {
+    height: 5rem;
+    font-size: 1.6rem;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    border: 0.1rem solid var(--black);
+    padding: 0 1rem;
+
+    &:hover {
+      outline: 1px solid var(--black);
+    }
+  }
 `;
 
 export const Label = styled.p`

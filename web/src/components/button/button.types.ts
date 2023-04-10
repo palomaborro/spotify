@@ -4,4 +4,5 @@ export type ButtonProps = {
   style?: React.CSSProperties;
   onClick?: () => void;
   type?: "button" | "submit" | "reset";
+  width?: string;
 };

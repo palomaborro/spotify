@@ -10,27 +10,46 @@ const saveUser = (req, res) => {
 
   user.name = params.name;
   user.surname = params.surname;
-  user.email = params.email;
+  if (params.email) {
+    user.email = params.email.toLowerCase();
+  } else {
+    res.status(400).send({ message: "Email is required" });
+    return;
+  }
   user.role = "ROLE_USER";
   user.image = null;
 
   if (params.password) {
-    bcrypt.hash(params.password, 10, (err, hash) => {
-      user.password = hash;
-      if (user.name !== null && user.surname !== null && user.email !== null) {
-        user.save((err, userStored) => {
-          if (err) {
-            res.status(500).send({ message: "Error saving user" });
+    User.findOne({ email: user.email.toLowerCase() }, (err, existingUser) => {
+      if (err) {
+        res.status(500).send({ message: "Error checking email" });
+      } else if (existingUser) {
+        res.status(409).send({ message: "Email already exists" });
+      } else {
+        bcrypt.hash(params.password, 10, (err, hash) => {
+          user.password = hash;
+          if (
+            user.name !== null &&
+            user.surname !== null &&
+            user.email !== null
+          ) {
+            console.log("User before saving:", user);
+            user.save((err, userStored) => {
+              console.log("User after saving:", userStored);
+              if (err) {
+                res.status(500).send({ message: "Error saving user" });
+              } else {
+                if (!userStored) {
+                  res.status(404).send({ message: "User not registered" });
+                } else {
+                  res.status(200).send({ user: userStored });
+                }
+              }
+            });
           } else {
-            if (!userStored) {
-              res.status(404).send({ message: "User not registered" });
-            } else {
-              res.status(200).send({ user: userStored });
-            }
+            res.status(400).send({ message: "Fill all fields" });
           }
         });
-      } else {
-        res.status(400).send({ message: "Fill all fields" });
       }
     });
   } else {

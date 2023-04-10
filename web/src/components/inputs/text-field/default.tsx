@@ -1,7 +1,4 @@
-// @ts-nocheck
 import React, { FC } from "react";
-
-import Joi from "joi";
 
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -9,45 +6,32 @@ import { Container, Label, ErrorMessage } from "./text-field.styled";
 import { TextFieldProps } from "./text-field.types";
 
 const TextField: FC<TextFieldProps> = ({
+  placeholder,
+  name,
   label,
   error,
-  handleInputState,
-  handleErrorState,
-  schema,
-  ...rest
+  onChange,
+  value,
+  required,
+  type,
 }) => {
-  const validateProperty = ({
-    name,
-    value,
-  }: {
-    name: string;
-    value: string;
-  }) => {
-    const obj = { [name]: value };
-    const inputSchema = Joi.object({ [name]: schema });
-    const { error } = inputSchema.validate(obj);
-    return error ? error.details[0].message : "";
-  };
-
-  const handleChange = ({ currentTarget: input }: any) => {
-    if (schema) {
-      const errorMessage = validateProperty(input);
-      if (handleErrorState) handleErrorState(input.name, errorMessage);
-    }
-    handleInputState(input.name, input.value);
-  };
+  const errorMessage = name && error && error[name];
 
   return (
     <Container>
       <Label>{label}</Label>
       <input
-        {...rest}
-        onChange={handleChange}
+        type={type || "text"}
+        placeholder={placeholder}
+        required={required}
+        name={name}
+        value={value}
+        onChange={onChange}
         className={error ? `${"input"} ${"error"}` : `${"input"} `}
       />
-      {error && (
+      {errorMessage && (
         <ErrorMessage>
-          <ClearIcon /> {error}
+          <ClearIcon /> {errorMessage}
         </ErrorMessage>
       )}
     </Container>

@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
-export const ButtonWrapper = styled.button`
+interface ButtonWrapperProps {
+  width?: string;
+}
+
+export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   border: none;
   min-width: 10rem;
   outline: none;
@@ -14,6 +18,7 @@ export const ButtonWrapper = styled.button`
   padding: 1rem 2rem;
   transform: scale(1);
   transition: all 0.1s;
+  width: ${({ width }) => width};
 
   &:hover {
     transform: scale(1.05);

@@ -7,7 +7,7 @@ export const Container = styled.div`
   padding: 1rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 
   audio {
     width: 25rem;

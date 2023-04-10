@@ -1,8 +1,7 @@
+import { ChangeEvent } from "react";
+
 export type FileInputProps = {
   label: string;
-  name: string;
-  handleInputState: (value: string) => void;
-  value: string;
-  icon: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   type: string;
 };

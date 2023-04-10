@@ -12,8 +12,11 @@ import Library from "./pages/library/default";
 import LikedSongs from "./pages/liked-songs/default";
 import Playlist from "./pages/playlist/default";
 import Profile from "./pages/profile/default";
+import PrivateRoute from "./utils/private-route";
 
 const App = () => {
+  const isAuthenticated = localStorage.getItem("token");
+
   return (
     <Routes>
       <Route path="/" element={<Main />} />
@@ -22,7 +25,15 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/home" element={<Home />} />
       <Route path="/search" element={<Search />} />
-      <Route path="/library" element={<Library />} />
+      <Route
+        path="/library"
+        element={
+          <PrivateRoute
+            isAuthenticated={isAuthenticated}
+            element={<Library />}
+          />
+        }
+      />
       <Route path="/liked-songs" element={<LikedSongs />} />
       <Route path="/playlist" element={<Playlist />} />
       <Route path="/profile" element={<Profile />} />

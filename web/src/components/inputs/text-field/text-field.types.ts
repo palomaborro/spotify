@@ -1,7 +1,12 @@
+import { ChangeEvent } from "react";
+
 export type TextFieldProps = {
   label: string;
-  error: string;
-  handleInputState: (value: string) => void;
-  handleErrorState: (value: string) => void;
-  schema: any;
+  error?: Record<string, string> | undefined;
+  value: string;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  name?: string;
+  required?: boolean;
+  type?: string;
 };

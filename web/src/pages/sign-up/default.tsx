@@ -1,15 +1,9 @@
-// @ts-nocheck
 import React, { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import Joi from "joi";
-import passwordComplexity from "joi-password-complexity";
-
 import TextField from "../../components/inputs/text-field/default";
-import Select from "../../components/inputs/select/default";
-import Radio from "../../components/inputs/radio/default";
-import Checkbox from "../../components/inputs/checkbox/default";
+import FileInput from "../../components/inputs/file-input/default";
 import Button from "../../components/button/default";
 import BlackLogoIcon from "../../images/black-logo";
 import {
@@ -18,169 +12,127 @@ import {
   Header,
   Form,
   InputContainer,
-  DateOfBirthContainer,
-  DateOfBirth,
-  Month,
-  Day,
-  Year,
-  CheckboxContainer,
   TermsAndConditions,
   SubmitButtonWrapper,
 } from "./sign-up.styled";
-import { Errors } from "./sign-up.types";
-
-const months = [
-  { name: "January", value: "01" },
-  { name: "February", value: "02" },
-  { name: "March", value: "03" },
-  { name: "April", value: "04" },
-  { name: "May", value: "05" },
-  { name: "June", value: "06" },
-  { name: "July", value: "07" },
-  { name: "August", value: "08" },
-  { name: "September", value: "09" },
-  { name: "October", value: "10" },
-  { name: "November", value: "11" },
-  { name: "December", value: "12" },
-];
-
-const genders = ["male", "female", "non-binary"];
+import { Errors, SignUpData } from "./sign-up.types";
 
 const SignUp = () => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<SignUpData>({
     email: "",
     password: "",
     name: "",
-    month: "",
-    year: "",
-    date: "",
-    gender: "",
+    surname: "",
+    image: null,
   });
-  const [errors, setErrors] = useState<Errors>({});
+  const [error, setError] = useState<Errors>({});
 
-  const handleInputState = (name: string, value: string) => {
-    setData((data) => ({ ...data, [name]: value }));
-  };
-
-  const handleErrorState = (name: string, value: string) => {
-    value === ""
-      ? delete errors[name]
-      : setErrors(() => ({ ...errors, [name]: value }));
-  };
-
-  const schema = {
-    email: Joi.string().email({ tlds: false }).required().label("Email"),
-    password: passwordComplexity().required().label("Password"),
-    name: Joi.string().min(5).max(10).required().label("Name"),
-  };
-
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (Object.keys(errors).length === 0) {
-      console.log(data);
-    } else {
-      console.log("please fill out properly");
+
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("surname", data.surname);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      if (data.image) {
+        formData.append("image", data.image);
+      }
+
+      const response = await fetch("http://localhost:3977/sign-up", {
+        method: "POST",
+        body: formData,
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        window.location.href = "/login";
+      } else {
+        setError({
+          message:
+            responseData.message ||
+            "Error trying to sign up. Please try again.",
+        });
+      }
+    } catch (error) {
+      setError({ message: "Error trying to sign up. Please try again." });
     }
   };
 
   return (
     <Container>
       <LogoWrapper>
-        <BlackLogoIcon />
+        <BlackLogoIcon width={150} />
       </LogoWrapper>
       <Header>Sign up for free to start listening.</Header>
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <TextField
-            label="What's your email?"
-            placeholder="Enter your email"
+            onChange={(e) => {
+              setData({ ...data, email: e.target.value });
+            }}
+            label="Email"
+            placeholder="Email"
             name="email"
-            handleInputState={handleInputState}
-            schema={schema.email}
-            handleErrorState={handleErrorState}
             value={data.email}
-            error={errors.email}
+            error={error}
             required={true}
           />
         </InputContainer>
         <InputContainer>
           <TextField
-            label="Create a password"
-            placeholder="Create a password"
+            onChange={(e) => {
+              setData({ ...data, password: e.target.value });
+            }}
+            label="Password"
+            placeholder="Password"
             name="password"
-            handleInputState={handleInputState}
-            schema={schema.password}
-            handleErrorState={handleErrorState}
             value={data.password}
-            error={errors.password}
+            error={error}
             type="password"
             required={true}
           />
         </InputContainer>
         <InputContainer>
           <TextField
-            label="What should we call you?"
-            placeholder="Enter a profile name"
+            onChange={(e) => {
+              setData({ ...data, name: e.target.value });
+            }}
+            label="Name"
+            placeholder="Name"
             name="name"
-            handleInputState={handleInputState}
-            schema={schema.name}
-            handleErrorState={handleErrorState}
             value={data.name}
-            error={errors.name}
+            error={error}
             required={true}
           />
         </InputContainer>
-        <DateOfBirthContainer>
-          <p>What's your date of birth?</p>
-          <DateOfBirth>
-            <Month>
-              <Select
-                name="month"
-                handleInputState={handleInputState}
-                label="Month"
-                placeholder="Months"
-                options={months}
-                value={data.month}
-                required={true}
-              />
-            </Month>
-            <Day>
-              <TextField
-                label="Date"
-                placeholder="DD"
-                name="date"
-                value={data.date}
-                handleInputState={handleInputState}
-                required={true}
-              />
-            </Day>
-            <Year>
-              <TextField
-                label="Year"
-                placeholder="YYYY"
-                name="year"
-                value={data.year}
-                handleInputState={handleInputState}
-                required={true}
-              />
-            </Year>
-          </DateOfBirth>
-        </DateOfBirthContainer>
         <InputContainer>
-          <Radio
-            label="What's your gender?"
-            name="gender"
-            handleInputState={handleInputState}
-            options={genders}
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, surname: e.target.value });
+            }}
+            label="Surname"
+            placeholder="Surname"
+            name="name"
+            value={data.surname}
+            error={error}
             required={true}
           />
         </InputContainer>
-        <CheckboxContainer>
-          <Checkbox
-            required={true}
-            label="Share my registration data with Spotify's content providers for marketing purposes."
+        <InputContainer>
+          <FileInput
+            onChange={(e) => {
+              setData({
+                ...data,
+                image: e.target.files ? e.target.files[0] : null,
+              });
+            }}
+            label="Profile Image"
+            type="file"
           />
-        </CheckboxContainer>
+        </InputContainer>
         <TermsAndConditions>
           By clicking on sign-up, you agree to Spotify's{" "}
           <a href="/#">Terms and Conditions of Use.</a>

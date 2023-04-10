@@ -9,7 +9,7 @@ const middlewareUpload = multipart({ uploadDir: "./uploads/users" });
 
 api.get("/get-image-user/:imageFile", UserController.getImageFile);
 
-api.post("/register", UserController.saveUser);
+api.post("/sign-up", middlewareUpload, UserController.saveUser);
 api.post("/login", UserController.loginUser);
 api.post(
   "/upload-image-user/:id",
