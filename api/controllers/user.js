@@ -33,9 +33,7 @@ const saveUser = (req, res) => {
             user.surname !== null &&
             user.email !== null
           ) {
-            console.log("User before saving:", user);
             user.save((err, userStored) => {
-              console.log("User after saving:", userStored);
               if (err) {
                 res.status(500).send({ message: "Error saving user" });
               } else {
@@ -91,16 +89,18 @@ const loginUser = (req, res) => {
   });
 };
 
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
   const userId = req.params.id;
   const update = req.body;
 
-  if (req.files && req.files.image) {
-    const file_path = req.files.image.path;
-    const file_split = file_path.split("/");
-    const file_name = file_split[file_split.length - 1];
-
-    update.image = file_name;
+  if (update.newPassword) {
+    try {
+      const hashedPassword = await bcrypt.hash(update.newPassword, 10);
+      update.password = hashedPassword;
+    } catch (error) {
+      return res.status(500).send({ message: "Error updating password" });
+    }
+    delete update.newPassword;
   }
 
   User.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdated) => {
@@ -110,11 +110,7 @@ const updateUser = (req, res) => {
       if (!userUpdated) {
         res.status(404).send({ message: "User not updated" });
       } else {
-        if (update.image) {
-          res.status(200).send({ image: update.image, user: userUpdated });
-        } else {
-          res.status(200).send({ user: userUpdated });
-        }
+        res.status(200).send({ user: userUpdated });
       }
     }
   });
@@ -167,10 +163,51 @@ const getImageFile = (req, res) => {
   }
 };
 
+const getUserProfile = (req, res) => {
+  const userId = req.params.id;
+
+  User.findById(userId, (err, user) => {
+    if (err) {
+      return res.status(500).send({ message: "Error finding the user" });
+    }
+
+    if (!user) {
+      return res.status(404).send({ message: "The user does not exist" });
+    }
+
+    if (user.image) {
+      const imagePath = path.join(
+        __dirname,
+        "..",
+        "uploads",
+        "users",
+        user.image
+      );
+      if (fs.existsSync(imagePath)) {
+        user.image = `${req.protocol}://${req.get("host")}/uploads/users/${
+          user.image
+        }`;
+      } else {
+        user.image = null;
+      }
+    }
+
+    res.status(200).send({
+      user: {
+        email: user.email,
+        name: user.name,
+        surname: user.surname,
+        image: user.image,
+      },
+    });
+  });
+};
+
 module.exports = {
   saveUser,
   loginUser,
   updateUser,
   uploadImage,
   getImageFile,
+  getUserProfile,
 };

@@ -8,6 +8,11 @@ const api = express.Router();
 const middlewareUpload = multipart({ uploadDir: "./uploads/users" });
 
 api.get("/get-image-user/:imageFile", UserController.getImageFile);
+api.get(
+  "/profile/:id",
+  middlewareAuth.isAuthenticated,
+  UserController.getUserProfile
+);
 
 api.post("/sign-up", middlewareUpload, UserController.saveUser);
 api.post("/login", UserController.loginUser);

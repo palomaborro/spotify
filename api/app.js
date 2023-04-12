@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
+const path = require("path");
 
 const app = express();
 
@@ -24,5 +25,6 @@ app.use("/", user_routes);
 app.use("/", artist_routes);
 app.use("/", album_routes);
 app.use("/", song_routes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 module.exports = app;

@@ -1,10 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+
+import { Link } from "react-router-dom";
 
 import TextField from "../../components/inputs/text-field/default";
 import FileInput from "../../components/inputs/file-input/default";
 import Button from "../../components/button/default";
+import BlackLogoIcon from "../../images/black-logo";
 
-import { Title, Form, Input, ButtonWrapper } from "./profile.styled";
+import {
+  Title,
+  Form,
+  Input,
+  ButtonWrapper,
+  Container,
+  LogoWrapper,
+  TitleWrapper,
+} from "./profile.styled";
 import { ProfileData, Errors } from "./profile.types";
 
 import { UserContext } from "../../utils/user-context";
@@ -12,14 +23,62 @@ import { UserContext } from "../../utils/user-context";
 const Profile = () => {
   const [data, setData] = useState<ProfileData>({
     email: "",
-    password: "",
+    newPassword: "",
     name: "",
     surname: "",
     image: null,
   });
   const [error, setError] = useState<Errors>({});
-
+  const [titleImageURL, setTitleImageURL] = useState<string | undefined>(
+    undefined
+  );
+  const [formImageURL, setFormImageURL] = useState<string | undefined>(
+    undefined
+  );
   const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const token = user.token;
+        const userId = user.userId;
+
+        const response = await fetch(
+          `http://localhost:3977/profile/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          setError({
+            message:
+              responseData.message ||
+              "Error trying to fetch user data. Please try again.",
+          });
+        } else {
+          setData({
+            email: responseData.user.email,
+            name: responseData.user.name,
+            surname: responseData.user.surname,
+            newPassword: "",
+            image: responseData.user.image,
+          });
+          setTitleImageURL(getImageUrl(responseData.user.image));
+        }
+      } catch (error) {
+        setError({
+          message: "Error trying to fetch user data. Please try again.",
+        });
+      }
+    };
+    fetchUserData();
+  }, [user.token, user.userId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,15 +88,13 @@ const Profile = () => {
       formData.append("name", data.name);
       formData.append("surname", data.surname);
       formData.append("email", data.email);
-      formData.append("password", data.password);
+      formData.append("newPassword", data.newPassword);
       if (data.image) {
         formData.append("image", data.image);
       }
 
       const token = user.token;
       const userId = user.userId;
-      console.log("sign up token", token);
-      console.log("sign up userId", userId);
 
       const response = await fetch(`http://localhost:3977/profile/${userId}`, {
         method: "PUT",
@@ -63,9 +120,29 @@ const Profile = () => {
     }
   };
 
+  const getImageUrl = (image: string | File | null): string | undefined => {
+    if (typeof image === "string") {
+      return image;
+    } else if (image instanceof File) {
+      return URL.createObjectURL(image);
+    }
+    return undefined;
+  };
+
   return (
-    <div>
-      <Title>Profile</Title>
+    <Container>
+      <LogoWrapper>
+        <Link to="/">
+          <BlackLogoIcon width={150} />
+        </Link>
+      </LogoWrapper>
+      <TitleWrapper>
+        <div>
+          <Title>{`Hi ${data.name}!`} </Title>
+          <h2>Want to modify something?</h2>
+        </div>
+        {titleImageURL && <img src={titleImageURL} alt="user" />}
+      </TitleWrapper>
       <Form onSubmit={handleSubmit}>
         <Input>
           <TextField
@@ -107,22 +184,46 @@ const Profile = () => {
           />
         </Input>
         <Input>
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, newPassword: e.target.value });
+            }}
+            label="Password"
+            placeholder="Password"
+            name="password"
+            value={data.newPassword}
+            error={error}
+            type="password"
+            required={true}
+          />
+        </Input>
+        <Input isImage>
           <FileInput
             onChange={(e) => {
               setData({
                 ...data,
                 image: e.target.files ? e.target.files[0] : null,
               });
+              setFormImageURL(
+                e.target.files
+                  ? URL.createObjectURL(e.target.files[0])
+                  : undefined
+              );
             }}
-            label="Profile Image"
+            label="Change image"
             type="file"
           />
+          {formImageURL ? (
+            <img src={formImageURL} alt="user" />
+          ) : (
+            titleImageURL && <img src={titleImageURL} alt="user" />
+          )}
         </Input>
         <ButtonWrapper>
           <Button label="Update" type="submit" />
         </ButtonWrapper>
       </Form>
-    </div>
+    </Container>
   );
 };
 

@@ -1,9 +1,9 @@
 export interface ProfileData {
   email: string;
-  password: string;
+  newPassword: string;
   name: string;
   surname: string;
-  image: File | null;
+  image: string | File | null;
 }
 
 export type Errors = Record<string, string>;
