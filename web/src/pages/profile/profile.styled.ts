@@ -17,42 +17,6 @@ export const Input = styled.div`
   margin: 0.5rem 0;
 `;
 
-export const DateOfBirthWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 45rem;
-  margin: 0.5rem 0;
-
-  p {
-    margin: 0.5rem 0;
-    font-weight: 500;
-    font-size: 1.4rem;
-  }
-`;
-
-export const DateOfBirth = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-
-  p {
-    font-weight: normal;
-  }
-`;
-
-export const Month = styled.div`
-  width: 40%;
-`;
-
-export const Day = styled.div`
-  width: 20%;
-`;
-
-export const Year = styled.div`
-  width: 30%;
-`;
-
 export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;

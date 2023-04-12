@@ -72,9 +72,12 @@ const loginUser = (req, res) => {
       } else {
         bcrypt.compare(password, user.password, (err, check) => {
           if (check) {
-            if (params.gethash) {
+            if (params.gethash !== false) {
               res.status(200).send({
                 token: jwt.createToken(user),
+                user: {
+                  _id: user._id,
+                },
               });
             } else {
               res.status(200).send({ user });
@@ -92,14 +95,26 @@ const updateUser = (req, res) => {
   const userId = req.params.id;
   const update = req.body;
 
-  User.findByIdAndUpdate(userId, update, (err, userUpdated) => {
+  if (req.files && req.files.image) {
+    const file_path = req.files.image.path;
+    const file_split = file_path.split("/");
+    const file_name = file_split[file_split.length - 1];
+
+    update.image = file_name;
+  }
+
+  User.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdated) => {
     if (err) {
       res.status(500).send({ message: "Error updating user" });
     } else {
       if (!userUpdated) {
         res.status(404).send({ message: "User not updated" });
       } else {
-        res.status(200).send({ image: file_name, user: userUpdated });
+        if (update.image) {
+          res.status(200).send({ image: update.image, user: userUpdated });
+        } else {
+          res.status(200).send({ user: userUpdated });
+        }
       }
     }
   });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 
@@ -16,10 +16,14 @@ import {
   NoAccount,
 } from "./login.styled";
 
+import { UserContext } from "../../utils/user-context";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<{ message?: string }>({});
+
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -35,15 +39,19 @@ const Login = () => {
         body: JSON.stringify({
           email,
           password,
+          gethash: true,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
         const token = data.token;
+        const userId = data.user._id;
 
         localStorage.setItem("token", token);
-        navigate("/");
+        localStorage.setItem("userId", userId);
+        setUser({ userId, token, isAuthenticated: true });
+        navigate("/profile");
       } else {
         setError({
           message: "Error trying to login. Please check your credentials.",

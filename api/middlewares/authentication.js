@@ -10,7 +10,7 @@ exports.isAuthenticated = (req, res, next) => {
       .send({ message: "The request does not have the authentication header" });
   }
 
-  const token = req.headers.authorization.replace(/['"]+/g, "");
+  const token = req.headers.authorization.split(" ")[1];
 
   try {
     var payload = jwt.verify(token, secret);

@@ -1,70 +1,66 @@
-// @ts-nocheck
-import React, { useState } from "react";
-
-import Joi from "joi";
+import React, { useState, useContext } from "react";
 
 import TextField from "../../components/inputs/text-field/default";
-import Select from "../../components/inputs/select/default";
-import Radio from "../../components/inputs/radio/default";
+import FileInput from "../../components/inputs/file-input/default";
 import Button from "../../components/button/default";
 
-import {
-  Title,
-  Form,
-  Input,
-  DateOfBirthWrapper,
-  DateOfBirth,
-  Month,
-  Day,
-  Year,
-  ButtonWrapper,
-} from "./profile.styled";
+import { Title, Form, Input, ButtonWrapper } from "./profile.styled";
+import { ProfileData, Errors } from "./profile.types";
 
-const months = [
-  { name: "January", value: "01" },
-  { name: "February", value: "02" },
-  { name: "March", value: "03" },
-  { name: "April", value: "04" },
-  { name: "May", value: "05" },
-  { name: "June", value: "06" },
-  { name: "July", value: "07" },
-  { name: "August", value: "08" },
-  { name: "September", value: "09" },
-  { name: "October", value: "10" },
-  { name: "November", value: "11" },
-  { name: "December", value: "12" },
-];
-
-const genders = ["male", "female", "non-binary"];
+import { UserContext } from "../../utils/user-context";
 
 const Profile = () => {
-  const [data, setData] = useState({
+  const [data, setData] = useState<ProfileData>({
     email: "",
+    password: "",
     name: "",
-    month: "",
-    year: "",
-    date: "",
-    gender: "",
+    surname: "",
+    image: null,
   });
-  const [errors, setErrors] = useState({});
+  const [error, setError] = useState<Errors>({});
 
-  const handleInputState = (name: string, value: string) => {
-    setData((data) => ({ ...data, [name]: value }));
-  };
+  const { user } = useContext(UserContext);
 
-  const handleErrorState = (name: string, value: string) => {
-    value === ""
-      ? delete errors[name]
-      : setErrors(() => ({ ...errors, [name]: value }));
-  };
-
-  const schema = {
-    name: Joi.string().min(5).max(10).required().label("Name"),
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(data);
+
+    try {
+      const formData = new FormData();
+      formData.append("name", data.name);
+      formData.append("surname", data.surname);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      if (data.image) {
+        formData.append("image", data.image);
+      }
+
+      const token = user.token;
+      const userId = user.userId;
+      console.log("sign up token", token);
+      console.log("sign up userId", userId);
+
+      const response = await fetch(`http://localhost:3977/profile/${userId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        setError({
+          message:
+            responseData.message ||
+            "Error trying to change your profile info. Please try again.",
+        });
+      }
+    } catch (error) {
+      setError({
+        message: "Error trying to change your profile info. Please try again.",
+      });
+    }
   };
 
   return (
@@ -73,71 +69,53 @@ const Profile = () => {
       <Form onSubmit={handleSubmit}>
         <Input>
           <TextField
-            label="What's your email?"
-            placeholder="Enter your email"
+            onChange={(e) => {
+              setData({ ...data, email: e.target.value });
+            }}
+            label="Email"
+            placeholder="Email"
             name="email"
-            handleInputState={handleInputState}
             value={data.email}
+            error={error}
             required={true}
           />
         </Input>
         <Input>
           <TextField
-            label="What should we call you?"
-            placeholder="Enter a profile name"
+            onChange={(e) => {
+              setData({ ...data, name: e.target.value });
+            }}
+            label="Name"
+            placeholder="Name"
             name="name"
-            handleInputState={handleInputState}
-            schema={schema.name}
-            handleErrorState={handleErrorState}
             value={data.name}
-            error={errors.name}
+            error={error}
             required={true}
           />
         </Input>
-        <DateOfBirthWrapper>
-          <p>What's your date of birth?</p>
-          <DateOfBirth>
-            <Month>
-              <Select
-                name="month"
-                handleInputState={handleInputState}
-                label="Month"
-                placeholder="Months"
-                options={months}
-                value={data.month}
-                required={true}
-              />
-            </Month>
-            <Day>
-              <TextField
-                label="Date"
-                placeholder="DD"
-                name="date"
-                value={data.date}
-                handleInputState={handleInputState}
-                required={true}
-              />
-            </Day>
-            <Year>
-              <TextField
-                label="Year"
-                placeholder="YYYY"
-                name="year"
-                value={data.year}
-                handleInputState={handleInputState}
-                required={true}
-              />
-            </Year>
-          </DateOfBirth>
-        </DateOfBirthWrapper>
         <Input>
-          <Radio
-            label="What's your gender?"
-            name="gender"
-            handleInputState={handleInputState}
-            options={genders}
-            value={data.gender}
+          <TextField
+            onChange={(e) => {
+              setData({ ...data, surname: e.target.value });
+            }}
+            label="Surname"
+            placeholder="Surname"
+            name="name"
+            value={data.surname}
+            error={error}
             required={true}
+          />
+        </Input>
+        <Input>
+          <FileInput
+            onChange={(e) => {
+              setData({
+                ...data,
+                image: e.target.files ? e.target.files[0] : null,
+              });
+            }}
+            label="Profile Image"
+            type="file"
           />
         </Input>
         <ButtonWrapper>

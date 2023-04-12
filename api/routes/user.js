@@ -18,8 +18,8 @@ api.post(
 );
 
 api.put(
-  "/update-user/:id",
-  middlewareAuth.isAuthenticated,
+  "/profile/:id",
+  [middlewareAuth.isAuthenticated, middlewareUpload],
   UserController.updateUser
 );
 
