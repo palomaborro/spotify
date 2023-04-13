@@ -175,23 +175,6 @@ const getUserProfile = (req, res) => {
       return res.status(404).send({ message: "The user does not exist" });
     }
 
-    if (user.image) {
-      const imagePath = path.join(
-        __dirname,
-        "..",
-        "uploads",
-        "users",
-        user.image
-      );
-      if (fs.existsSync(imagePath)) {
-        user.image = `${req.protocol}://${req.get("host")}/uploads/users/${
-          user.image
-        }`;
-      } else {
-        user.image = null;
-      }
-    }
-
     res.status(200).send({
       user: {
         email: user.email,

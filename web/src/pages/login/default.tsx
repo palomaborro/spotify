@@ -12,8 +12,9 @@ import {
   OutlinedButton,
   Form,
   InputContainer,
-  FormCheckbox,
+  ButtonWrapper,
   NoAccount,
+  ErrorMessage,
 } from "./login.styled";
 
 import { UserContext } from "../../utils/user-context";
@@ -54,7 +55,7 @@ const Login = () => {
         navigate("/profile");
       } else {
         setError({
-          message: "Error trying to login. Please check your credentials.",
+          message: "Your email or password is incorrect.",
         });
       }
     } catch (error) {
@@ -100,9 +101,10 @@ const Login = () => {
               required={true}
             />
           </InputContainer>
-          <FormCheckbox>
+          {error.message && <ErrorMessage>{error.message}</ErrorMessage>}
+          <ButtonWrapper>
             <Button type="submit" label="LOG IN" width="100%" />
-          </FormCheckbox>
+          </ButtonWrapper>
         </Form>
         <NoAccount>Don't have an account?</NoAccount>
         <Link to="/signup">

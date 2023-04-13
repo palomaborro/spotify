@@ -70,12 +70,15 @@ export const InputContainer = styled.div`
   margin: 0.5rem 0;
 `;
 
-export const FormCheckbox = styled.div`
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  padding: 2rem 0;
+export const ButtonWrapper = styled.div`
+  padding: 1rem 0;
   border-bottom: 0.1rem solid var(--light-gray);
+`;
+
+export const ErrorMessage = styled.p`
+  color: red;
+  margin-top: 1rem;
+  font-size: 1.5rem;
 `;
 
 export const NoAccount = styled.h1`

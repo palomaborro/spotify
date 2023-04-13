@@ -15,6 +15,7 @@ import {
   Container,
   LogoWrapper,
   TitleWrapper,
+  SuccessMessage,
 } from "./profile.styled";
 import { ProfileData, Errors } from "./profile.types";
 
@@ -29,6 +30,8 @@ const Profile = () => {
     image: null,
   });
   const [error, setError] = useState<Errors>({});
+  const [successMessage, setSuccessMessage] = useState<string | undefined>("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const [titleImageURL, setTitleImageURL] = useState<string | undefined>(
     undefined
   );
@@ -69,7 +72,8 @@ const Profile = () => {
             newPassword: "",
             image: responseData.user.image,
           });
-          setTitleImageURL(getImageUrl(responseData.user.image));
+
+          setTitleImageURL(responseData.user.image);
         }
       } catch (error) {
         setError({
@@ -112,21 +116,15 @@ const Profile = () => {
             responseData.message ||
             "Error trying to change your profile info. Please try again.",
         });
+      } else {
+        setSuccessMessage("Profile info updated successfully!");
+        setShowSuccessMessage(true);
       }
     } catch (error) {
       setError({
         message: "Error trying to change your profile info. Please try again.",
       });
     }
-  };
-
-  const getImageUrl = (image: string | File | null): string | undefined => {
-    if (typeof image === "string") {
-      return image;
-    } else if (image instanceof File) {
-      return URL.createObjectURL(image);
-    }
-    return undefined;
   };
 
   return (
@@ -154,7 +152,7 @@ const Profile = () => {
             name="email"
             value={data.email}
             error={error}
-            required={true}
+            required={false}
           />
         </Input>
         <Input>
@@ -167,7 +165,7 @@ const Profile = () => {
             name="name"
             value={data.name}
             error={error}
-            required={true}
+            required={false}
           />
         </Input>
         <Input>
@@ -180,7 +178,7 @@ const Profile = () => {
             name="name"
             value={data.surname}
             error={error}
-            required={true}
+            required={false}
           />
         </Input>
         <Input>
@@ -194,7 +192,7 @@ const Profile = () => {
             value={data.newPassword}
             error={error}
             type="password"
-            required={true}
+            required={false}
           />
         </Input>
         <Input isImage>
@@ -219,6 +217,9 @@ const Profile = () => {
             titleImageURL && <img src={titleImageURL} alt="user" />
           )}
         </Input>
+        {showSuccessMessage && (
+          <SuccessMessage>{successMessage}</SuccessMessage>
+        )}
         <ButtonWrapper>
           <Button label="Update" type="submit" />
         </ButtonWrapper>

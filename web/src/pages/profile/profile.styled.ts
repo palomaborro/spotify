@@ -74,3 +74,9 @@ export const ButtonWrapper = styled.div`
     height: 4.5rem;
   }
 `;
+
+export const SuccessMessage = styled.p`
+  color: #20c15b;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+`;
