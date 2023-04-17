@@ -28,8 +28,9 @@ export const Label = styled.p`
 
 export const ErrorMessage = styled.p`
   color: red;
-  margin: 0.2rem 0;
+  margin: 1rem 0 0.3rem 0;
   font-weight: 400;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
 

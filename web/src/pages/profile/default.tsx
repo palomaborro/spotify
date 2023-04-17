@@ -20,6 +20,14 @@ import {
 import { ProfileData, Errors } from "./profile.types";
 
 import { UserContext } from "../../utils/user-context";
+import { isValidInput } from "../../utils/utils";
+import {
+  NAME_REGEX,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+  FIELD_ERROR_MESSAGES,
+  StringFieldsOnly,
+} from "../../utils/constants";
 
 const Profile = () => {
   const [data, setData] = useState<ProfileData>({
@@ -29,7 +37,9 @@ const Profile = () => {
     surname: "",
     image: null,
   });
-  const [error, setError] = useState<Errors>({});
+  const [error, setError] = useState<Errors>({
+    email: "",
+  });
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
   const [titleImageURL, setTitleImageURL] = useState<string | undefined>(
@@ -38,6 +48,10 @@ const Profile = () => {
   const [formImageURL, setFormImageURL] = useState<string | undefined>(
     undefined
   );
+  const [formState, setFormState] = useState<"idle" | "submitting" | "success">(
+    "idle"
+  );
+
   const { user } = useContext(UserContext);
 
   useEffect(() => {
@@ -108,6 +122,8 @@ const Profile = () => {
         body: formData,
       });
 
+      setFormState("submitting");
+
       const responseData = await response.json();
 
       if (!response.ok) {
@@ -116,14 +132,43 @@ const Profile = () => {
             responseData.message ||
             "Error trying to change your profile info. Please try again.",
         });
+        setFormState("idle");
       } else {
         setSuccessMessage("Profile info updated successfully!");
         setShowSuccessMessage(true);
+        setFormState("success");
       }
     } catch (error) {
       setError({
         message: "Error trying to change your profile info. Please try again.",
       });
+    }
+  };
+
+  useEffect(() => {
+    if (formState === "success") {
+      setData((prevState) => ({ ...prevState, newPassword: "" }));
+      setFormState("idle");
+    }
+  }, [formState]);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: keyof StringFieldsOnly<ProfileData>,
+    regex?: RegExp
+  ) => {
+    const value = e.target.value;
+    setData((prevData) => ({ ...prevData, [field]: value }));
+
+    if (regex) {
+      if (!isValidInput(value, regex)) {
+        setError((prevError) => ({
+          ...prevError,
+          [field]: FIELD_ERROR_MESSAGES[field],
+        }));
+      } else {
+        setError((prevError) => ({ ...prevError, [field]: undefined }));
+      }
     }
   };
 
@@ -144,9 +189,7 @@ const Profile = () => {
       <Form onSubmit={handleSubmit}>
         <Input>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, email: e.target.value });
-            }}
+            onChange={(e) => handleInputChange(e, "email", EMAIL_REGEX)}
             label="Email"
             placeholder="Email"
             name="email"
@@ -157,9 +200,7 @@ const Profile = () => {
         </Input>
         <Input>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, name: e.target.value });
-            }}
+            onChange={(e) => handleInputChange(e, "name", NAME_REGEX)}
             label="Name"
             placeholder="Name"
             name="name"
@@ -170,9 +211,7 @@ const Profile = () => {
         </Input>
         <Input>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, surname: e.target.value });
-            }}
+            onChange={(e) => handleInputChange(e, "surname", NAME_REGEX)}
             label="Surname"
             placeholder="Surname"
             name="name"
@@ -183,9 +222,9 @@ const Profile = () => {
         </Input>
         <Input>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, newPassword: e.target.value });
-            }}
+            onChange={(e) =>
+              handleInputChange(e, "newPassword", PASSWORD_REGEX)
+            }
             label="Password"
             placeholder="Password"
             name="password"

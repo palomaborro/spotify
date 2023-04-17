@@ -53,19 +53,21 @@ export const Input = styled.div<{ isImage?: boolean }>`
   width: 45rem;
   margin: 0.5rem 0;
   display: ${({ isImage }) => (isImage ? "flex" : "")};
+  align-items: center;
 
   img {
     border-radius: 50rem;
     object-fit: cover;
     width: 8rem;
     height: 8rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
   }
 `;
 
 export const ButtonWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   width: 45rem;
   margin: 2rem 0 1.5rem 0;
 

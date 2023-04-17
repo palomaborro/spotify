@@ -6,4 +6,7 @@ export interface ProfileData {
   image: string | File | null;
 }
 
-export type Errors = Record<string, string>;
+export type Errors = {
+  email?: string;
+  message?: string;
+};
