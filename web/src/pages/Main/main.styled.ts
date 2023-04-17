@@ -108,7 +108,7 @@ export const Wrapper = styled.div`
     color: var(--primary);
     padding-bottom: 3rem;
 
-    @media (max-width: 900px) {
+    @media (max-width: 1100px) {
       font-size: 1.2rem;
     }
   }
@@ -132,6 +132,10 @@ export const FooterFirstElement = styled.div`
   justify-content: space-between;
   margin-bottom: 8rem;
 
+  .footer-logo {
+    margin-right: 3rem;
+  }
+
   @media (max-width: 900px) {
     flex-direction: column;
     align-items: center;
@@ -139,6 +143,8 @@ export const FooterFirstElement = styled.div`
 `;
 
 export const FooterLinksContainer = styled.div`
+  display: flex;
+
   @media (max-width: 900px) {
     display: flex;
     flex-direction: column;
@@ -148,6 +154,8 @@ export const FooterLinksContainer = styled.div`
 export const FooterFirstElementLinks = styled.div`
   display: flex;
   flex-direction: column;
+  width: fit-content;
+  margin-right: 5rem;
 
   @media (max-width: 900px) {
     margin-top: 3rem;
@@ -175,7 +183,7 @@ export const FooterLinks = styled.div`
     color: var(--primary);
   }
 
-  @media (max-width: 900) {
+  @media (max-width: 900px) {
     display: flex;
     flex-direction: column;
   }
@@ -184,7 +192,7 @@ export const FooterLinks = styled.div`
 export const FooterIcons = styled.div`
   display: flex;
 
-  @media (max-width: 900) {
+  @media (max-width: 900px) {
     margin-top: 3rem;
   }
 `;
@@ -211,28 +219,13 @@ export const FooterIcon = styled.div`
   }
 `;
 
-export const FooterSecondElement = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @media (max-width: 900) {
-    display: flex;
-    flex-direction: column;
-  }
-`;
-
-export const FooterSecondElementLinks = styled.div`
-  display: flex;
-`;
-
 export const Copyright = styled.div`
   display: flex;
   align-items: center;
   font-size: 1.2rem;
   color: var(--light-white);
 
-  @media (max-width: 900) {
+  @media (max-width: 900px) {
     display: flex;
     justify-content: center;
   }

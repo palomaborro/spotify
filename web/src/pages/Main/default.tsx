@@ -24,8 +24,6 @@ import {
   FooterLinks,
   FooterIcons,
   FooterIcon,
-  FooterSecondElement,
-  FooterSecondElementLinks,
   Copyright,
   FooterLinksContainer,
 } from "./main.styled";
@@ -50,15 +48,6 @@ const communitiesLinks = [
 ];
 
 const usefulLInks = ["Support", "Web Player", "Free Mobile App"];
-
-const footerLinks = [
-  "legal",
-  "privacy center",
-  "privacy policy",
-  "Cookies",
-  "About ads",
-  "Additional CA Privacy Disclosures",
-];
 
 const footerIcons = [<InstagramIcon />, <TwitterIcon />, <FacebookIcon />];
 
@@ -117,7 +106,7 @@ const Main = () => {
       </Container>
       <Footer>
         <FooterFirstElement>
-          <Link to="/" className="footer_logo">
+          <Link to="/" className="footer-logo">
             <WhiteLogoIcon width={150} />
           </Link>
           <FooterLinksContainer>
