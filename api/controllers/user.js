@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("../services/auth-service");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
 
 const saveUser = (req, res) => {
   const user = new User();
@@ -91,27 +92,54 @@ const loginUser = (req, res) => {
 
 const updateUser = async (req, res) => {
   const userId = req.params.id;
-  const update = req.body;
 
-  if (update.newPassword) {
-    try {
-      const hashedPassword = await bcrypt.hash(update.newPassword, 10);
-      update.password = hashedPassword;
-    } catch (error) {
-      return res.status(500).send({ message: "Error updating password" });
-    }
-    delete update.newPassword;
-  }
+  const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./uploads/users");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  });
 
-  User.findByIdAndUpdate(userId, update, { new: true }, (err, userUpdated) => {
+  const upload = multer({ storage }).single("image");
+
+  upload(req, res, async (err) => {
     if (err) {
-      res.status(500).send({ message: "Error updating user" });
+      res.status(500).send({ message: "Error uploading file" });
     } else {
-      if (!userUpdated) {
-        res.status(404).send({ message: "User not updated" });
-      } else {
-        res.status(200).send({ user: userUpdated });
+      const update = req.body;
+
+      if (update.newPassword) {
+        try {
+          const hashedPassword = await bcrypt.hash(update.newPassword, 10);
+          update.password = hashedPassword;
+        } catch (error) {
+          return res.status(500).send({ message: "Error updating password" });
+        }
+        delete update.newPassword;
       }
+
+      if (req.file) {
+        update.image = `./uploads/users/${req.file.filename}`;
+      }
+
+      User.findByIdAndUpdate(
+        userId,
+        update,
+        { new: true },
+        (err, userUpdated) => {
+          if (err) {
+            res.status(500).send({ message: "Error updating user" });
+          } else {
+            if (!userUpdated) {
+              res.status(404).send({ message: "User not updated" });
+            } else {
+              res.status(200).send({ user: userUpdated });
+            }
+          }
+        }
+      );
     }
   });
 };

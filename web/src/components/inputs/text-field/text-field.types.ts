@@ -9,4 +9,5 @@ export type TextFieldProps = {
   name?: string;
   required?: boolean;
   type?: string;
+  onBlur?: (event: ChangeEvent<HTMLInputElement>) => void;
 };

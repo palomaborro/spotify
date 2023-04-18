@@ -46,7 +46,12 @@ export const Title = styled.h1`
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 2rem 3rem;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 export const Input = styled.div<{ isImage?: boolean }>`
@@ -62,6 +67,10 @@ export const Input = styled.div<{ isImage?: boolean }>`
     height: 8rem;
     margin-left: 2rem;
     margin-top: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    width: 30rem;
   }
 `;
 

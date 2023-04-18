@@ -3,10 +3,5 @@ export interface ProfileData {
   newPassword: string;
   name: string;
   surname: string;
-  image: string | File | null;
+  image: string | File | null | undefined;
 }
-
-export type Errors = {
-  email?: string;
-  message?: string;
-};

@@ -11,6 +11,8 @@ export type StringFieldsOnly<T> = {
 
 export const NAME_REGEX = /^[A-Za-z]+$/;
 
+export const SURNAME_REGEX = /^[A-Za-z]+$/;
+
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const PASSWORD_REGEX =

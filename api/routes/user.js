@@ -1,11 +1,11 @@
 const express = require("express");
 const UserController = require("../controllers/user");
 const middlewareAuth = require("../middlewares/authentication");
-const multipart = require("connect-multiparty");
+const multer = require("multer");
+
+const upload = multer({ dest: "./uploads/users" });
 
 const api = express.Router();
-
-const middlewareUpload = multipart({ uploadDir: "./uploads/users" });
 
 api.get("/get-image-user/:imageFile", UserController.getImageFile);
 api.get(
@@ -14,17 +14,17 @@ api.get(
   UserController.getUserProfile
 );
 
-api.post("/sign-up", middlewareUpload, UserController.saveUser);
+api.post("/sign-up", upload.single("image"), UserController.saveUser);
 api.post("/login", UserController.loginUser);
 api.post(
   "/upload-image-user/:id",
-  [middlewareAuth.isAuthenticated, middlewareUpload],
+  [middlewareAuth.isAuthenticated, upload.single("image")],
   UserController.uploadImage
 );
 
 api.put(
   "/profile/:id",
-  [middlewareAuth.isAuthenticated, middlewareUpload],
+  [middlewareAuth.isAuthenticated],
   UserController.updateUser
 );
 

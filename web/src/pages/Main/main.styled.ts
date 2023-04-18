@@ -130,10 +130,11 @@ export const Footer = styled.footer`
 export const FooterFirstElement = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8rem;
+  margin-bottom: 3rem;
 
   .footer-logo {
     margin-right: 3rem;
+    margin-top: 3rem;
   }
 
   @media (max-width: 800px) {

@@ -17,17 +17,18 @@ import {
   TitleWrapper,
   SuccessMessage,
 } from "./profile.styled";
-import { ProfileData, Errors } from "./profile.types";
+import { Errors } from "./profile.types";
 
 import { UserContext } from "../../utils/user-context";
-import { isValidInput } from "../../utils/utils";
 import {
   NAME_REGEX,
+  SURNAME_REGEX,
   EMAIL_REGEX,
   PASSWORD_REGEX,
   FIELD_ERROR_MESSAGES,
-  StringFieldsOnly,
 } from "../../utils/constants";
+import { ProfileData } from "../../utils/types";
+import { handleInputChange, handleInputBlur } from "../../utils/input-handlers";
 
 const Profile = () => {
   const [data, setData] = useState<ProfileData>({
@@ -45,6 +46,7 @@ const Profile = () => {
   const [titleImageURL, setTitleImageURL] = useState<string | undefined>(
     undefined
   );
+  const [titleName, setTitleName] = useState<string | undefined>(undefined);
   const [formImageURL, setFormImageURL] = useState<string | undefined>(
     undefined
   );
@@ -79,15 +81,20 @@ const Profile = () => {
               "Error trying to fetch user data. Please try again.",
           });
         } else {
+          const userImage = responseData.user.image
+            ? `http://localhost:3977/${responseData.user.image}`
+            : undefined;
+
           setData({
             email: responseData.user.email,
             name: responseData.user.name,
             surname: responseData.user.surname,
             newPassword: "",
-            image: responseData.user.image,
+            image: userImage,
           });
 
-          setTitleImageURL(responseData.user.image);
+          setTitleImageURL(userImage);
+          setTitleName(responseData.user.name);
         }
       } catch (error) {
         setError({
@@ -137,6 +144,9 @@ const Profile = () => {
         setSuccessMessage("Profile info updated successfully!");
         setShowSuccessMessage(true);
         setFormState("success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       }
     } catch (error) {
       setError({
@@ -152,26 +162,6 @@ const Profile = () => {
     }
   }, [formState]);
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    field: keyof StringFieldsOnly<ProfileData>,
-    regex?: RegExp
-  ) => {
-    const value = e.target.value;
-    setData((prevData) => ({ ...prevData, [field]: value }));
-
-    if (regex) {
-      if (!isValidInput(value, regex)) {
-        setError((prevError) => ({
-          ...prevError,
-          [field]: FIELD_ERROR_MESSAGES[field],
-        }));
-      } else {
-        setError((prevError) => ({ ...prevError, [field]: undefined }));
-      }
-    }
-  };
-
   return (
     <Container>
       <LogoWrapper>
@@ -181,7 +171,7 @@ const Profile = () => {
       </LogoWrapper>
       <TitleWrapper>
         <div>
-          <Title>{`Hi ${data.name}!`} </Title>
+          <Title>{`Hi ${titleName}!`} </Title>
           <h2>Want to modify something?</h2>
         </div>
         {titleImageURL && <img src={titleImageURL} alt="user" />}
@@ -189,49 +179,87 @@ const Profile = () => {
       <Form onSubmit={handleSubmit}>
         <Input>
           <TextField
-            onChange={(e) => handleInputChange(e, "email", EMAIL_REGEX)}
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "email",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                EMAIL_REGEX
+              )
+            }
             label="Email"
             placeholder="Email"
             name="email"
             value={data.email}
             error={error}
             required={false}
+            onBlur={() => handleInputBlur("email", setError)}
           />
         </Input>
         <Input>
           <TextField
-            onChange={(e) => handleInputChange(e, "name", NAME_REGEX)}
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "name",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                NAME_REGEX
+              )
+            }
             label="Name"
             placeholder="Name"
             name="name"
             value={data.name}
             error={error}
             required={false}
-          />
-        </Input>
-        <Input>
-          <TextField
-            onChange={(e) => handleInputChange(e, "surname", NAME_REGEX)}
-            label="Surname"
-            placeholder="Surname"
-            name="name"
-            value={data.surname}
-            error={error}
-            required={false}
+            onBlur={() => handleInputBlur("name", setError)}
           />
         </Input>
         <Input>
           <TextField
             onChange={(e) =>
-              handleInputChange(e, "newPassword", PASSWORD_REGEX)
+              handleInputChange(
+                e,
+                "surname",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                SURNAME_REGEX
+              )
+            }
+            label="Surname"
+            placeholder="Surname"
+            name="surname"
+            value={data.surname}
+            error={error}
+            required={false}
+            onBlur={() => handleInputBlur("surname", setError)}
+          />
+        </Input>
+        <Input>
+          <TextField
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "newPassword",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                PASSWORD_REGEX
+              )
             }
             label="Password"
             placeholder="Password"
-            name="password"
+            name="newPassword"
             value={data.newPassword}
             error={error}
             type="password"
             required={false}
+            onBlur={() => handleInputBlur("newPassword", setError)}
           />
         </Input>
         <Input isImage>

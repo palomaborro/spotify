@@ -14,6 +14,7 @@ const TextField: FC<TextFieldProps> = ({
   value,
   required,
   type,
+  onBlur,
 }) => {
   const errorMessage = name && error && error[name];
 
@@ -28,6 +29,7 @@ const TextField: FC<TextFieldProps> = ({
         value={value}
         onChange={onChange}
         className={error ? `${"input"} ${"error"}` : `${"input"} `}
+        onBlur={onBlur}
       />
       {errorMessage && (
         <ErrorMessage>

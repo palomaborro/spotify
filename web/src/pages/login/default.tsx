@@ -16,13 +16,25 @@ import {
   NoAccount,
   ErrorMessage,
 } from "./login.styled";
+import { Errors, ProfileData } from "./login.types";
 
 import { UserContext } from "../../utils/user-context";
+import {
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+  FIELD_ERROR_MESSAGES,
+} from "../../utils/constants";
+import { handleInputChange, handleInputBlur } from "../../utils/input-handlers";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<{ message?: string }>({});
+  const [data, setData] = useState<ProfileData>({
+    email: "",
+    newPassword: "",
+  });
+  const [error, setError] = useState<Errors>({
+    email: "",
+    password: "",
+  });
 
   const { setUser } = useContext(UserContext);
 
@@ -32,16 +44,18 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      const requestBody = {
+        email: data.email,
+        password: data.newPassword,
+        gethash: "true",
+      };
+
       const response = await fetch("http://localhost:3977/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email,
-          password,
-          gethash: true,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       if (response.ok) {
@@ -76,29 +90,45 @@ const Login = () => {
         <Form onSubmit={handleSubmit}>
           <InputContainer>
             <TextField
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) =>
+                handleInputChange(
+                  e,
+                  "email",
+                  setData,
+                  setError,
+                  FIELD_ERROR_MESSAGES,
+                  EMAIL_REGEX
+                )
+              }
               label="Email"
               placeholder="Email"
               name="email"
-              value={email}
+              value={data.email}
               error={error}
               required={true}
+              onBlur={() => handleInputBlur("email", setError)}
             />
           </InputContainer>
           <InputContainer>
             <TextField
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) =>
+                handleInputChange(
+                  e,
+                  "newPassword",
+                  setData,
+                  setError,
+                  FIELD_ERROR_MESSAGES,
+                  PASSWORD_REGEX
+                )
+              }
               label="Password"
               placeholder="Password"
-              name="password"
-              value={password}
+              name="newPassword"
+              value={data.newPassword}
               error={error}
               type="password"
               required={true}
+              onBlur={() => handleInputBlur("newPassword", setError)}
             />
           </InputContainer>
           {error.message && <ErrorMessage>{error.message}</ErrorMessage>}
