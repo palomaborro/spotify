@@ -137,7 +137,7 @@ const Login = () => {
           </ButtonWrapper>
         </Form>
         <NoAccount>Don't have an account?</NoAccount>
-        <Link to="/signup">
+        <Link to="/sign-up">
           <OutlinedButton>sign up for spotify</OutlinedButton>
         </Link>
       </Main>

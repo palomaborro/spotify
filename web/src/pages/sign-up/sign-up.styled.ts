@@ -5,18 +5,26 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem 0;
 `;
 
 export const LogoWrapper = styled.div`
-  width: 14rem;
-  margin-bottom: 1rem;
+  width: 100%;
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--light-white);
+
+  img {
+    width: 20rem;
+  }
 `;
 
 export const Header = styled.h1`
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 3rem;
+  margin-top: 3rem;
 
   @media (max-width: 500px) {
     width: 30rem;

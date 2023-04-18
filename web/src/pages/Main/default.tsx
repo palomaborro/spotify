@@ -53,7 +53,7 @@ const Main = () => {
   const navLinks = [
     { name: "Premium", link: "#" },
     { name: "Support", link: "#" },
-    { name: "Download", link: "#" },
+    { name: "Artists", link: "#" },
     user.isAuthenticated
       ? { name: "Profile", link: "/profile" }
       : { name: "Sign up", link: "/sign-up" },
@@ -109,7 +109,7 @@ const Main = () => {
         <Wrapper>
           <h1>Listening is everything</h1>
           <p>Millions of songs and podcasts. No credit card needed.</p>
-          <Link to="/signup">
+          <Link to="/sign-up">
             <Button
               label="GET SPOTIFY FREE"
               style={{ color: "#2941ab", width: "18rem", fontSize: "1.4rem" }}

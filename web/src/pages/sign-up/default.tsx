@@ -77,7 +77,9 @@ const SignUp = () => {
   return (
     <Container>
       <LogoWrapper>
-        <BlackLogoIcon width={150} />
+        <Link to="/">
+          <BlackLogoIcon width={150} />
+        </Link>
       </LogoWrapper>
       <Header>Sign up for free to start listening.</Header>
       <Form onSubmit={handleSubmit}>
