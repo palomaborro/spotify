@@ -5,9 +5,6 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
   padding: 4rem 0;
 `;
 
@@ -20,16 +17,29 @@ export const Header = styled.h1`
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 3rem;
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
 `;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 400px) {
+    width: 100%;
+  }
 `;
 
 export const InputContainer = styled.div`
   width: 45rem;
   margin: 0.5rem 0;
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
 `;
 
 export const TermsAndConditions = styled.p`
@@ -43,6 +53,10 @@ export const TermsAndConditions = styled.p`
   a {
     text-decoration: underline;
     color: var(--dark-green);
+  }
+
+  @media (max-width: 500px) {
+    width: 30rem;
   }
 `;
 

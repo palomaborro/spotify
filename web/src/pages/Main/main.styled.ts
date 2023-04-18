@@ -97,7 +97,7 @@ export const Wrapper = styled.div`
       width: 80rem;
       transform: translate(125px, 0px);
     }
-    @media (max-width: 900) {
+    @media (max-width: 900px) {
       font-size: 6rem;
     }
   }
@@ -136,7 +136,7 @@ export const FooterFirstElement = styled.div`
     margin-right: 3rem;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 800px) {
     flex-direction: column;
     align-items: center;
   }
@@ -145,7 +145,7 @@ export const FooterFirstElement = styled.div`
 export const FooterLinksContainer = styled.div`
   display: flex;
 
-  @media (max-width: 900px) {
+  @media (max-width: 800px) {
     display: flex;
     flex-direction: column;
   }

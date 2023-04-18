@@ -26,10 +26,17 @@ export const Main = styled.main`
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
+
+  @media (max-width: 500px) {
+    a {
+      display: flex;
+      justify-content: center;
+    }
+  }
 `;
 
 export const OutlinedButton = styled.button`
-  width: 100%;
+  width: 45rem;
   height: 5rem;
   border-radius: 50rem;
   border: 2px solid var(--gray);
@@ -58,16 +65,29 @@ export const OutlinedButton = styled.button`
     border-color: var(--light-gray);
     color: var(--white);
   }
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
 `;
 
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 export const InputContainer = styled.div`
-  width: 100%;
+  width: 45rem;
   margin: 0.5rem 0;
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
 `;
 
 export const ButtonWrapper = styled.div`
