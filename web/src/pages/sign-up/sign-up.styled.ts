@@ -33,9 +33,20 @@ export const Form = styled.form`
   }
 `;
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<{ isImage?: boolean }>`
   width: 45rem;
   margin: 0.5rem 0;
+  display: ${({ isImage }) => (isImage ? "flex" : "")};
+  align-items: center;
+
+  img {
+    border-radius: 50rem;
+    object-fit: cover;
+    width: 8rem;
+    height: 8rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
 
   @media (max-width: 500px) {
     width: 30rem;

@@ -17,15 +17,27 @@ import {
 } from "./sign-up.styled";
 import { Errors, SignUpData } from "./sign-up.types";
 
+import {
+  NAME_REGEX,
+  SURNAME_REGEX,
+  EMAIL_REGEX,
+  PASSWORD_REGEX,
+  FIELD_ERROR_MESSAGES,
+} from "../../utils/constants";
+import { handleInputChange, handleInputBlur } from "../../utils/input-handlers";
+
 const SignUp = () => {
   const [data, setData] = useState<SignUpData>({
     email: "",
-    password: "",
+    newPassword: "",
     name: "",
     surname: "",
     image: null,
   });
   const [error, setError] = useState<Errors>({});
+  const [formImageURL, setFormImageURL] = useState<string | undefined>(
+    undefined
+  );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +47,7 @@ const SignUp = () => {
       formData.append("name", data.name);
       formData.append("surname", data.surname);
       formData.append("email", data.email);
-      formData.append("password", data.password);
+      formData.append("password", data.newPassword);
       if (data.image) {
         formData.append("image", data.image);
       }
@@ -46,6 +58,7 @@ const SignUp = () => {
       });
 
       const responseData = await response.json();
+      console.log(responseData);
 
       if (response.ok) {
         window.location.href = "/login";
@@ -70,68 +83,106 @@ const SignUp = () => {
       <Form onSubmit={handleSubmit}>
         <InputContainer>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, email: e.target.value });
-            }}
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "email",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                EMAIL_REGEX
+              )
+            }
             label="Email"
             placeholder="Email"
             name="email"
             value={data.email}
             error={error}
             required={true}
+            onBlur={() => handleInputBlur("email", setError)}
           />
         </InputContainer>
         <InputContainer>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, password: e.target.value });
-            }}
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "newPassword",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                PASSWORD_REGEX
+              )
+            }
             label="Password"
             placeholder="Password"
-            name="password"
-            value={data.password}
+            name="newPassword"
+            value={data.newPassword}
             error={error}
             type="password"
             required={true}
+            onBlur={() => handleInputBlur("newPassword", setError)}
           />
         </InputContainer>
         <InputContainer>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, name: e.target.value });
-            }}
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "name",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                NAME_REGEX
+              )
+            }
             label="Name"
             placeholder="Name"
             name="name"
             value={data.name}
             error={error}
             required={true}
+            onBlur={() => handleInputBlur("name", setError)}
           />
         </InputContainer>
         <InputContainer>
           <TextField
-            onChange={(e) => {
-              setData({ ...data, surname: e.target.value });
-            }}
+            onChange={(e) =>
+              handleInputChange(
+                e,
+                "surname",
+                setData,
+                setError,
+                FIELD_ERROR_MESSAGES,
+                SURNAME_REGEX
+              )
+            }
             label="Surname"
             placeholder="Surname"
-            name="name"
+            name="surname"
             value={data.surname}
             error={error}
             required={true}
+            onBlur={() => handleInputBlur("surname", setError)}
           />
         </InputContainer>
-        <InputContainer>
+        <InputContainer isImage>
           <FileInput
             onChange={(e) => {
               setData({
                 ...data,
                 image: e.target.files ? e.target.files[0] : null,
               });
+              setFormImageURL(
+                e.target.files
+                  ? URL.createObjectURL(e.target.files[0])
+                  : undefined
+              );
             }}
             label="Profile Image"
             type="file"
           />
+          {formImageURL && <img src={formImageURL} alt="user" width={100} />}
         </InputContainer>
         <TermsAndConditions>
           By clicking on sign-up, you agree to Spotify's{" "}
