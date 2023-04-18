@@ -50,17 +50,25 @@ const Main = () => {
 
   const { user, logoutUser } = useContext(UserContext);
 
-  const navLinks = [
-    { name: "Premium", link: "#" },
-    { name: "Support", link: "#" },
-    { name: "Artists", link: "#" },
-    user.isAuthenticated
-      ? { name: "Profile", link: "/profile" }
-      : { name: "Sign up", link: "/sign-up" },
-    user.isAuthenticated
-      ? { name: "Logout", link: "/login", onClick: logoutUser }
-      : { name: "Log in", link: "/login" },
-  ];
+  const getNavLinks = () => {
+    const links = [
+      user.isAuthenticated
+        ? { name: "Profile", link: "/profile" }
+        : { name: "Sign up", link: "/sign-up" },
+      { name: "Artists", link: "#" },
+      user.isAuthenticated
+        ? { name: "Log out", link: "/login", onClick: logoutUser }
+        : { name: "Log in", link: "/login" },
+    ];
+
+    if (user.userRole === "ADMIN") {
+      links.splice(1, 0, { name: "Users", link: "/users" });
+    }
+
+    return links;
+  };
+
+  const navLinks = getNavLinks();
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -97,6 +105,7 @@ const Main = () => {
             </Link>
           ))}
         </NavLinks>
+
         <div className="menu-icon" onClick={handleMenuToggle}>
           {isMenuOpen ? (
             <CloseIcon fontSize="large" />

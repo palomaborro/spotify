@@ -13,6 +13,7 @@ api.get(
   middlewareAuth.isAuthenticated,
   UserController.getUserProfile
 );
+api.get("/users", UserController.getUsers);
 
 api.post("/sign-up", upload.single("image"), UserController.saveUser);
 api.post("/login", UserController.loginUser);

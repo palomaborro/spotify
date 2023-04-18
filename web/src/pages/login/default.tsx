@@ -62,10 +62,12 @@ const Login = () => {
         const data = await response.json();
         const token = data.token;
         const userId = data.user._id;
+        const userRole = data.user.role;
 
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
-        setUser({ userId, token, isAuthenticated: true });
+        localStorage.setItem("userRole", userRole);
+        setUser({ userId, token, isAuthenticated: true, userRole });
         navigate("/");
       } else {
         setError({

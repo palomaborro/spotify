@@ -17,7 +17,7 @@ const saveUser = (req, res) => {
     res.status(400).send({ message: "Email is required" });
     return;
   }
-  user.role = "ROLE_USER";
+  user.role = params.role || "USER";
   user.image = null;
 
   if (params.password) {
@@ -76,6 +76,7 @@ const loginUser = (req, res) => {
                 token: jwt.createToken(user),
                 user: {
                   _id: user._id,
+                  role: user.role,
                 },
               });
             } else {
@@ -214,6 +215,20 @@ const getUserProfile = (req, res) => {
   });
 };
 
+const getUsers = (req, res) => {
+  User.find({}, (err, users) => {
+    if (err) {
+      res.status(500).send({ message: "Error finding users" });
+    } else {
+      if (!users) {
+        res.status(404).send({ message: "No users found" });
+      } else {
+        res.status(200).send({ users });
+      }
+    }
+  });
+};
+
 module.exports = {
   saveUser,
   loginUser,
@@ -221,4 +236,5 @@ module.exports = {
   uploadImage,
   getImageFile,
   getUserProfile,
+  getUsers,
 };

@@ -26,7 +26,7 @@ const NotFound = () => {
             We couldn't find the page you were looking for. Maybe our FAQ or
             Community can help?
           </Description>
-          <RedirectLink onClick={() => navigate("/home")}>
+          <RedirectLink onClick={() => navigate("/")}>
             Go Back Home
           </RedirectLink>
         </Main>

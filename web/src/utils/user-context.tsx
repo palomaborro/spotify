@@ -4,6 +4,7 @@ type UserContextData = {
   userId: string | null;
   token: string | null;
   isAuthenticated: boolean;
+  userRole: string | null;
 };
 
 type UserContextType = {
@@ -19,10 +20,12 @@ type UserProviderProps = {
 const getUserFromLocalStorage = (): UserContextData => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
+  const userRole = localStorage.getItem("userRole");
 
   return {
     userId: userId ? userId : null,
     token: token ? token : null,
+    userRole: userRole ? userRole : null,
     isAuthenticated: !!userId && !!token,
   };
 };
@@ -39,7 +42,13 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const logoutUser = () => {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
-    setUser({ userId: null, token: null, isAuthenticated: false });
+    localStorage.removeItem("userRole");
+    setUser({
+      userId: null,
+      token: null,
+      userRole: null,
+      isAuthenticated: false,
+    });
   };
 
   return (
