@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Link } from "react-router-dom";
 
@@ -29,13 +29,7 @@ import {
 } from "./main.styled";
 import "./main-styles.scss";
 
-const navLinks = [
-  { name: "Premium", link: "#" },
-  { name: "Support", link: "#" },
-  { name: "Download", link: "#" },
-  { name: "Sign up", link: "/sign-up" },
-  { name: "Log in", link: "/login" },
-];
+import { UserContext } from "../../utils/user-context";
 
 const companyLInks = ["About", "Jobs", "For the record"];
 
@@ -53,6 +47,20 @@ const footerIcons = [<InstagramIcon />, <TwitterIcon />, <FacebookIcon />];
 
 const Main = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { user, logoutUser } = useContext(UserContext);
+
+  const navLinks = [
+    { name: "Premium", link: "#" },
+    { name: "Support", link: "#" },
+    { name: "Download", link: "#" },
+    user.isAuthenticated
+      ? { name: "Profile", link: "/profile" }
+      : { name: "Sign up", link: "/sign-up" },
+    user.isAuthenticated
+      ? { name: "Logout", link: "/login", onClick: logoutUser }
+      : { name: "Log in", link: "/login" },
+  ];
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -79,7 +87,12 @@ const Main = () => {
         </Link>
         <NavLinks isMenuOpen={isMenuOpen}>
           {navLinks.map((link, index) => (
-            <Link key={index} to={link.link} className="links">
+            <Link
+              key={index}
+              to={link.link}
+              className="links"
+              onClick={link.onClick}
+            >
               {link.name}
             </Link>
           ))}

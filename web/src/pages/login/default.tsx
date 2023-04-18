@@ -66,7 +66,7 @@ const Login = () => {
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
         setUser({ userId, token, isAuthenticated: true });
-        navigate("/profile");
+        navigate("/");
       } else {
         setError({
           message: "Your email or password is incorrect.",
