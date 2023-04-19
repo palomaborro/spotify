@@ -246,6 +246,48 @@ const deleteUser = (req, res) => {
   });
 };
 
+const makeUserAdmin = (req, res) => {
+  const userId = req.params.id;
+
+  User.findByIdAndUpdate(
+    userId,
+    { role: "ADMIN" },
+    { new: true },
+    (err, userUpdated) => {
+      if (err) {
+        res.status(500).send({ message: "Error updating user" });
+      } else {
+        if (!userUpdated) {
+          res.status(404).send({ message: "User not updated" });
+        } else {
+          res.status(200).send({ user: userUpdated });
+        }
+      }
+    }
+  );
+};
+
+const revokeUserAdmin = (req, res) => {
+  const userId = req.params.id;
+
+  User.findByIdAndUpdate(
+    userId,
+    { role: "USER" },
+    { new: true },
+    (err, userUpdated) => {
+      if (err) {
+        res.status(500).send({ message: "Error updating user" });
+      } else {
+        if (!userUpdated) {
+          res.status(404).send({ message: "User not updated" });
+        } else {
+          res.status(200).send({ user: userUpdated });
+        }
+      }
+    }
+  );
+};
+
 module.exports = {
   saveUser,
   loginUser,
@@ -255,4 +297,6 @@ module.exports = {
   getUserProfile,
   getUsers,
   deleteUser,
+  makeUserAdmin,
+  revokeUserAdmin,
 };

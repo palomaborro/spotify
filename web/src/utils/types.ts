@@ -5,3 +5,10 @@ export interface ProfileData {
   surname: string;
   image: string | File | null | undefined;
 }
+
+export type UserType = {
+  _id: string;
+  name: string;
+  email: string;
+  isAdmin: boolean;
+};

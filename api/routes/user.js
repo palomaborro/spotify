@@ -23,12 +23,26 @@ api.post(
   UserController.uploadImage
 );
 
-api.delete("/users/:id", UserController.deleteUser);
+api.delete(
+  "/users/:id",
+  middlewareAuth.isAuthenticated,
+  UserController.deleteUser
+);
 
 api.put(
   "/profile/:id",
   [middlewareAuth.isAuthenticated],
   UserController.updateUser
+);
+api.put(
+  "/users/:id",
+  middlewareAuth.isAuthenticated,
+  UserController.makeUserAdmin
+);
+api.put(
+  "/users/:id",
+  middlewareAuth.isAuthenticated,
+  UserController.revokeUserAdmin
 );
 
 module.exports = api;
