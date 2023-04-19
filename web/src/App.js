@@ -10,7 +10,9 @@ import Search from "./pages/search/default";
 import LikedSongs from "./pages/liked-songs/default";
 import Playlist from "./pages/playlist/default";
 import Profile from "./pages/profile/default";
+import Users from "./pages/users/default";
 import PrivateRoute from "./utils/private-route";
+import AdminRoute from "./utils/admin-route";
 
 const App = () => {
   return (
@@ -19,9 +21,14 @@ const App = () => {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/search" element={<Search />} />
-      <Route path="/profile" element={<PrivateRoute />}>
-        <Route index element={<Profile />} />
-      </Route>
+      <Route
+        path="/profile/*"
+        element={<PrivateRoute path="/profile" element={<Profile />} />}
+      />
+      <Route
+        path="/users/*"
+        element={<AdminRoute path="*" element={<Users />} />}
+      />
       <Route path="/liked-songs" element={<LikedSongs />} />
       <Route path="/playlist" element={<Playlist />} />
       <Route path="*" element={<NotFound />} />
