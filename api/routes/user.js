@@ -23,6 +23,8 @@ api.post(
   UserController.uploadImage
 );
 
+api.delete("/users/:id", UserController.deleteUser);
+
 api.put(
   "/profile/:id",
   [middlewareAuth.isAuthenticated],

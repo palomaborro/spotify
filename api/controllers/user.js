@@ -229,6 +229,23 @@ const getUsers = (req, res) => {
   });
 };
 
+const deleteUser = (req, res) => {
+  const userId = req.params.id;
+  console.log("Received user ID:", userId);
+
+  User.findByIdAndRemove(userId, (err, userRemoved) => {
+    if (err) {
+      res.status(500).send({ message: "Error deleting user" });
+    } else {
+      if (!userRemoved) {
+        res.status(404).send({ message: "User not deleted" });
+      } else {
+        res.status(200).send({ user: userRemoved });
+      }
+    }
+  });
+};
+
 module.exports = {
   saveUser,
   loginUser,
@@ -237,4 +254,5 @@ module.exports = {
   getImageFile,
   getUserProfile,
   getUsers,
+  deleteUser,
 };
