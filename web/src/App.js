@@ -23,7 +23,11 @@ const App = () => {
       <Route path="/search" element={<Search />} />
       <Route
         path="/profile/*"
-        element={<PrivateRoute path="/profile" element={<Profile />} />}
+        element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        }
       />
       <Route
         path="/users/*"
