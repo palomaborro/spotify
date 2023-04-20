@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
+export const Container = styled.div`
+  overflow-x: auto;
+`;
+
 export const Body = styled.div`
   padding: 1rem 3rem;
+  min-width: 700px;
 `;
 
 export const LogoWrapper = styled.div`
@@ -75,4 +80,7 @@ export const UserList = styled.div<{ lastElement?: boolean }>`
 
 export const ButtonWrapper = styled.div`
   margin-right: 1rem;
+
+  @media (max-width: 700px) {
+  }
 `;

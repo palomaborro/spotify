@@ -18,6 +18,7 @@ import {
   LogoWrapper,
   UserList,
   ButtonWrapper,
+  Container,
 } from "./users.styled";
 
 const Users = () => {
@@ -96,51 +97,53 @@ const Users = () => {
   };
 
   return (
-    <Body>
-      <LogoWrapper>
-        <Link to="/">
-          <BlackLogoIcon width={150} />
-        </Link>
-      </LogoWrapper>
-      <NavBody>
-        <LeftElement>
-          <p>User</p>
-        </LeftElement>
-        <MiddleElement>
-          <p>Email</p>
-        </MiddleElement>
-        <MiddleElement>
-          <p>Admin</p>
-        </MiddleElement>
-        <RightElement>
-          <p>Actions</p>
-        </RightElement>
-      </NavBody>
-      {users
-        .filter((user) => user._id !== userId)
-        .map((user, index, arr) => (
-          <UserList key={user._id} lastElement={index === arr.length - 1}>
-            <LeftElement>
-              <p>{user.name}</p>
-            </LeftElement>
-            <MiddleElement>
-              <p>{user.email}</p>
-            </MiddleElement>
-            <MiddleElement>
-              <p>{user.isAdmin ? "Yes" : "No"}</p>
-            </MiddleElement>
-            <RightElement>
-              <ButtonWrapper>
-                <Button label="Delete" onClick={() => deleteUser(user._id)} />
-              </ButtonWrapper>
-              <Button
-                label={user.isAdmin ? "Revoke Admin" : "Make Admin"}
-                onClick={() => toggleAdmin(user._id)}
-              />
-            </RightElement>
-          </UserList>
-        ))}
-    </Body>
+    <Container>
+      <Body>
+        <LogoWrapper>
+          <Link to="/">
+            <BlackLogoIcon width={150} />
+          </Link>
+        </LogoWrapper>
+        <NavBody>
+          <LeftElement>
+            <p>User</p>
+          </LeftElement>
+          <MiddleElement>
+            <p>Email</p>
+          </MiddleElement>
+          <MiddleElement>
+            <p>Admin</p>
+          </MiddleElement>
+          <RightElement>
+            <p>Actions</p>
+          </RightElement>
+        </NavBody>
+        {users
+          .filter((user) => user._id !== userId)
+          .map((user, index, arr) => (
+            <UserList key={user._id} lastElement={index === arr.length - 1}>
+              <LeftElement>
+                <p>{user.name}</p>
+              </LeftElement>
+              <MiddleElement>
+                <p>{user.email}</p>
+              </MiddleElement>
+              <MiddleElement>
+                <p>{user.isAdmin ? "Yes" : "No"}</p>
+              </MiddleElement>
+              <RightElement>
+                <ButtonWrapper>
+                  <Button label="Delete" onClick={() => deleteUser(user._id)} />
+                </ButtonWrapper>
+                <Button
+                  label={user.isAdmin ? "Revoke Admin" : "Make Admin"}
+                  onClick={() => toggleAdmin(user._id)}
+                />
+              </RightElement>
+            </UserList>
+          ))}
+      </Body>
+    </Container>
   );
 };
 
