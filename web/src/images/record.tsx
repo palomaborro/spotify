@@ -22,9 +22,9 @@ const Record = () => {
       <g
         id="record"
         stroke="none"
-        stroke-width="1"
+        strokeWidth="1"
         fill="none"
-        fill-rule="evenodd"
+        fillRule="evenodd"
       >
         <g id="record-bg">
           <mask id="mask-2" fill="white">
@@ -33,8 +33,8 @@ const Record = () => {
           <use
             id="outer-circle"
             stroke="#503750"
-            stroke-width="2.7"
-            fill-opacity="0.25"
+            strokeWidth="2.7"
+            fillOpacity="0.25"
             fill="#503750"
             xlinkHref="#path-1"
           ></use>
@@ -271,7 +271,7 @@ const Record = () => {
         <ellipse
           id="middle-circle"
           stroke="#503750"
-          stroke-width="2.7"
+          strokeWidth="2.7"
           fill="#FFCDD2"
           cx="264.85201"
           cy="264.841358"
@@ -281,8 +281,8 @@ const Record = () => {
         <ellipse
           id="inner-circle"
           stroke="#503750"
-          stroke-width="2.7"
-          fill-opacity="0.25"
+          strokeWidth="2.7"
+          fillOpacity="0.25"
           fill="#1E3264"
           cx="264.641943"
           cy="264.631299"
