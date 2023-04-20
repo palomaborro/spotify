@@ -1,7 +1,24 @@
 import React, { useState, useEffect, useContext } from "react";
 
+import { Link } from "react-router-dom";
+
+import Button from "../../components/button/default";
+
+import BlackLogoIcon from "../../images/black-logo";
+
 import { UserContext } from "../../utils/user-context";
 import { UserType } from "../../utils/types";
+
+import {
+  Body,
+  NavBody,
+  LeftElement,
+  MiddleElement,
+  RightElement,
+  LogoWrapper,
+  UserList,
+  ButtonWrapper,
+} from "./users.styled";
 
 const Users = () => {
   const [users, setUsers] = useState<UserType[]>([]);
@@ -9,8 +26,6 @@ const Users = () => {
   const { user } = useContext(UserContext);
 
   const userId = user.userId;
-
-  console.log(userId);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,7 +40,6 @@ const Users = () => {
           throw new Error(responseData.message);
         }
         setUsers(responseData.users);
-        console.log(responseData.users);
       } catch (error) {
         console.error(error);
       }
@@ -82,36 +96,51 @@ const Users = () => {
   };
 
   return (
-    <div>
-      <h1>Users Management</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Admin</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users
-            .filter((user) => user._id !== userId)
-            .map((user) => (
-              <tr key={user._id}>
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.isAdmin ? "Yes" : "No"}</td>
-                <td>
-                  <button onClick={() => deleteUser(user._id)}>Delete</button>
-                  <button onClick={() => toggleAdmin(user._id)}>
-                    {user.isAdmin ? "Revoke Admin" : "Make Admin"}
-                  </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
-    </div>
+    <Body>
+      <LogoWrapper>
+        <Link to="/">
+          <BlackLogoIcon width={150} />
+        </Link>
+      </LogoWrapper>
+      <NavBody>
+        <LeftElement>
+          <p>User</p>
+        </LeftElement>
+        <MiddleElement>
+          <p>Email</p>
+        </MiddleElement>
+        <MiddleElement>
+          <p>Admin</p>
+        </MiddleElement>
+        <RightElement>
+          <p>Actions</p>
+        </RightElement>
+      </NavBody>
+      {users
+        .filter((user) => user._id !== userId)
+        .map((user, index, arr) => (
+          <UserList key={user._id} lastElement={index === arr.length - 1}>
+            <LeftElement>
+              <p>{user.name}</p>
+            </LeftElement>
+            <MiddleElement>
+              <p>{user.email}</p>
+            </MiddleElement>
+            <MiddleElement>
+              <p>{user.isAdmin ? "Yes" : "No"}</p>
+            </MiddleElement>
+            <RightElement>
+              <ButtonWrapper>
+                <Button label="Delete" onClick={() => deleteUser(user._id)} />
+              </ButtonWrapper>
+              <Button
+                label={user.isAdmin ? "Revoke Admin" : "Make Admin"}
+                onClick={() => toggleAdmin(user._id)}
+              />
+            </RightElement>
+          </UserList>
+        ))}
+    </Body>
   );
 };
 
