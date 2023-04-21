@@ -61,7 +61,7 @@ const getArtists = (req, res) => {
   const options = {
     sort: "name",
     page: req.params.page,
-    limit: 10,
+    limit: 12,
   };
 
   Artist.paginate({}, options, (err, artists) => {
