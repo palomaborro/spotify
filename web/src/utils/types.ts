@@ -12,3 +12,10 @@ export type UserType = {
   email: string;
   isAdmin: boolean;
 };
+
+export type ArtistType = {
+  _id: string;
+  name: string;
+  image: string;
+  description: string;
+};
