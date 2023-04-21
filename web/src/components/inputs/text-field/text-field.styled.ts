@@ -24,6 +24,7 @@ export const Label = styled.p`
   margin: 0.5rem 0;
   font-weight: 500;
   font-size: 1.4rem;
+  color: #b3b3b3;
 `;
 
 export const ErrorMessage = styled.p`

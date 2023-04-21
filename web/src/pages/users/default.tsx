@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import Button from "../../components/button/default";
 
-import BlackLogoIcon from "../../images/black-logo";
+import WhiteLogoIcon from "../../images/white-logo";
 
 import { UserContext } from "../../utils/user-context";
 import { UserType } from "../../utils/types";
@@ -101,7 +101,7 @@ const Users = () => {
       <Body>
         <LogoWrapper>
           <Link to="/">
-            <BlackLogoIcon width={150} />
+            <WhiteLogoIcon width={150} />
           </Link>
         </LogoWrapper>
         <NavBody>

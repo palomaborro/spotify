@@ -5,6 +5,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
+  background-color: #181818;
 `;
 
 export const LogoWrapper = styled.div`
@@ -25,6 +27,7 @@ export const Header = styled.h1`
   font-weight: 700;
   margin-bottom: 3rem;
   margin-top: 3rem;
+  color: #b3b3b3;
 
   @media (max-width: 500px) {
     width: 30rem;
@@ -68,6 +71,7 @@ export const TermsAndConditions = styled.p`
   font-weight: 500;
   text-align: center;
   margin: 0.8rem 0;
+  color: #b3b3b3;
 
   a {
     text-decoration: underline;

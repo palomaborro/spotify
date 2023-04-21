@@ -6,6 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 5rem;
+  min-height: 100vh;
+  background-color: #181818;
 `;
 
 export const LogoWrapper = styled.div`
@@ -24,6 +26,7 @@ export const LogoWrapper = styled.div`
 export const TitleWrapper = styled.div`
   display: flex;
   margin-top: 2rem;
+  color: #b3b3b3;
 
   div {
     margin-right: 2rem;

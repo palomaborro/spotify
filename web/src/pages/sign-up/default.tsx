@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import TextField from "../../components/inputs/text-field/default";
 import FileInput from "../../components/inputs/file-input/default";
 import Button from "../../components/button/default";
-import BlackLogoIcon from "../../images/black-logo";
+import WhiteLogoIcon from "../../images/white-logo";
 import {
   Container,
   LogoWrapper,
@@ -77,7 +77,7 @@ const SignUp = () => {
     <Container>
       <LogoWrapper>
         <Link to="/">
-          <BlackLogoIcon width={150} />
+          <WhiteLogoIcon width={150} />
         </Link>
       </LogoWrapper>
       <Header>Sign up for free to start listening.</Header>

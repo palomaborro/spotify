@@ -6,6 +6,8 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 5rem;
+  min-height: 100vh;
+  background-color: #181818;
 `;
 
 export const LogoWrapper = styled.div`
@@ -106,4 +108,5 @@ export const NoAccount = styled.h1`
   font-size: 1.8rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+  color: #b3b3b3;
 `;

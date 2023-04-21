@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   overflow-x: auto;
+  min-height: 100vh;
+  background-color: #181818;
 `;
 
 export const Body = styled.div`
