@@ -11,6 +11,8 @@ import LikedSongs from "./pages/liked-songs/default";
 import Playlist from "./pages/playlist/default";
 import Profile from "./pages/profile/default";
 import Users from "./pages/users/default";
+import Artists from "./pages/artists/default";
+
 import PrivateRoute from "./utils/private-route";
 import AdminRoute from "./utils/admin-route";
 
@@ -21,6 +23,7 @@ const App = () => {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/search" element={<Search />} />
+      <Route path="/artists" element={<Artists />} />
       <Route
         path="/profile/*"
         element={

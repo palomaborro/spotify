@@ -1,11 +1,11 @@
 const express = require("express");
 const ArtistController = require("../controllers/artist");
 const middlewareAuth = require("../middlewares/authentication");
-const multipart = require("connect-multiparty");
+const multer = require("multer");
+
+const upload = multer({ dest: "./uploads/artists" });
 
 const api = express.Router();
-
-const middlewareUpload = multipart({ uploadDir: "./uploads/artists" });
 
 api.get(
   "/artist/:id",
@@ -17,18 +17,21 @@ api.get(
   middlewareAuth.isAuthenticated,
   ArtistController.getArtists
 );
-api.get("/get-image-artist/:imageFile", ArtistController.getImageFile);
 
 api.post(
-  "/artist",
+  "/artists",
   middlewareAuth.isAuthenticated,
+  ArtistController.artistImageUpload,
   ArtistController.saveArtist
 );
-api.post(
-  "/upload-image-artist/:id",
-  [middlewareAuth.isAuthenticated, middlewareUpload],
-  ArtistController.uploadImage
-);
+
+// api.get("/get-image-artist/:imageFile", upload.single("image"));
+
+// api.post(
+//   "/upload-image-artist/:id",
+//   [middlewareAuth.isAuthenticated, ArtistController.artistImageUpload],
+//   ArtistController.uploadImage
+// );
 
 api.put(
   "/artist/:id",

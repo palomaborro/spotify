@@ -5,6 +5,18 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+
+const artistImageUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./uploads/artists");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+}).single("image");
 
 const getArtist = (req, res) => {
   const artistId = req.params.id;
@@ -28,8 +40,10 @@ const saveArtist = (req, res) => {
 
   artist.name = params.name;
   artist.description = params.description;
-  artist.image = null;
 
+  if (req.file) {
+    artist.image = `/uploads/artists/${req.file.filename}`;
+  }
   artist.save((err, artistStored) => {
     if (err) {
       res.status(500).send({ message: "Error saving artist" });
@@ -47,7 +61,7 @@ const getArtists = (req, res) => {
   const options = {
     sort: "name",
     page: req.params.page,
-    limit: 2,
+    limit: 10,
   };
 
   Artist.paginate({}, options, (err, artists) => {
@@ -179,4 +193,5 @@ module.exports = {
   deleteArtist,
   uploadImage,
   getImageFile,
+  artistImageUpload,
 };

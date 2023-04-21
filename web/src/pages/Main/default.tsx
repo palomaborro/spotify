@@ -55,7 +55,7 @@ const Main = () => {
       user.isAuthenticated
         ? { name: "Profile", link: "/profile" }
         : { name: "Sign up", link: "/sign-up" },
-      { name: "Artists", link: "#" },
+      { name: "Artists", link: "/artists" },
       user.isAuthenticated
         ? { name: "Log out", link: "/login", onClick: logoutUser }
         : { name: "Log in", link: "/login" },
