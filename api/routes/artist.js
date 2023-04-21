@@ -12,11 +12,7 @@ api.get(
   middlewareAuth.isAuthenticated,
   ArtistController.getArtist
 );
-api.get(
-  "/artists/:page?",
-  middlewareAuth.isAuthenticated,
-  ArtistController.getArtists
-);
+api.get("/artists/:page?", ArtistController.getArtists);
 
 api.post(
   "/artists",

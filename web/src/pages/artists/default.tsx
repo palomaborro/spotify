@@ -1,27 +1,34 @@
 import React, { useState, useEffect, useContext } from "react";
 
+import { useParams } from "react-router-dom";
+
 import { ArtistType } from "../../utils/types";
 import { UserContext } from "../../utils/user-context";
+
+import ArtistCard from "../../components/artist-card/default";
 
 const Artists = () => {
   const [artists, setArtists] = useState<ArtistType[]>([]);
 
   const { user } = useContext(UserContext);
+  const { page } = useParams();
 
   useEffect(() => {
     const fetchArtists = async () => {
       try {
         const token = user.token;
 
-        const response = await fetch("http://localhost:3977/artists/:page", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:3977/artists/${page || 1}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const responseData = await response.json();
-        console.log(responseData);
 
         if (!response.ok) {
           throw new Error(responseData.message);
@@ -33,22 +40,13 @@ const Artists = () => {
       }
     };
     fetchArtists();
-  }, [user.token]);
+  }, [page, user.token]);
 
   return (
     <div>
       <h1>Artists</h1>
       {artists.map((artist) => (
-        <div key={artist._id}>
-          <h2>{artist.name}</h2>
-          <p>{artist.description}</p>
-          {artist.image && (
-            <img
-              src={`http://localhost:3977${artist.image}`}
-              alt={artist.name}
-            />
-          )}
-        </div>
+        <ArtistCard key={artist._id} artist={artist} />
       ))}
     </div>
   );
