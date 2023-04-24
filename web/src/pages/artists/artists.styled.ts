@@ -14,6 +14,24 @@ export const Container = styled.div`
     flex: 0 0 calc(25% - 1rem);
     margin-bottom: 1rem;
   }
+
+  @media (max-width: 1400px) {
+    > * {
+      flex: 0 0 calc(33.333% - 1rem);
+    }
+  }
+
+  @media (max-width: 1100px) {
+    padding: 0 7rem;
+
+    > * {
+      flex: 0 0 calc(50% - 1rem);
+    }
+  }
+
+  @media (max-width: 500px) {
+    justify-content: center;
+  }
 `;
 
 export const Header = styled.h1`
