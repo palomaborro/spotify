@@ -13,9 +13,15 @@ export const Container = styled.div`
     border-radius: 0.5rem;
     border: 0.1rem solid var(--black);
     padding: 0 1rem;
+    background-color: #3c3c3c;
+    color: #b3b3b3;
 
     &:hover {
       outline: 1px solid var(--black);
+    }
+
+    ::placeholder {
+      color: #b3b3b3;
     }
   }
 `;
