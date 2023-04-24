@@ -42,8 +42,6 @@ const Artist = () => {
     getArtist();
   }, [id]);
 
-  console.log(artist);
-
   return (
     <Wrapper>
       <Navbar />
