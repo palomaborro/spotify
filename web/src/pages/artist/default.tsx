@@ -10,6 +10,8 @@ import {
   Wrapper,
   Container,
   ArtistNameAndImageContainer,
+  Image,
+  ArtistName,
   ArtistDescription,
 } from "./artist.styled";
 
@@ -46,14 +48,14 @@ const Artist = () => {
     <Wrapper>
       <Navbar />
       <Container>
-        <h1>{artist?.name}</h1>
         <ArtistNameAndImageContainer>
-          <img
+          <Image
             src={`http://localhost:3977${artist?.image}`}
             alt={artist?.name}
           />
-          <ArtistDescription>{artist?.description}</ArtistDescription>
+          <ArtistName>{artist?.name}</ArtistName>
         </ArtistNameAndImageContainer>
+        <ArtistDescription>{artist?.description}</ArtistDescription>
       </Container>
     </Wrapper>
   );
