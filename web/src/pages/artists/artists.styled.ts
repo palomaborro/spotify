@@ -62,3 +62,64 @@ export const ArrowsWrapper = styled.div`
   justify-content: center;
   padding: 4rem 0;
 `;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 3rem;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
+
+export const Input = styled.div<{ isImage?: boolean }>`
+  width: 45rem;
+  margin: 0.5rem 0;
+  display: ${({ isImage }) => (isImage ? "flex" : "")};
+  align-items: center;
+
+  img {
+    border-radius: 50rem;
+    object-fit: cover;
+    width: 8rem;
+    height: 8rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
+`;
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    color: #b3b3b3;
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 45rem;
+  margin: 2rem 0 1.5rem 0;
+
+  button {
+    width: 15rem;
+    height: 4.5rem;
+  }
+`;
+
+export const SuccessMessage = styled.p`
+  color: #20c15b;
+  margin-top: 1rem;
+  font-size: 1.5rem;
+`;
