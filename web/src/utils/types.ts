@@ -11,10 +11,11 @@ export type UserType = {
   name: string;
   email: string;
   isAdmin: boolean;
+  role: string;
 };
 
 export type ArtistType = {
-  _id?: string;
+  _id: string;
   name: string;
   image: string | File | null | undefined;
   description: string;

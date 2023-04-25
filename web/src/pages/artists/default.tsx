@@ -32,6 +32,7 @@ const Artists = () => {
   const [artists, setArtists] = useState<ArtistType[]>([]);
   const [hasNextPage, setHasNextPage] = useState(true);
   const [data, setData] = useState<ArtistType>({
+    _id: "",
     name: "",
     description: "",
     image: null,
@@ -157,6 +158,7 @@ const Artists = () => {
         throw new Error(responseData.message);
       } else {
         setData({
+          _id: responseData.artist._id,
           name: responseData.artist.name,
           description: responseData.artist.description,
           image: responseData.image,
@@ -172,13 +174,43 @@ const Artists = () => {
     }
   };
 
+  const deleteArtist = async (artistId: string) => {
+    try {
+      const token = user.token;
+
+      const response = await fetch(`http://localhost:3977/artist/${artistId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        const updatedArtists = artists.filter(
+          (artist) => artist._id !== artistId
+        );
+        setArtists(updatedArtists);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Wrapper>
       <Navbar />
       <Header>Artists</Header>
       <Container>
         {artists.map((artist) => (
-          <ArtistCard key={artist._id} artist={artist} />
+          <ArtistCard
+            key={artist._id ?? ""}
+            artist={artist}
+            onDelete={deleteArtist}
+          />
         ))}
       </Container>
       {user.userRole === "ADMIN" && isFirstPage() && (
