@@ -14,7 +14,7 @@ export const ButtonWrapper = styled.button<ButtonWrapperProps>`
   border-radius: 5rem;
   font-size: 1.6rem;
   font-weight: 700;
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   padding: 1rem 2rem;
   transform: scale(1);
   transition: all 0.1s;

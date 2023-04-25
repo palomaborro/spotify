@@ -11,9 +11,15 @@ const Button: FC<ButtonProps> = ({
   onClick,
   type,
   width,
+  disabled,
 }) => {
   return (
-    <ButtonWrapper onClick={onClick} width={width} type={type}>
+    <ButtonWrapper
+      onClick={onClick}
+      width={width}
+      type={type}
+      disabled={disabled}
+    >
       {isFetching ? (
         <CircularProgress size={25} style={{ color: "black" }} />
       ) : (
