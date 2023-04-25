@@ -70,27 +70,40 @@ const Users = () => {
     }
   };
 
+  const checkUserRole = (currentRole: string) => {
+    return currentRole === "ADMIN" ? "USER" : "ADMIN";
+  };
+
   const toggleAdmin = async (userId: string) => {
     try {
       const token = user.token;
 
+      const currentUser = users.find((user) => user._id === userId);
+      if (!currentUser) return;
+      const newRole = checkUserRole(currentUser.role);
+
       const response = await fetch(`http://localhost:3977/users/${userId}`, {
         method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({ role: newRole }),
       });
 
       const responseData = await response.json();
 
       if (!response.ok) {
         throw new Error(responseData.message);
+      } else {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user._id === userId
+              ? { ...user, role: newRole, isAdmin: newRole === "ADMIN" }
+              : user
+          )
+        );
       }
-      setUsers((prevUsers) =>
-        prevUsers.map((user) =>
-          user._id === userId ? { ...user, isAdmin: !user.isAdmin } : user
-        )
-      );
     } catch (error) {
       console.error(error);
     }
@@ -129,14 +142,14 @@ const Users = () => {
                 <p>{user.email}</p>
               </MiddleElement>
               <MiddleElement>
-                <p>{user.isAdmin ? "Yes" : "No"}</p>
+                <p>{user.role === "ADMIN" ? "Yes" : "No"}</p>
               </MiddleElement>
               <RightElement>
                 <ButtonWrapper>
                   <Button label="Delete" onClick={() => deleteUser(user._id)} />
                 </ButtonWrapper>
                 <Button
-                  label={user.isAdmin ? "Revoke Admin" : "Make Admin"}
+                  label={user.role === "ADMIN" ? "Revoke Admin" : "Make Admin"}
                   onClick={() => toggleAdmin(user._id)}
                 />
               </RightElement>

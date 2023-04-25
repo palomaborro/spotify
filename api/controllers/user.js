@@ -249,22 +249,33 @@ const deleteUser = (req, res) => {
 const makeUserAdmin = (req, res) => {
   const userId = req.params.id;
 
-  User.findByIdAndUpdate(
-    userId,
-    { role: "ADMIN" },
-    { new: true },
-    (err, userUpdated) => {
-      if (err) {
-        res.status(500).send({ message: "Error updating user" });
+  User.findById(userId, (err, user) => {
+    if (err) {
+      res.status(500).send({ message: "Error finding user" });
+    } else {
+      if (!user) {
+        res.status(404).send({ message: "User not found" });
       } else {
-        if (!userUpdated) {
-          res.status(404).send({ message: "User not updated" });
-        } else {
-          res.status(200).send({ user: userUpdated });
-        }
+        const newRole = user.role === "ADMIN" ? "USER" : "ADMIN";
+        User.findByIdAndUpdate(
+          userId,
+          { role: newRole },
+          { new: true },
+          (err, userUpdated) => {
+            if (err) {
+              res.status(500).send({ message: "Error updating user" });
+            } else {
+              if (!userUpdated) {
+                res.status(404).send({ message: "User not updated" });
+              } else {
+                res.status(200).send({ user: userUpdated });
+              }
+            }
+          }
+        );
       }
     }
-  );
+  });
 };
 
 const revokeUserAdmin = (req, res) => {
