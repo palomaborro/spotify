@@ -42,6 +42,7 @@ const Artists = () => {
   );
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
   const { page } = useParams();
@@ -83,6 +84,7 @@ const Artists = () => {
         throw new Error(responseData.message);
       } else {
         setHasNextPage(responseData.artists.length > 0);
+        return responseData.artists;
       }
     } catch (error) {
       console.error(error);
@@ -163,10 +165,12 @@ const Artists = () => {
           description: responseData.artist.description,
           image: responseData.image,
         });
+        setIsSubmitting(true);
         setShowSuccessMessage(true);
         setSuccessMessage("Artist added successfully!");
         setTimeout(() => {
           window.location.reload();
+          setIsSubmitting(false);
         }, 2000);
       }
     } catch (error) {
@@ -193,6 +197,14 @@ const Artists = () => {
         const updatedArtists = artists.filter(
           (artist) => artist._id !== artistId
         );
+        const nextPageArtists = await fetchNextPageArtists(
+          parseInt(page || "1") + 1
+        );
+
+        if (nextPageArtists.length > 0) {
+          updatedArtists.push(nextPageArtists[0]);
+        }
+
         setArtists(updatedArtists);
       }
     } catch (error) {
@@ -261,7 +273,11 @@ const Artists = () => {
               <SuccessMessage>{successMessage}</SuccessMessage>
             )}
             <ButtonWrapper>
-              <Button label="Add Artist" type="submit" />
+              <Button
+                label="Add Artist"
+                type="submit"
+                disabled={isSubmitting}
+              />
             </ButtonWrapper>
           </Form>
         </FormContainer>

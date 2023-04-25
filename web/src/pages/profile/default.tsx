@@ -53,6 +53,7 @@ const Profile = () => {
   const [formState, setFormState] = useState<"idle" | "submitting" | "success">(
     "idle"
   );
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
 
@@ -141,11 +142,13 @@ const Profile = () => {
         });
         setFormState("idle");
       } else {
+        setIsSubmitting(true);
         setSuccessMessage("Profile info updated successfully!");
         setShowSuccessMessage(true);
         setFormState("success");
         setTimeout(() => {
           window.location.reload();
+          setIsSubmitting(false);
         }, 2000);
       }
     } catch (error) {
@@ -288,7 +291,7 @@ const Profile = () => {
           <SuccessMessage>{successMessage}</SuccessMessage>
         )}
         <ButtonWrapper>
-          <Button label="Update" type="submit" />
+          <Button label="Update" type="submit" disabled={isSubmitting} />
         </ButtonWrapper>
       </Form>
     </Container>
