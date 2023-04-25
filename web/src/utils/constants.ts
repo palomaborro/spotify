@@ -9,9 +9,9 @@ export type StringFieldsOnly<T> = {
   [K in keyof T as T[K] extends string ? K : never]: T[K];
 };
 
-export const NAME_REGEX = /^[A-Za-z]+$/;
+export const NAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
 
-export const SURNAME_REGEX = /^[A-Za-z]+$/;
+export const SURNAME_REGEX = /^[A-Za-zÀ-ÖØ-öø-ÿ]+(?:[ '-][A-Za-zÀ-ÖØ-öø-ÿ]+)*$/;
 
 export const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
