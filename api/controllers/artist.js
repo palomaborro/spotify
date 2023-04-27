@@ -85,6 +85,10 @@ const updateArtist = (req, res) => {
   const artistId = req.params.id;
   const update = req.body;
 
+  if (req.file) {
+    update.image = `/uploads/artists/${req.file.filename}`;
+  }
+
   Artist.findByIdAndUpdate(artistId, update, (err, artistUpdated) => {
     if (err) {
       res.status(500).send({ message: "Error updating artist" });

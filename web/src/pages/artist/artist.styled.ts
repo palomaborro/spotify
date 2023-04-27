@@ -61,3 +61,42 @@ export const ArtistDescription = styled.p`
     width: 500px;
   }
 `;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 3rem;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 45rem;
+  margin: 2rem 0 1.5rem 0;
+
+  button {
+    width: 15rem;
+    height: 4.5rem;
+    margin-right: 3rem;
+  }
+`;
+
+export const ButtonAndImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  img {
+    border-radius: 50rem;
+    object-fit: cover;
+    width: 20rem;
+    height: 20rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+`;

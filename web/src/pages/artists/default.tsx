@@ -140,10 +140,19 @@ const Artists = () => {
       const token = user.token;
 
       const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("description", data.description);
-      if (data.image) {
-        formData.append("image", data.image);
+      if (data) {
+        formData.append("name", data.name ?? "");
+        formData.append("description", data.description ?? "");
+        if (data.image) {
+          formData.append(
+            "image",
+            typeof data.image === "string"
+              ? data.image
+              : data.image instanceof File
+              ? data.image
+              : ""
+          );
+        }
       }
 
       const response = await fetch("http://localhost:3977/artists", {
@@ -235,7 +244,7 @@ const Artists = () => {
                 label="Name"
                 placeholder="Artist name"
                 name="name"
-                value={data.name}
+                value={data.name ?? ""}
                 required={true}
               />
             </Input>
@@ -245,7 +254,7 @@ const Artists = () => {
                 label="Description"
                 placeholder="Artist description"
                 name="description"
-                value={data.description}
+                value={data.description ?? ""}
                 required={true}
               />
             </Input>

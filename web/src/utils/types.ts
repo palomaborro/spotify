@@ -16,7 +16,8 @@ export type UserType = {
 
 export type ArtistType = {
   _id: string;
-  name: string;
-  image: string | File | null | undefined;
-  description: string;
+  name: string | null;
+  image: string | File | null;
+  description: string | null;
+  imagePreviewUrl?: string | null;
 };

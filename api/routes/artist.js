@@ -17,17 +17,10 @@ api.post(
   ArtistController.saveArtist
 );
 
-// api.get("/get-image-artist/:imageFile", upload.single("image"));
-
-// api.post(
-//   "/upload-image-artist/:id",
-//   [middlewareAuth.isAuthenticated, ArtistController.artistImageUpload],
-//   ArtistController.uploadImage
-// );
-
 api.put(
   "/artist/:id",
   middlewareAuth.isAuthenticated,
+  ArtistController.artistImageUpload,
   ArtistController.updateArtist
 );
 
