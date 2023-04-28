@@ -48,7 +48,7 @@ export const ArtistName = styled.h1`
 export const ArtistDescription = styled.p`
   color: #b3b3b3;
   line-height: 1.6;
-  padding: 3rem 0;
+  padding: 3rem 0 2rem 0;
   text-align: justify;
   font-size: 1.5rem;
   max-width: 750px;
@@ -66,7 +66,6 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 2rem 3rem;
 
   @media (max-width: 500px) {
     width: 100%;
@@ -77,7 +76,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 45rem;
-  margin: 2rem 0 1.5rem 0;
+  margin: 0 0 1.5rem 0;
 
   button {
     width: 15rem;
@@ -99,4 +98,9 @@ export const ButtonAndImageWrapper = styled.div`
     margin-left: 2rem;
     margin-top: 1rem;
   }
+`;
+
+export const MessageBannerWrapper = styled.div`
+  width: 400px;
+  height: auto;
 `;

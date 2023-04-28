@@ -8,6 +8,7 @@ import { UserContext } from "../../utils/user-context";
 import Navbar from "../../components/navbar/default";
 import Button from "../../components/button/default";
 import FileInput from "../../components/inputs/file-input/default";
+import MessageBanner from "../../components/message-banner/default";
 
 import {
   Wrapper,
@@ -19,6 +20,7 @@ import {
   Form,
   ButtonWrapper,
   ButtonAndImageWrapper,
+  MessageBannerWrapper,
 } from "./artist.styled";
 
 const Artist = () => {
@@ -39,8 +41,8 @@ const Artist = () => {
   const [formImageURL, setFormImageURL] = useState<string | undefined>(
     undefined
   );
-  const nameRef = useRef<HTMLHeadingElement>(null); // Add a ref for the name
-  const descriptionRef = useRef<HTMLParagraphElement>(null); // Add a ref for the description
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const { user } = useContext(UserContext);
@@ -209,7 +211,7 @@ const Artist = () => {
           <ButtonAndImageWrapper>
             {isEditing.image && (
               <FileInput
-                label="Update image"
+                label="Change image"
                 onChange={handleImageChange}
                 type="file"
               />
@@ -229,6 +231,14 @@ const Artist = () => {
             </ButtonWrapper>
           ) : null}
         </Form>
+        {user.userRole === "ADMIN" &&
+        !isEditing.image &&
+        !isEditing.name &&
+        !isEditing.description ? (
+          <MessageBannerWrapper>
+            <MessageBanner message="By clicking on any of the elements you can edit them" />
+          </MessageBannerWrapper>
+        ) : null}
       </Container>
     </Wrapper>
   );
