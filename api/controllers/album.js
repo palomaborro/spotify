@@ -2,6 +2,18 @@ const Album = require("../models/album");
 const Song = require("../models/song");
 const { existsSync } = require("fs");
 const path = require("path");
+const multer = require("multer");
+
+const albumImageUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./uploads/albums");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+}).single("image");
 
 const getAlbum = (req, res) => {
   const albumId = req.params.id;
@@ -28,8 +40,11 @@ const saveAlbum = (req, res) => {
   album.title = params.title;
   album.description = params.description;
   album.year = params.year;
-  album.image = null;
   album.artist = params.artist;
+
+  if (req.file) {
+    album.image = `/uploads/albums/${req.file.filename}`;
+  }
 
   album.save((err, albumStored) => {
     if (err) {
@@ -166,4 +181,5 @@ module.exports = {
   deleteAlbum,
   uploadImage,
   getImageFile,
+  albumImageUpload,
 };

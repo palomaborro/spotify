@@ -1,11 +1,9 @@
 const express = require("express");
 const AlbumController = require("../controllers/album");
 const middlewareAuth = require("../middlewares/authentication");
-const multipart = require("connect-multiparty");
+const multer = require("multer");
 
 const api = express.Router();
-
-const middlewareUpload = multipart({ uploadDir: "./uploads/albums" });
 
 api.get("/album/:id", middlewareAuth.isAuthenticated, AlbumController.getAlbum);
 api.get(
@@ -15,12 +13,17 @@ api.get(
 );
 api.get("/get-image-album/:imageFile", AlbumController.getImageFile);
 
-api.post("/album", middlewareAuth.isAuthenticated, AlbumController.saveAlbum);
 api.post(
-  "/upload-image-album/:id",
-  [middlewareAuth.isAuthenticated, middlewareUpload],
-  AlbumController.uploadImage
+  "/album",
+  middlewareAuth.isAuthenticated,
+  AlbumController.albumImageUpload,
+  AlbumController.saveAlbum
 );
+// api.post(
+//   "/upload-image-album/:id",
+//   [middlewareAuth.isAuthenticated, middlewareUpload],
+//   AlbumController.uploadImage
+// );
 
 api.put(
   "/album/:id",

@@ -21,3 +21,12 @@ export type ArtistType = {
   description: string | null;
   imagePreviewUrl?: string | null;
 };
+
+export type AlbumType = {
+  _id: string;
+  artist: ArtistType;
+  description: string;
+  image: string | File | null;
+  title: string;
+  year: number;
+};

@@ -3,8 +3,6 @@ const ArtistController = require("../controllers/artist");
 const middlewareAuth = require("../middlewares/authentication");
 const multer = require("multer");
 
-const upload = multer({ dest: "./uploads/artists" });
-
 const api = express.Router();
 
 api.get("/artist/:id", ArtistController.getArtist);

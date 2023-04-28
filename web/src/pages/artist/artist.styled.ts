@@ -41,7 +41,6 @@ export const ArtistName = styled.h1`
 
   &:hover {
     color: var(--primary);
-    cursor: pointer;
   }
 `;
 
@@ -103,4 +102,22 @@ export const ButtonAndImageWrapper = styled.div`
 export const MessageBannerWrapper = styled.div`
   width: 400px;
   height: auto;
+`;
+
+export const DiscographyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 750px;
+`;
+
+export const Discography = styled.h1`
+  color: #fff;
+  display: flex;
+  padding-top: 3rem;
+
+  &:hover {
+    color: var(--primary);
+    cursor: pointer;
+  }
 `;

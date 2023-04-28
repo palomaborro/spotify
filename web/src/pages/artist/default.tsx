@@ -2,13 +2,14 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 
 import { useParams } from "react-router-dom";
 
-import { ArtistType } from "../../utils/types";
+import { ArtistType, AlbumType } from "../../utils/types";
 import { UserContext } from "../../utils/user-context";
 
 import Navbar from "../../components/navbar/default";
 import Button from "../../components/button/default";
 import FileInput from "../../components/inputs/file-input/default";
 import MessageBanner from "../../components/message-banner/default";
+import AlbumCard from "../../components/album-card/default";
 
 import {
   Wrapper,
@@ -21,6 +22,8 @@ import {
   ButtonWrapper,
   ButtonAndImageWrapper,
   MessageBannerWrapper,
+  DiscographyWrapper,
+  Discography,
 } from "./artist.styled";
 
 const Artist = () => {
@@ -30,6 +33,7 @@ const Artist = () => {
     image: null,
     description: "",
   });
+  const [albums, setAlbums] = useState<AlbumType[]>([]);
   const [isEditing, setIsEditing] = useState({
     image: false,
     name: false,
@@ -127,6 +131,35 @@ const Artist = () => {
 
     getArtist();
   }, [id, updateTrigger]);
+
+  useEffect(() => {
+    const getAlbums = async () => {
+      try {
+        const token = user.token;
+
+        const response = await fetch(
+          `http://localhost:3977/albums/${artist._id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const responseData = await response.json();
+
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        } else {
+          setAlbums(responseData.albums);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getAlbums();
+  }, [artist]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -239,6 +272,12 @@ const Artist = () => {
             <MessageBanner message="By clicking on any of the elements you can edit them" />
           </MessageBannerWrapper>
         ) : null}
+        <DiscographyWrapper>
+          <Discography>Discography</Discography>
+          {albums.map((album) => (
+            <AlbumCard key={album._id} album={album} />
+          ))}
+        </DiscographyWrapper>
       </Container>
     </Wrapper>
   );
