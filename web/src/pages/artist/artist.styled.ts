@@ -115,9 +115,30 @@ export const Discography = styled.h1`
   color: #fff;
   display: flex;
   padding-top: 3rem;
+  margin-bottom: 2rem;
 
   &:hover {
     color: var(--primary);
     cursor: pointer;
   }
+`;
+
+export const AlbumsWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0;
+  max-width: 750px;
+
+  > * {
+    flex: 1;
+    margin-bottom: 1rem;
+    padding: 0 2rem;
+  }
+`;
+
+export const EmptyAlbums = styled.p`
+  color: #b3b3b3;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
 `;

@@ -25,6 +25,7 @@ import {
   DiscographyWrapper,
   Discography,
   AlbumsWrapper,
+  EmptyAlbums,
 } from "./artist.styled";
 
 const Artist = () => {
@@ -275,11 +276,15 @@ const Artist = () => {
         ) : null}
         <DiscographyWrapper>
           <Discography>Discography</Discography>
-          <AlbumsWrapper>
-            {albums.map((album) => (
-              <AlbumCard key={album._id} album={album} />
-            ))}
-          </AlbumsWrapper>
+          {albums.length > 0 ? (
+            <AlbumsWrapper>
+              {albums.map((album) => (
+                <AlbumCard key={album._id} album={album} />
+              ))}
+            </AlbumsWrapper>
+          ) : (
+            <EmptyAlbums>There are no albums</EmptyAlbums>
+          )}
         </DiscographyWrapper>
       </Container>
     </Wrapper>
