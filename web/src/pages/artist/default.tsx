@@ -24,6 +24,7 @@ import {
   MessageBannerWrapper,
   DiscographyWrapper,
   Discography,
+  AlbumsWrapper,
 } from "./artist.styled";
 
 const Artist = () => {
@@ -274,9 +275,11 @@ const Artist = () => {
         ) : null}
         <DiscographyWrapper>
           <Discography>Discography</Discography>
-          {albums.map((album) => (
-            <AlbumCard key={album._id} album={album} />
-          ))}
+          <AlbumsWrapper>
+            {albums.map((album) => (
+              <AlbumCard key={album._id} album={album} />
+            ))}
+          </AlbumsWrapper>
         </DiscographyWrapper>
       </Container>
     </Wrapper>

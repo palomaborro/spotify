@@ -18,6 +18,7 @@ export const TextWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin: 1rem 0 3rem 0;
 `;
 
 export const TitleAndYearWrapper = styled.div`
