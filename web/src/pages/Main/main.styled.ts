@@ -76,11 +76,6 @@ export const FooterFirstElement = styled.div`
   justify-content: space-between;
   margin-bottom: 3rem;
 
-  .footer-logo {
-    margin-right: 3rem;
-    margin-top: 3rem;
-  }
-
   @media (max-width: 800px) {
     flex-direction: column;
     align-items: center;
