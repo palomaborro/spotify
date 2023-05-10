@@ -160,7 +160,9 @@ const Artist = () => {
         console.error(error);
       }
     };
-    getAlbums();
+    if (artist._id) {
+      getAlbums();
+    }
   }, [artist]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -271,7 +273,7 @@ const Artist = () => {
         !isEditing.name &&
         !isEditing.description ? (
           <MessageBannerWrapper>
-            <MessageBanner message="By clicking on any of the elements you can edit them" />
+            <MessageBanner message="By clicking on any of the elements above you can edit them" />
           </MessageBannerWrapper>
         ) : null}
         <DiscographyWrapper>

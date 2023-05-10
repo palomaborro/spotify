@@ -100,7 +100,7 @@ export const ButtonAndImageWrapper = styled.div`
 `;
 
 export const MessageBannerWrapper = styled.div`
-  width: 400px;
+  width: 432px;
   height: auto;
 `;
 
