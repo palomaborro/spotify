@@ -87,6 +87,10 @@ const updateAlbum = (req, res) => {
   const albumId = req.params.id;
   const update = req.body;
 
+  if (req.file) {
+    update.image = `/uploads/albums/${req.file.filename}`;
+  }
+
   Album.findByIdAndUpdate(albumId, update, (err, albumUpdated) => {
     if (err) {
       res.status(500).send({ message: "Error in the request" });

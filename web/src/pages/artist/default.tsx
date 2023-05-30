@@ -47,12 +47,13 @@ const Artist = () => {
   const [formImageURL, setFormImageURL] = useState<string | undefined>(
     undefined
   );
-  const nameRef = useRef<HTMLHeadingElement>(null);
-  const descriptionRef = useRef<HTMLParagraphElement>(null);
   const [updateTrigger, setUpdateTrigger] = useState(false);
 
   const { user } = useContext(UserContext);
   const { id } = useParams();
+
+  const nameRef = useRef<HTMLHeadingElement>(null);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
 
   const handleNameBlur = () => {
     if (nameRef.current) {

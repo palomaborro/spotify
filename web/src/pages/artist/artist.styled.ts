@@ -119,7 +119,6 @@ export const Discography = styled.h1`
 
   &:hover {
     color: var(--primary);
-    cursor: pointer;
   }
 `;
 

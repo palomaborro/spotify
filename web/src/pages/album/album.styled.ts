@@ -8,22 +8,13 @@ export const Wrapper = styled.div`
 export const Container = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
 
   img {
     border-radius: 1rem;
-    margin-right: 2rem;
+    margin-top: 3rem;
+    cursor: pointer;
   }
-`;
-
-export const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: calc(100vh - 20rem);
-  max-width: 750px;
-  margin: 0 auto;
-  width: 100%;
 `;
 
 export const AlbumTitle = styled.h1`
@@ -52,13 +43,55 @@ export const AlbumDescription = styled.p`
   line-height: 1.6;
   text-align: justify;
   font-size: 1.5rem;
+  max-width: 750px;
 `;
 
 export const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin: 3rem 0;
 `;
 
 export const TitleAndYearWrapper = styled.div`
   display: flex;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 45rem;
+  height: 4.5rem;
+  margin: 0 0 1.5rem 0;
+
+  button {
+    width: 15rem;
+    height: 4.5rem;
+    margin-right: 3rem;
+  }
+`;
+
+export const ButtonAndImageWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  img {
+    border-radius: 1rem;
+    object-fit: cover;
+    width: 20rem;
+    height: 20rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
 `;
