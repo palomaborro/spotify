@@ -23,8 +23,9 @@ export const Image = styled.img`
   border-radius: 0.5rem;
 
   @media (max-width: 500px) {
-    width: 300px;
+    max-width: 300px;
   }
+
   @media (max-width: 850px) {
     width: 500px;
   }
@@ -53,7 +54,7 @@ export const ArtistDescription = styled.p`
   max-width: 750px;
 
   @media (max-width: 500px) {
-    width: 300px;
+    max-width: 300px;
   }
 
   @media (max-width: 850px) {
@@ -67,7 +68,7 @@ export const Form = styled.form`
   align-items: center;
 
   @media (max-width: 500px) {
-    width: 100%;
+    max-width: 300px;
   }
 `;
 
@@ -81,6 +82,10 @@ export const ButtonWrapper = styled.div`
     width: 15rem;
     height: 4.5rem;
     margin-right: 3rem;
+  }
+
+  @media (max-width: 500px) {
+    max-width: 300px;
   }
 `;
 
@@ -102,6 +107,10 @@ export const ButtonAndImageWrapper = styled.div`
 export const MessageBannerWrapper = styled.div`
   width: 432px;
   height: auto;
+
+  @media (max-width: 500px) {
+    max-width: 300px;
+  }
 `;
 
 export const DiscographyWrapper = styled.div`
@@ -109,6 +118,10 @@ export const DiscographyWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   width: 750px;
+
+  @media (max-width: 500px) {
+    max-width: 300px;
+  }
 `;
 
 export const Discography = styled.h1`

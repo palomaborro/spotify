@@ -14,6 +14,10 @@ export const Container = styled.div`
     border-radius: 1rem;
     margin-top: 3rem;
     cursor: pointer;
+
+    @media (max-width: 500px) {
+      max-width: 300px;
+    }
   }
 `;
 
@@ -44,6 +48,10 @@ export const AlbumDescription = styled.p`
   text-align: justify;
   font-size: 1.5rem;
   max-width: 750px;
+
+  @media (max-width: 500px) {
+    max-width: 300px;
+  }
 `;
 
 export const TextContainer = styled.div`
