@@ -59,7 +59,7 @@ const Main = () => {
       </Container>
       <Footer>
         <FooterFirstElement>
-          <Link to="/">
+          <Link className="link" to="/">
             <WhiteLogoIcon width={150} />
           </Link>
           <FooterLinksContainer>

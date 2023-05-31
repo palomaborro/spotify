@@ -80,6 +80,10 @@ export const FooterFirstElement = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
+  &:f {
+    margin-top: 3rem;
+  }
 `;
 
 export const FooterLinksContainer = styled.div`
