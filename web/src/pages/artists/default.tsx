@@ -283,7 +283,7 @@ const Artists = () => {
             )}
             <ButtonWrapper>
               <Button
-                label="Add Artist"
+                label="Add artist"
                 type="submit"
                 disabled={isSubmitting}
               />

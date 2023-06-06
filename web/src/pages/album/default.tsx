@@ -10,7 +10,6 @@ import {
   Container,
   AlbumTitle,
   AlbumYear,
-  ArtistName,
   AlbumDescription,
   TextContainer,
   TitleAndYearWrapper,
@@ -20,20 +19,13 @@ import {
 } from "./album.styled";
 
 const Album = () => {
-  const initialArtist: ArtistType = {
-    _id: "",
-    name: "",
-    image: null,
-    description: "",
-  };
-
   const [album, setAlbum] = useState<AlbumType>({
     _id: "",
     title: "",
     image: null,
     year: 0,
     description: "",
-    artist: initialArtist,
+    artist: "",
   });
   const [isEditing, setIsEditing] = useState({
     image: false,
@@ -231,9 +223,6 @@ const Album = () => {
               <AlbumYear onClick={handleYearClick}>({album.year})</AlbumYear>
             )}
           </TitleAndYearWrapper>
-          <Link to={`/artist/${album.artist._id}`}>
-            <ArtistName>{album.artist.name}</ArtistName>
-          </Link>
           {isEditing.description ? (
             <AlbumDescription
               contentEditable={true}

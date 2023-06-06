@@ -39,7 +39,7 @@ const saveAlbum = (req, res) => {
 
   album.title = params.title;
   album.description = params.description;
-  album.year = params.year;
+  album.year = Number(params.year);
   album.artist = params.artist;
 
   if (req.file) {

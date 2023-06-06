@@ -24,9 +24,9 @@ export type ArtistType = {
 
 export type AlbumType = {
   _id: string;
-  artist: ArtistType;
+  artist: string;
   description: string;
   image: string | File | null;
   title: string;
-  year: number;
+  year: number | string;
 };

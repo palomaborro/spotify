@@ -32,16 +32,6 @@ export const AlbumYear = styled.h1`
   margin-bottom: 2rem;
 `;
 
-export const ArtistName = styled.h1`
-  color: #b3b3b3;
-  margin-bottom: 2rem;
-  cursor: pointer;
-
-  &:hover {
-    color: var(--primary);
-  }
-`;
-
 export const AlbumDescription = styled.p`
   color: #b3b3b3;
   line-height: 1.6;

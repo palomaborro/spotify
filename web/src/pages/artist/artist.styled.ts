@@ -154,3 +154,42 @@ export const EmptyAlbums = styled.p`
   font-size: 1.5rem;
   margin-top: 0.5rem;
 `;
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    color: #b3b3b3;
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+`;
+
+export const Input = styled.div<{ isImage?: boolean }>`
+  width: 45rem;
+  margin: 0.5rem 0;
+  display: ${({ isImage }) => (isImage ? "flex" : "")};
+  align-items: center;
+
+  img {
+    border-radius: 50rem;
+    object-fit: cover;
+    width: 8rem;
+    height: 8rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
+`;
+
+export const SuccessMessage = styled.p`
+  color: #20c15b;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+`;

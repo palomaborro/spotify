@@ -10,6 +10,8 @@ import Button from "../../components/button/default";
 import FileInput from "../../components/inputs/file-input/default";
 import MessageBanner from "../../components/message-banner/default";
 import AlbumCard from "../../components/album-card/default";
+import TextField from "../../components/inputs/text-field/default";
+import TextArea from "../../components/inputs/text-area/default";
 
 import {
   Wrapper,
@@ -26,6 +28,9 @@ import {
   Discography,
   AlbumsWrapper,
   EmptyAlbums,
+  FormContainer,
+  Input,
+  SuccessMessage,
 } from "./artist.styled";
 
 const Artist = () => {
@@ -48,6 +53,18 @@ const Artist = () => {
     undefined
   );
   const [updateTrigger, setUpdateTrigger] = useState(false);
+
+  const [data, setData] = useState<AlbumType>({
+    _id: "",
+    title: "",
+    description: "",
+    image: null,
+    year: "",
+    artist: artist._id,
+  });
+  const [successMessage, setSuccessMessage] = useState<string | undefined>("");
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
   const { id } = useParams();
@@ -126,6 +143,10 @@ const Artist = () => {
             : undefined;
           setArtist(responseData.artist);
           setTitleImageURL(artistImage);
+          setData((prevData) => ({
+            ...prevData,
+            artist: responseData.artist._id,
+          }));
         }
       } catch (error) {
         console.error(error);
@@ -170,6 +191,8 @@ const Artist = () => {
     e.preventDefault();
 
     try {
+      const token = user.token;
+
       const formData = new FormData();
       if (artist) {
         formData.append("name", artist.name ?? "");
@@ -179,7 +202,6 @@ const Artist = () => {
         }
       }
 
-      const token = user.token;
       const response = await fetch(`http://localhost:3977/artist/${id}`, {
         method: "PUT",
         headers: {
@@ -206,6 +228,70 @@ const Artist = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handlePostSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const token = user.token;
+
+      const formData = new FormData();
+      if (data) {
+        formData.append("title", data.title);
+        formData.append("year", data.year.toString());
+        formData.append("artist", artist._id);
+        formData.append("description", data.description);
+        if (data.image instanceof File) {
+          formData.append("image", data.image);
+        }
+      }
+
+      const response = await fetch(`http://localhost:3977/album`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const responseData = await response.json();
+
+      console.log("RESPONSEDATA", responseData);
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        setData({
+          _id: responseData._id,
+          title: responseData.title,
+          description: responseData.description,
+          image: responseData.image,
+          year: responseData.year,
+          artist: responseData.artist,
+        });
+        setIsSubmitting(true);
+        setShowSuccessMessage(true);
+        setSuccessMessage("Album added successfully!");
+        setTimeout(() => {
+          window.location.reload();
+          setIsSubmitting(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleInputChange = <T extends {}>(
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    inputName: string,
+    setData: React.Dispatch<React.SetStateAction<any>>
+  ) => {
+    setData((prevState: T) => ({
+      ...prevState,
+      [inputName]: e.target.value,
+    }));
   };
 
   return (
@@ -282,13 +368,74 @@ const Artist = () => {
           {albums.length > 0 ? (
             <AlbumsWrapper>
               {albums.map((album) => (
-                <AlbumCard key={album._id} album={album} />
+                <AlbumCard key={album._id} album={album} artist={artist.name} />
               ))}
             </AlbumsWrapper>
           ) : (
             <EmptyAlbums>There are no albums</EmptyAlbums>
           )}
         </DiscographyWrapper>
+        <FormContainer>
+          <h2>Add a new album</h2>
+          <Form onSubmit={handlePostSubmit}>
+            <Input>
+              <TextField
+                onChange={(e) => handleInputChange(e, "title", setData)}
+                label="Title"
+                placeholder="Album title"
+                name="title"
+                value={data.title}
+                required={true}
+              />
+            </Input>
+            <Input>
+              <TextField
+                onChange={(e) => handleInputChange(e, "year", setData)}
+                label="Year"
+                placeholder="Album year"
+                name="year"
+                value={data.year}
+                required={true}
+              />
+            </Input>
+            <Input>
+              <TextArea
+                onChange={(e) => handleInputChange(e, "description", setData)}
+                label="Description"
+                placeholder="Album description"
+                name="description"
+                value={data.description}
+                required={true}
+              />
+            </Input>
+            <Input isImage>
+              <FileInput
+                onChange={(e) => {
+                  setData({
+                    ...data,
+                    image: e.target.files ? e.target.files[0] : null,
+                  });
+                  setFormImageURL(
+                    e.target.files
+                      ? URL.createObjectURL(e.target.files[0])
+                      : undefined
+                  );
+                }}
+                label="Add image"
+                type="file"
+              />
+              {formImageURL && (
+                <img src={formImageURL} alt="user" width={100} />
+              )}
+            </Input>
+            {showSuccessMessage && (
+              <SuccessMessage>{successMessage}</SuccessMessage>
+            )}
+            <ButtonWrapper>
+              <Button label="Add album" type="submit" disabled={isSubmitting} />
+            </ButtonWrapper>
+          </Form>
+        </FormContainer>
       </Container>
     </Wrapper>
   );

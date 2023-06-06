@@ -14,10 +14,11 @@ import {
 
 interface AlbumCardProps {
   album: AlbumType;
+  artist: string | null;
 }
 
-const AlbumCard: FC<AlbumCardProps> = ({ album }) => {
-  const artistName = album.artist?.name ?? "";
+const AlbumCard: FC<AlbumCardProps> = ({ album, artist }) => {
+  const artistName = artist ?? "";
 
   return (
     <Container>
