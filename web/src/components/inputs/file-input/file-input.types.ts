@@ -4,4 +4,5 @@ export type FileInputProps = {
   label: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   type: string;
+  required?: boolean;
 };

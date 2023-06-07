@@ -31,6 +31,7 @@ import {
   FormContainer,
   Input,
   SuccessMessage,
+  ErrorMessage,
 } from "./artist.styled";
 
 const Artist = () => {
@@ -63,7 +64,9 @@ const Artist = () => {
     artist: artist._id,
   });
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
@@ -257,10 +260,11 @@ const Artist = () => {
 
       const responseData = await response.json();
 
-      console.log("RESPONSEDATA", responseData);
-
       if (!response.ok) {
-        throw new Error(responseData.message);
+        setErrorMessage(
+          "There was an error adding the album, make sure the info is correct."
+        );
+        setShowErrorMessage(true);
       } else {
         setData({
           _id: responseData._id,
@@ -292,6 +296,30 @@ const Artist = () => {
       ...prevState,
       [inputName]: e.target.value,
     }));
+  };
+
+  const deleteAlbum = async (albumId: string) => {
+    try {
+      const token = user.token;
+
+      const response = await fetch(`http://localhost:3977/album/${albumId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        const updatedAlbums = albums.filter((album) => album._id !== albumId);
+        setAlbums(updatedAlbums);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -368,7 +396,12 @@ const Artist = () => {
           {albums.length > 0 ? (
             <AlbumsWrapper>
               {albums.map((album) => (
-                <AlbumCard key={album._id} album={album} artist={artist.name} />
+                <AlbumCard
+                  key={album._id}
+                  album={album}
+                  artist={artist.name}
+                  onDelete={deleteAlbum}
+                />
               ))}
             </AlbumsWrapper>
           ) : (
@@ -422,7 +455,8 @@ const Artist = () => {
                   );
                 }}
                 label="Add image"
-                type="file"
+                type="image"
+                required={true}
               />
               {formImageURL && (
                 <img src={formImageURL} alt="user" width={100} />
@@ -431,6 +465,7 @@ const Artist = () => {
             {showSuccessMessage && (
               <SuccessMessage>{successMessage}</SuccessMessage>
             )}
+            {showErrorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <ButtonWrapper>
               <Button label="Add album" type="submit" disabled={isSubmitting} />
             </ButtonWrapper>

@@ -4,7 +4,7 @@ import Button from "../../button/default";
 import { Container, Input } from "./file-input.styled";
 import { FileInputProps } from "./file-input.types";
 
-const FileInput: FC<FileInputProps> = ({ label, type, onChange }) => {
+const FileInput: FC<FileInputProps> = ({ label, type, onChange, required }) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const handleClick = () => {
@@ -24,6 +24,7 @@ const FileInput: FC<FileInputProps> = ({ label, type, onChange }) => {
             ? "audio/*"
             : undefined
         }
+        required={required}
       />
       <Button onClick={handleClick} label={label} type="button" />
     </Container>

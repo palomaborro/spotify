@@ -193,3 +193,10 @@ export const SuccessMessage = styled.p`
   margin-bottom: 1rem;
   font-size: 1.5rem;
 `;
+
+export const ErrorMessage = styled.p`
+  color: #c12020;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+`;

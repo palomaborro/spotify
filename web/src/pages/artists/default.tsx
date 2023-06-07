@@ -26,6 +26,7 @@ import {
   FormContainer,
   ButtonWrapper,
   SuccessMessage,
+  ErrorMessage,
 } from "./artists.styled";
 
 const Artists = () => {
@@ -41,7 +42,9 @@ const Artists = () => {
     undefined
   );
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
+  const [errorMessage, setErrorMessage] = useState<string | undefined>("");
   const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+  const [showErrorMessage, setShowErrorMessage] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const { user } = useContext(UserContext);
@@ -166,7 +169,10 @@ const Artists = () => {
       const responseData = await response.json();
 
       if (!response.ok) {
-        throw new Error(responseData.message);
+        setShowErrorMessage(true);
+        setErrorMessage(
+          "There was a problem adding the artist, make sure the info is correct"
+        );
       } else {
         setData({
           _id: responseData.artist._id,
@@ -272,7 +278,7 @@ const Artists = () => {
                   );
                 }}
                 label="Add image"
-                type="file"
+                type="image"
               />
               {formImageURL && (
                 <img src={formImageURL} alt="user" width={100} />
@@ -281,6 +287,7 @@ const Artists = () => {
             {showSuccessMessage && (
               <SuccessMessage>{successMessage}</SuccessMessage>
             )}
+            {showErrorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <ButtonWrapper>
               <Button
                 label="Add artist"
