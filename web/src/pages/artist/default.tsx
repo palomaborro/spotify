@@ -54,14 +54,15 @@ const Artist = () => {
     undefined
   );
   const [updateTrigger, setUpdateTrigger] = useState(false);
-
   const [data, setData] = useState<AlbumType>({
     _id: "",
     title: "",
     description: "",
     image: null,
     year: "",
-    artist: artist._id,
+    artist: {
+      _id: "",
+    },
   });
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
@@ -188,7 +189,7 @@ const Artist = () => {
     if (artist._id) {
       getAlbums();
     }
-  }, [artist]);
+  }, [artist, user.token]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
