@@ -93,3 +93,74 @@ export const ButtonAndImageWrapper = styled.div`
     margin-top: 1rem;
   }
 `;
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2 {
+    color: #b3b3b3;
+    font-size: 2rem;
+    margin-top: 3rem;
+  }
+`;
+
+export const Input = styled.div<{ isImage?: boolean }>`
+  width: 45rem;
+  margin: 0.5rem 0;
+  display: ${({ isImage }) => (isImage ? "flex" : "")};
+  align-items: center;
+
+  img {
+    border-radius: 50rem;
+    object-fit: cover;
+    width: 8rem;
+    height: 8rem;
+    margin-left: 2rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 500px) {
+    width: 30rem;
+  }
+`;
+
+export const SuccessMessage = styled.p`
+  color: #20c15b;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+`;
+
+export const ErrorMessage = styled.p`
+  color: #c12020;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+`;
+
+export const Tracks = styled.h1`
+  color: #fff;
+  display: flex;
+  padding-top: 3rem;
+  margin-bottom: 2rem;
+
+  &:hover {
+    color: var(--primary);
+  }
+`;
+
+export const EmptyTracks = styled.p`
+  color: #b3b3b3;
+  font-size: 1.5rem;
+  margin-top: 0.5rem;
+`;
+
+export const TrackWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 750px;
+  width: 100%;
+`;
