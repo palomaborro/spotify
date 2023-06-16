@@ -1,6 +1,5 @@
 const Album = require("../models/album");
 const Song = require("../models/song");
-const { existsSync } = require("fs");
 const path = require("path");
 const multer = require("multer");
 
@@ -130,60 +129,11 @@ const deleteAlbum = (req, res) => {
   });
 };
 
-const uploadImage = (req, res) => {
-  const albumId = req.params.id;
-
-  if (req.files) {
-    const file_path = req.files.image.path;
-    const file_split = file_path.toString().split("/");
-    const file_name = file_split[2];
-
-    const ext_split = file_name.split(".");
-    const file_ext = ext_split[1] || null;
-
-    if (
-      file_ext === "png" ||
-      file_ext === "jpg" ||
-      file_ext === "jpeg" ||
-      file_ext === "gif"
-    ) {
-      Album.findByIdAndUpdate(
-        albumId,
-        { image: file_name },
-        (err, albumUpdated) => {
-          if (err) {
-            res.status(404).send({ message: "Album not updated" });
-          } else {
-            res.status(200).send({ image: file_name, album: albumUpdated });
-          }
-        }
-      );
-    } else {
-      res.status(415).send({ message: "Invalid image extension" });
-    }
-  } else {
-    res.status(404).send({ message: "You have not uploaded any image" });
-  }
-};
-
-const getImageFile = (req, res) => {
-  const imageFile = req.params.imageFile;
-  const path_file = `./uploads/albums/${imageFile}`;
-
-  if (existsSync(path_file)) {
-    res.sendFile(path.resolve(path_file));
-  } else {
-    res.status(404).send({ message: "Image does not exist" });
-  }
-};
-
 module.exports = {
   getAlbum,
   saveAlbum,
   getAlbums,
   updateAlbum,
   deleteAlbum,
-  uploadImage,
-  getImageFile,
   albumImageUpload,
 };
