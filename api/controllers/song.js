@@ -4,6 +4,18 @@ const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+
+const songUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "./uploads/songs");
+    },
+    filename: (req, file, cb) => {
+      cb(null, file.originalname);
+    },
+  }),
+}).single("song");
 
 const getSong = (req, res) => {
   const songId = req.params.id;
@@ -27,11 +39,15 @@ const saveSong = (req, res) => {
   const song = new Song();
   const params = req.body;
 
-  song.number = params.number;
+  song.number = Number(params.number);
   song.name = params.name;
-  song.duration = params.duration;
-  song.file = null;
+  song.duration = Number(params.duration);
+  song.artist = params.artist;
   song.album = params.album;
+
+  if (req.file) {
+    song.song = `/uploads/songs/${req.file.filename}`;
+  }
 
   song.save((err, songStored) => {
     if (err) {
@@ -65,7 +81,6 @@ const getSongs = (req, res) => {
         model: "Artist",
       },
     })
-    .populate({ path: "featuredArtists" })
     .exec((err, songs) => {
       if (err) {
         res.status(500).send({ message: "Error in the request" });
@@ -112,37 +127,6 @@ const deleteSong = (req, res) => {
   });
 };
 
-const uploadFile = (req, res) => {
-  const songId = req.params.id;
-
-  if (req.files) {
-    const file_path = req.files.file.path;
-    const file_split = file_path.toString().split("/");
-    const file_name = file_split[2];
-
-    const ext_split = file_name.split(".");
-    const file_ext = ext_split[1] || null;
-
-    if (file_ext === "mp3" || file_ext === "wav" || file_ext === "flac") {
-      Song.findByIdAndUpdate(
-        songId,
-        { file: file_name },
-        (err, songUpdated) => {
-          if (err) {
-            res.status(404).send({ message: "Song not updated" });
-          } else {
-            res.status(200).send({ file: file_name, song: songUpdated });
-          }
-        }
-      );
-    } else {
-      res.status(415).send({ message: "Invalid file extension" });
-    }
-  } else {
-    res.status(404).send({ message: "You have not uploaded any file" });
-  }
-};
-
 const getSongFile = (req, res) => {
   const songFile = req.params.songFile;
   const path_file = `./uploads/songs/${songFile}`;
@@ -160,6 +144,6 @@ module.exports = {
   getSongs,
   updateSong,
   deleteSong,
-  uploadFile,
   getSongFile,
+  songUpload,
 };
