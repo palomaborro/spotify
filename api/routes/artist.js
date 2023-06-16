@@ -14,6 +14,12 @@ api.post(
   ArtistController.artistImageUpload,
   ArtistController.saveArtist
 );
+api.post(
+  "/artist/:id",
+  middlewareAuth.isAuthenticated,
+  ArtistController.artistImageUpload,
+  ArtistController.updateArtist
+);
 
 api.put(
   "/artist/:id",
