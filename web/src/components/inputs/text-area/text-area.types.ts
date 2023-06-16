@@ -5,6 +5,6 @@ export type TextAreaProps = {
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder: string;
   name: string;
-  value: string;
+  value: string | number;
   required?: boolean;
 };
