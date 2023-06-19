@@ -138,7 +138,6 @@ const Album = () => {
       setFormImageURL(URL.createObjectURL(imageFile));
     }
   };
-
   const handleTrackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const trackFile = e.target.files ? e.target.files[0] : null;
     if (trackFile) {
@@ -147,6 +146,8 @@ const Album = () => {
         song: trackFile,
       });
       setFormTrackName(trackFile.name);
+    } else {
+      setFormTrackName(undefined);
     }
   };
 
@@ -443,19 +444,9 @@ const Album = () => {
                 required={true}
               />
             </Input>
-            <Input>
+            <Input isTrack>
               <FileInput
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    song: e.target.files ? e.target.files[0] : null,
-                  });
-                  setFormTrackName(
-                    e.target.files
-                      ? URL.createObjectURL(e.target.files[0])
-                      : undefined
-                  );
-                }}
+                onChange={handleTrackChange}
                 label="Select track"
                 type="audio"
                 required={true}

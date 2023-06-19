@@ -106,11 +106,13 @@ export const FormContainer = styled.div`
   }
 `;
 
-export const Input = styled.div<{ isImage?: boolean }>`
+export const Input = styled.div<{ isImage?: boolean; isTrack?: boolean }>`
   width: 45rem;
   margin: 0.5rem 0;
-  display: ${({ isImage }) => (isImage ? "flex" : "")};
+  display: ${({ isImage, isTrack }) => (isImage || isTrack ? "flex" : "")};
   align-items: center;
+  color: ${({ isTrack }) => (isTrack ? "#b3b3b3" : "")};
+  font-size: ${({ isTrack }) => (isTrack ? "1.5rem" : "")};
 
   img {
     border-radius: 50rem;
