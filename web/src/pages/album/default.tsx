@@ -9,6 +9,7 @@ import Navbar from "../../components/navbar/default";
 import Button from "../../components/button/default";
 import FileInput from "../../components/inputs/file-input/default";
 import TextField from "../../components/inputs/text-field/default";
+import Song from "../../components/song/default";
 
 import {
   Wrapper,
@@ -403,20 +404,7 @@ const Album = () => {
         <TrackWrapper>
           <Tracks>Album tracks</Tracks>
           {songs.length > 0 ? (
-            songs.map((song, index) => (
-              <div key={index}>
-                <h3>{song.name}</h3>
-                {song.song && (
-                  <audio controls>
-                    <source
-                      src={`http://localhost:3977${song.song}`}
-                      type="audio/mpeg"
-                    />
-                    Tu navegador no soporta el elemento de audio.
-                  </audio>
-                )}
-              </div>
-            ))
+            songs.map((song) => <Song key={song._id} song={song} />)
           ) : (
             <EmptyTracks>No tracks yet</EmptyTracks>
           )}
