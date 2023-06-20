@@ -7,6 +7,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #b3b3b3;
 
   &:hover {
     background-color: var(--light-black);
@@ -16,6 +17,7 @@ export const Container = styled.div`
 export const LeftElement = styled.div`
   display: flex;
   flex: 1;
+  align-items: center;
 
   img {
     width: 4rem;
