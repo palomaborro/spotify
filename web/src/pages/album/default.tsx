@@ -224,6 +224,30 @@ const Album = () => {
     getSongs();
   }, [id, updateTrigger]);
 
+  const deleteSong = async (songId: string) => {
+    try {
+      const token = user.token;
+
+      const response = await fetch(`http://localhost:3977/song/${songId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseData.message);
+      } else {
+        const updatedSongs = songs.filter((song) => song._id !== songId);
+        setSongs(updatedSongs);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -316,10 +340,10 @@ const Album = () => {
         setIsSubmitting(true);
         setShowSuccessMessage(true);
         setSuccessMessage("Song added successfully!");
-        // setTimeout(() => {
-        //   window.location.reload();
-        //   setIsSubmitting(false);
-        // }, 2000);
+        setTimeout(() => {
+          window.location.reload();
+          setIsSubmitting(false);
+        }, 2000);
       }
     } catch (error) {
       console.error(error);
@@ -404,7 +428,9 @@ const Album = () => {
         <TrackWrapper>
           <Tracks>Album tracks</Tracks>
           {songs.length > 0 ? (
-            songs.map((song) => <Song key={song._id} song={song} />)
+            songs.map((song) => (
+              <Song onDelete={deleteSong} key={song._id} song={song} />
+            ))
           ) : (
             <EmptyTracks>No tracks yet</EmptyTracks>
           )}
