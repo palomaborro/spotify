@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState, useContext } from "react";
 
+import { Link } from "react-router-dom";
+
 import { IconButton } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -134,7 +136,9 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
         <p>{song.name}</p>
       </LeftElement>
       <MiddleElement>
-        <p>{artist.name}</p>
+        <Link to={`/artist/${artist._id}`}>
+          <p>{artist.name}</p>
+        </Link>
       </MiddleElement>
       <RightElement>
         {/* <Like songId={song._id} /> */}

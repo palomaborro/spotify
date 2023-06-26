@@ -50,6 +50,10 @@ export const MiddleElement = styled.div`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  &:hover {
+    color: var(--primary);
+  }
 `;
 
 export const RightElement = styled.div`
