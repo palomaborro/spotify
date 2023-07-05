@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 100%;
   height: 6rem;
   border-radius: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: #b3b3b3;
+  margin-bottom: 1rem;
 
   &:hover {
     background-color: var(--light-black);
@@ -89,4 +89,32 @@ export const Input = styled.input`
     background: var(--primary);
     cursor: pointer;
   }
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 45rem;
+  height: 4.5rem;
+  margin: 0 0 1.5rem 0;
+
+  button {
+    width: 15rem;
+    height: 4.5rem;
+    margin-right: 3rem;
+  }
+`;
+
+export const Form = styled.form`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
+`;
+
+export const Wrapper = styled.div`
+  width: 100%;
 `;
