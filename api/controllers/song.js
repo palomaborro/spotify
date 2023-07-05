@@ -1,4 +1,3 @@
-const Artist = require("../models/artist");
 const Song = require("../models/song");
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");

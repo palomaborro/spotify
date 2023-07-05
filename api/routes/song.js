@@ -2,6 +2,7 @@ const express = require("express");
 const SongController = require("../controllers/song");
 const middlewareAuth = require("../middlewares/authentication");
 const multer = require("multer");
+const upload = multer();
 
 const api = express.Router();
 
@@ -16,7 +17,12 @@ api.post(
   SongController.saveSong
 );
 
-api.put("/song/:id", middlewareAuth.isAuthenticated, SongController.updateSong);
+api.put(
+  "/song/:id",
+  upload.none(),
+  middlewareAuth.isAuthenticated,
+  SongController.updateSong
+);
 
 api.delete(
   "/song/:id",
