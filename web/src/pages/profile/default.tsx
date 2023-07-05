@@ -46,7 +46,7 @@ const Profile = () => {
   const [titleImageURL, setTitleImageURL] = useState<string | undefined>(
     undefined
   );
-  const [titleName, setTitleName] = useState<string | undefined>(undefined);
+  const [titleName, setTitleName] = useState<string | undefined>("");
   const [formImageURL, setFormImageURL] = useState<string | undefined>(
     undefined
   );
