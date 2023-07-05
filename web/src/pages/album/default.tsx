@@ -59,7 +59,7 @@ const Album = () => {
   const [formImageURL, setFormImageURL] = useState<string | undefined>(
     undefined
   );
-  const [data, setData] = useState<SongType>({
+  const [song, setSong] = useState<SongType>({
     _id: "",
     number: "",
     name: "",
@@ -142,8 +142,8 @@ const Album = () => {
   const handleTrackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const trackFile = e.target.files ? e.target.files[0] : null;
     if (trackFile) {
-      setData({
-        ...data,
+      setSong({
+        ...song,
         song: trackFile,
       });
       setFormTrackName(trackFile.name);
@@ -189,7 +189,7 @@ const Album = () => {
             ? `http://localhost:3977${data.album.image}`
             : undefined;
           setAlbum(data.album);
-          setData((prevData) => ({
+          setSong((prevData) => ({
             ...prevData,
             artist: data.album.artist._id,
             album: data.album._id,
@@ -200,7 +200,6 @@ const Album = () => {
         console.error(error);
       }
     };
-
     getAlbum();
   }, [id, updateTrigger]);
 
@@ -303,13 +302,13 @@ const Album = () => {
       const token = user.token;
 
       const formData = new FormData();
-      if (data) {
-        formData.append("number", data.number.toString());
-        formData.append("name", data.name);
-        formData.append("artist", data.artist);
-        formData.append("album", data.album);
-        if (data.song instanceof File) {
-          formData.append("song", data.song);
+      if (song) {
+        formData.append("number", song.number.toString());
+        formData.append("name", song.name);
+        formData.append("artist", song.artist);
+        formData.append("album", song.album);
+        if (song.song instanceof File) {
+          formData.append("song", song.song);
         }
       }
 
@@ -329,7 +328,7 @@ const Album = () => {
         );
         setShowErrorMessage(true);
       } else {
-        setData({
+        setSong({
           _id: responseData._id,
           number: responseData.number,
           name: responseData.name,
@@ -440,21 +439,21 @@ const Album = () => {
           <Form onSubmit={handlePostSubmit}>
             <Input>
               <TextField
-                onChange={(e) => handleInputChange(e, "number", setData)}
+                onChange={(e) => handleInputChange(e, "number", setSong)}
                 label="Track number"
                 placeholder="Number"
                 name="number"
-                value={data.number || ""}
+                value={song.number || ""}
                 required={true}
               />
             </Input>
             <Input>
               <TextField
-                onChange={(e) => handleInputChange(e, "name", setData)}
+                onChange={(e) => handleInputChange(e, "name", setSong)}
                 label="Track name"
                 placeholder="Name"
                 name="year"
-                value={data.name || ""}
+                value={song.name || ""}
                 required={true}
               />
             </Input>
