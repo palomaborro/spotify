@@ -22,6 +22,7 @@ import {
   ButtonWrapper,
   Form,
   Wrapper,
+  SongNumber,
 } from "./song.styled";
 import "./song.styles.scss";
 
@@ -222,6 +223,7 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
           <IconButton className="play_btn" onClick={handlePlay}>
             {playIcon}
           </IconButton>
+          <SongNumber>{song.number}.</SongNumber>
           <>
             {isEditing.name ? (
               <p

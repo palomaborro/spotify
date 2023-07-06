@@ -118,3 +118,8 @@ export const Form = styled.form`
 export const Wrapper = styled.div`
   width: 100%;
 `;
+
+export const SongNumber = styled.p`
+  color: var(--primary);
+  font-size: 1.2rem;
+`;

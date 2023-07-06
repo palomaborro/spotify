@@ -165,4 +165,8 @@ export const TrackWrapper = styled.div`
   align-items: flex-start;
   max-width: 750px;
   width: 100%;
+
+  @media (max-width: 500px) {
+    max-width: 300px;
+  }
 `;
