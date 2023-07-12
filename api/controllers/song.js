@@ -1,4 +1,5 @@
 const Song = require("../models/song");
+const User = require("../models/user");
 const mongoose = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 const fs = require("fs");
@@ -126,15 +127,25 @@ const deleteSong = (req, res) => {
   });
 };
 
-const getSongFile = (req, res) => {
-  const songFile = req.params.songFile;
-  const path_file = `./uploads/songs/${songFile}`;
+const saveFavoriteSongs = (req, res) => {
+  const userId = req.params.id;
+  const songId = req.body.song;
 
-  if (fs.existsSync(path_file)) {
-    res.sendFile(path.resolve(path_file));
-  } else {
-    res.status(404).send({ message: "Song does not exist" });
-  }
+  User.findByIdAndUpdate(
+    userId,
+    { $push: { favorites: songId } },
+    (err, userUpdated) => {
+      if (err) {
+        res.status(500).send({ message: "Error in the request" });
+      } else {
+        if (!userUpdated) {
+          res.status(404).send({ message: "User not updated" });
+        } else {
+          res.status(200).send({ user: userUpdated });
+        }
+      }
+    }
+  );
 };
 
 module.exports = {
@@ -143,6 +154,6 @@ module.exports = {
   getSongs,
   updateSong,
   deleteSong,
-  getSongFile,
   songUpload,
+  saveFavoriteSongs,
 };

@@ -245,7 +245,6 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
           </Link>
         </MiddleElement>
         <RightElement>
-          {/* <Like songId={song._id} /> */}
           <Input
             type="range"
             value={currentTimeSong}
@@ -254,6 +253,7 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
             step="1"
             onChange={handleProgressBarChange}
           />
+          <Like songId={song._id} />
           <p>{duration ? formatDuration(duration) : "Loading..."}</p>
         </RightElement>
         {user.userRole === "ADMIN" && (

@@ -8,13 +8,17 @@ const api = express.Router();
 
 api.get("/song/:id", middlewareAuth.isAuthenticated, SongController.getSong);
 api.get("/songs/:album?", SongController.getSongs);
-api.get("/get-album-song/:songFile", SongController.getSongFile);
 
 api.post(
   "/song/:id",
   middlewareAuth.isAuthenticated,
   SongController.songUpload,
   SongController.saveSong
+);
+api.post(
+  "/favorites/:id",
+  middlewareAuth.isAuthenticated,
+  SongController.saveFavoriteSongs
 );
 
 api.put(
