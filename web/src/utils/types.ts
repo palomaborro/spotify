@@ -15,7 +15,7 @@ export type UserType = {
 };
 
 export type ArtistType = {
-  _id: string;
+  _id: string | null;
   name: string | null;
   image: string | File | null;
   description: string | null;
@@ -39,5 +39,8 @@ export type SongType = {
   name: string;
   song: string | File | null;
   artist: string;
-  album: string;
+  album: {
+    _id: string;
+    title: string;
+  };
 };
