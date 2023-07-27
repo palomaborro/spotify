@@ -1,4 +1,4 @@
-import React, { useState, useContext, FC } from "react";
+import React, { useState, useContext, FC, useEffect } from "react";
 
 import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -18,25 +18,26 @@ const Like: FC<LikeProps> = ({ songId }) => {
 
   const { user } = useContext(UserContext);
 
+  useEffect(() => {
+    setLike(favoriteSongs.includes(songId));
+  }, [favoriteSongs, songId]);
+
   const handleFavoriteClick = async () => {
     if (!favoriteSongs.includes(songId) && user.userId) {
-      const newFavorites = [...favoriteSongs, songId];
-
       try {
         const token = user.token;
 
         const body = {
-          userId: user.userId,
-          favorites: newFavorites,
+          user: user.userId,
+          song: songId,
         };
-
-        console.log(user.userId);
 
         const response = await fetch(
           `http://localhost:3977/favorites/${user.userId}`,
           {
             method: "POST",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
             body: JSON.stringify(body),
@@ -48,8 +49,8 @@ const Like: FC<LikeProps> = ({ songId }) => {
         if (!response.ok) {
           throw new Error(data.message);
         } else {
-          setFavoriteSongs(newFavorites);
-          setLike(!like);
+          setFavoriteSongs(data.user.favorites);
+          setLike(data.action === "added");
         }
       } catch (error) {
         console.error(error);
