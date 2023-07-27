@@ -18,6 +18,7 @@ const Navbar = () => {
         ? { name: "Profile", link: "/profile" }
         : { name: "Sign up", link: "/sign-up" },
       { name: "Artists", link: "/artists" },
+      { name: "Favorite Songs", link: "/favorites/:id" },
       user.isAuthenticated
         ? { name: "Log out", link: "/login", onClick: logoutUser }
         : { name: "Log in", link: "/login" },
