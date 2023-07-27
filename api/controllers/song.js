@@ -127,27 +127,6 @@ const deleteSong = (req, res) => {
   });
 };
 
-const saveFavoriteSongs = (req, res) => {
-  const userId = req.params.id;
-  const songId = req.body.song;
-
-  User.findByIdAndUpdate(
-    userId,
-    { $push: { favorites: songId } },
-    (err, userUpdated) => {
-      if (err) {
-        res.status(500).send({ message: "Error in the request" });
-      } else {
-        if (!userUpdated) {
-          res.status(404).send({ message: "User not updated" });
-        } else {
-          res.status(200).send({ user: userUpdated });
-        }
-      }
-    }
-  );
-};
-
 module.exports = {
   getSong,
   saveSong,
@@ -155,5 +134,4 @@ module.exports = {
   updateSong,
   deleteSong,
   songUpload,
-  saveFavoriteSongs,
 };

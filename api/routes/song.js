@@ -15,11 +15,6 @@ api.post(
   SongController.songUpload,
   SongController.saveSong
 );
-api.post(
-  "/favorites/:id",
-  middlewareAuth.isAuthenticated,
-  SongController.saveFavoriteSongs
-);
 
 api.put(
   "/song/:id",
