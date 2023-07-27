@@ -19,12 +19,6 @@ export const LeftElement = styled.div`
   flex: 1;
   align-items: center;
 
-  img {
-    width: 4rem;
-    height: 4rem;
-    object-fit: cover;
-  }
-
   p {
     font-size: 1.4rem;
     font-weight: 500;
@@ -39,21 +33,10 @@ export const LeftElement = styled.div`
 
 export const MiddleElement = styled.div`
   flex: 1;
-
-  p {
-    text-align: center;
-    font-size: 1.2rem;
-    margin: 0;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &:hover {
-    color: var(--primary);
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const RightElement = styled.div`
@@ -122,4 +105,17 @@ export const Wrapper = styled.div`
 export const SongNumber = styled.p`
   color: var(--primary);
   font-size: 1.2rem;
+`;
+
+export const AlbumTitle = styled.p`
+  font-size: 1.5rem;
+`;
+
+export const ArtistName = styled.p`
+  text-align: center;
+  font-size: 1.6rem;
+
+  &:hover {
+    color: var(--primary);
+  }
 `;

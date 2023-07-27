@@ -23,20 +23,22 @@ import {
   Form,
   Wrapper,
   SongNumber,
+  AlbumTitle,
+  ArtistName,
 } from "./song.styled";
 import "./song.styles.scss";
 
 interface SongProps {
   song: SongType;
-  onDelete: (songId: string) => void;
+  onDelete?: (songId: string) => void;
 }
 
 const Song: FC<SongProps> = ({ song, onDelete }) => {
   const [artist, setArtist] = useState<ArtistType>({
-    _id: "",
-    name: "",
+    _id: null,
+    name: null,
     image: null,
-    description: "",
+    description: null,
   });
   const [duration, setDuration] = useState<number | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
@@ -51,7 +53,14 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
 
   useEffect(() => {
     const getArtist = async () => {
+      const artist = song.artist;
       try {
+        if (typeof artist === "object") {
+          const artistObject = artist as ArtistType;
+          setArtist(artistObject);
+          return;
+        }
+
         const response = await fetch(
           `http://localhost:3977/artist/${song.artist}`,
           {
@@ -70,8 +79,10 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
         console.error(error);
       }
     };
-    getArtist();
-  }, [song.artist]);
+    if (song && song.artist) {
+      getArtist();
+    }
+  }, [song, song.artist]);
 
   useEffect(() => {
     const getSong = async () => {
@@ -97,7 +108,7 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
       }
     };
     getSong();
-  }, [song._id, updateTrigger]);
+  }, [song._id, updateTrigger, user.token]);
 
   useEffect(() => {
     const audioElement = document.createElement("audio");
@@ -161,7 +172,12 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
   const handleDeleteClick = (e: React.MouseEvent, songId: string) => {
     e.preventDefault();
     e.stopPropagation();
-    onDelete(songId);
+
+    if (onDelete) {
+      onDelete(songId);
+    } else {
+      console.warn("onDelete function is not defined");
+    }
   };
 
   const handleTitleClick = () => {
@@ -241,8 +257,9 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
         </LeftElement>
         <MiddleElement>
           <Link to={`/artist/${artist._id}`}>
-            <p>{artist.name}</p>
+            <ArtistName>{artist.name} </ArtistName>
           </Link>
+          <AlbumTitle>{song.album.title}</AlbumTitle>
         </MiddleElement>
         <RightElement>
           <Input
