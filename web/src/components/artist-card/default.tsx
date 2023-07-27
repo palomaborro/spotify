@@ -35,7 +35,11 @@ const ArtistCard: FC<ArtistCardProps> = ({ artist, onDelete }) => {
           <Artist>{artist.name}</Artist>
           {user.userRole === "ADMIN" && (
             <DeleteIcon
-              onClick={(e) => handleDeleteClick(e, artist._id)}
+              onClick={(e) => {
+                if (artist._id) {
+                  handleDeleteClick(e, artist._id);
+                }
+              }}
               fontSize="large"
               className="delete-icon"
             />

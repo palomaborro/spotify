@@ -50,9 +50,7 @@ const AudioPlayer = () => {
           <p>4.00</p>
         </ProgressContainer>
       </ControlElements>
-      <RightElement>
-        <Like />
-      </RightElement>
+      <RightElement>{/* <Like /> */}</RightElement>
     </Container>
   );
 };
