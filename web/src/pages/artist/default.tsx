@@ -244,7 +244,9 @@ const Artist = () => {
       if (data) {
         formData.append("title", data.title);
         formData.append("year", data.year.toString());
-        formData.append("artist", artist._id);
+        if (artist._id) {
+          formData.append("artist", artist._id);
+        }
         formData.append("description", data.description);
         if (data.image instanceof File) {
           formData.append("image", data.image);

@@ -65,7 +65,7 @@ const Album = () => {
     name: "",
     song: "",
     artist: album.artist._id,
-    album: album._id,
+    album: { _id: album._id, title: album.title },
   });
   const [successMessage, setSuccessMessage] = useState<string | undefined>("");
   const [errorMessage, setErrorMessage] = useState<string | undefined>("");
@@ -306,7 +306,7 @@ const Album = () => {
         formData.append("number", song.number.toString());
         formData.append("name", song.name);
         formData.append("artist", song.artist);
-        formData.append("album", song.album);
+        formData.append("album", song.album._id);
         if (song.song instanceof File) {
           formData.append("song", song.song);
         }
