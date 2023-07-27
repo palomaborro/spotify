@@ -7,7 +7,7 @@ import NotFound from "./pages/not-found/default.tsx";
 import SignUp from "./pages/sign-up/default";
 import Login from "./pages/login/default";
 import Search from "./pages/search/default";
-import LikedSongs from "./pages/liked-songs/default";
+import Favorites from "./pages/favorites/default";
 import Playlist from "./pages/playlist/default";
 import Profile from "./pages/profile/default";
 import Users from "./pages/users/default";
@@ -40,7 +40,7 @@ const App = () => {
         path="/users/*"
         element={<AdminRoute path="*" element={<Users />} />}
       />
-      <Route path="/liked-songs" element={<LikedSongs />} />
+      <Route path="/favorites/:id" element={<Favorites />} />
       <Route path="/playlist" element={<Playlist />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
