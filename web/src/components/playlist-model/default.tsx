@@ -32,7 +32,6 @@ const PlaylistModel = ({ closeModel, playlist }: any) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
   };
 
   return (
