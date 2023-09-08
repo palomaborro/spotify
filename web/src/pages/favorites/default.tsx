@@ -34,6 +34,7 @@ const Favorites = () => {
           {
             method: "GET",
             headers: {
+              "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
           }
@@ -50,8 +51,9 @@ const Favorites = () => {
         console.error(error);
       }
     };
+
     getFavoriteSongs();
-  }, [user.token, user.userId]);
+  }, [user]);
 
   console.log(favoriteSongs);
 
@@ -76,8 +78,8 @@ const Favorites = () => {
         </NavBody>
         {favoriteSongs?.length > 0 ? (
           favoriteSongs.map((song) => (
-            <PlaylistContainer>
-              <Song key={song._id} song={song} />
+            <PlaylistContainer key={song._id}>
+              <Song song={song} />
             </PlaylistContainer>
           ))
         ) : (
