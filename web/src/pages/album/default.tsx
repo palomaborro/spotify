@@ -295,7 +295,7 @@ const Album = () => {
     }
   };
 
-  const handlePostSubmit = async (e: React.FormEvent) => {
+  const handleNewSongSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
@@ -306,7 +306,7 @@ const Album = () => {
         formData.append("number", song.number.toString());
         formData.append("name", song.name);
         formData.append("artist", song.artist);
-        formData.append("album", song.album._id);
+        formData.append("album", song.album._id ?? song.album);
         if (song.song instanceof File) {
           formData.append("song", song.song);
         }
@@ -436,7 +436,7 @@ const Album = () => {
         </TrackWrapper>
         <FormContainer>
           <h2>Add a new track</h2>
-          <Form onSubmit={handlePostSubmit}>
+          <Form onSubmit={handleNewSongSubmit}>
             <Input>
               <TextField
                 onChange={(e) => handleInputChange(e, "number", setSong)}
