@@ -28,9 +28,14 @@ const getFavoriteSongs = (req, res) => {
 
 const saveFavoriteSongs = async (req, res) => {
   const userId = req.params.id;
-  const { songId, albumId, artistId } = req.body;
+  const { song: songId, album: albumId, artist: artistId } = req.body;
 
   try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
     const userUpdated = await User.findByIdAndUpdate(
       userId,
       { $push: { favorites: songId } },
@@ -46,11 +51,7 @@ const saveFavoriteSongs = async (req, res) => {
 
     await newFavorite.save();
 
-    if (!userUpdated) {
-      res.status(404).send({ message: "User not found" });
-    } else {
-      res.status(200).send({ user: userUpdated });
-    }
+    res.status(200).send({ user: userUpdated });
   } catch (err) {
     res.status(500).send({ message: "Error in the request" });
   }

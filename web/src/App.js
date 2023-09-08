@@ -40,7 +40,7 @@ const App = () => {
         path="/users/*"
         element={<AdminRoute path="*" element={<Users />} />}
       />
-      <Route path="/favorites" element={<Favorites />} />
+      <Route path="/favorites/*" element={<Favorites />} />
       <Route path="/playlist" element={<Playlist />} />
       <Route path="*" element={<NotFound />} />
     </Routes>

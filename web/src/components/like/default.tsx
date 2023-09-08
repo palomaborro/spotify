@@ -13,13 +13,25 @@ interface LikeProps {
 }
 
 const Like: FC<LikeProps> = ({ songId }) => {
-  const [like, setLike] = useState(false);
-  const [favoriteSongs, setFavoriteSongs] = useState<string[]>([]);
-
   const { user } = useContext(UserContext);
+
+  const getFavoriteSongsFromLocalStorage = () => {
+    const storedSongs = localStorage.getItem("favorites");
+    return storedSongs ? JSON.parse(storedSongs) : [];
+  };
+
+  const [favoriteSongs, setFavoriteSongs] = useState<string[]>(
+    getFavoriteSongsFromLocalStorage()
+  );
+  const [like, setLike] = useState<boolean>(favoriteSongs.includes(songId));
 
   useEffect(() => {
     setLike(favoriteSongs.includes(songId));
+  }, [favoriteSongs, songId]);
+
+  useEffect(() => {
+    setLike(favoriteSongs.includes(songId));
+    localStorage.setItem("favorites", JSON.stringify(favoriteSongs));
   }, [favoriteSongs, songId]);
 
   const handleFavoriteClick = async () => {
