@@ -5,7 +5,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import Song from "../../components/song/default";
 import Navbar from "../../components/navbar/default";
 
-import { SongType } from "../../utils/types";
+import { FavoriteType } from "../../utils/types";
 import { UserContext } from "../../utils/user-context";
 
 import {
@@ -20,7 +20,7 @@ import {
 } from "./favorites.styled";
 
 const Favorites = () => {
-  const [favoriteSongs, setFavoriteSongs] = useState<SongType[]>([]);
+  const [favoriteSongs, setFavoriteSongs] = useState<FavoriteType[]>([]);
 
   const { user } = useContext(UserContext);
 
@@ -55,8 +55,6 @@ const Favorites = () => {
     getFavoriteSongs();
   }, [user]);
 
-  console.log(favoriteSongs);
-
   return (
     <Wrapper>
       <Navbar />
@@ -77,11 +75,13 @@ const Favorites = () => {
           </RightElement>
         </NavBody>
         {favoriteSongs?.length > 0 ? (
-          favoriteSongs.map((song) => (
-            <PlaylistContainer key={song._id}>
-              <Song song={song} />
-            </PlaylistContainer>
-          ))
+          favoriteSongs.map((favorite) =>
+            favorite.song ? (
+              <PlaylistContainer key={favorite.song._id}>
+                <Song song={favorite.song} />
+              </PlaylistContainer>
+            ) : null
+          )
         ) : (
           <div>No tracks yet</div>
         )}
