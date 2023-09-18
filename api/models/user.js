@@ -10,7 +10,7 @@ const UserSchema = Schema({
   password: String,
   role: String,
   image: String,
-  favorites: [{ type: Schema.ObjectId, ref: "favorites" }],
+  favorites: [{ type: Schema.ObjectId, ref: "Favorites" }],
 });
 
 module.exports = mongoose.model("User", UserSchema);

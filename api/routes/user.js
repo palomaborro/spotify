@@ -14,6 +14,11 @@ api.get(
   UserController.getUserProfile
 );
 api.get("/users", UserController.getUsers);
+api.get(
+  "/favorites/:userId",
+  middlewareAuth.isAuthenticated,
+  UserController.getFavoriteSongs
+);
 
 api.post("/sign-up", upload.single("image"), UserController.saveUser);
 api.post("/login", UserController.loginUser);
@@ -22,11 +27,21 @@ api.post(
   [middlewareAuth.isAuthenticated, upload.single("image")],
   UserController.uploadImage
 );
+api.post(
+  "/users/:userId/favorites",
+  middlewareAuth.isAuthenticated,
+  UserController.saveFavoriteSong
+);
 
 api.delete(
   "/users/:id",
   middlewareAuth.isAuthenticated,
   UserController.deleteUser
+);
+api.delete(
+  "/users/:userId/favorites/:songId",
+  middlewareAuth.isAuthenticated,
+  UserController.deleteFavoriteSong
 );
 
 api.put(
