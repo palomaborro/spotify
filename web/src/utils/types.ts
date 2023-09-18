@@ -44,3 +44,22 @@ export type SongType = {
     title: string;
   };
 };
+
+export type SongDetailType = {
+  _id: string;
+  number: number | string;
+  name: string;
+  song: string | File | null;
+  artist: string;
+  album: {
+    _id: string;
+    title: string;
+  };
+};
+
+export type FavoriteType = {
+  _id: string;
+  user: string;
+  song: SongDetailType | null;
+  __v: number;
+};
