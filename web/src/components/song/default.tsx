@@ -259,7 +259,7 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
           <Link to={`/artist/${artist._id}`}>
             <ArtistName>{artist.name} </ArtistName>
           </Link>
-          <AlbumTitle>{song.album.title}</AlbumTitle>
+          <AlbumTitle>{song.album?.title}</AlbumTitle>
         </MiddleElement>
         <RightElement>
           <Input
