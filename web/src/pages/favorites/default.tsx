@@ -17,6 +17,7 @@ import {
   Container,
   Wrapper,
   PlaylistContainer,
+  EmptyTracks,
 } from "./favorites.styled";
 
 const Favorites = () => {
@@ -45,7 +46,9 @@ const Favorites = () => {
         if (!response.ok) {
           throw new Error(data.message);
         } else {
-          setFavoriteSongs(data.favorites);
+          setFavoriteSongs(
+            data.favorites.filter((fav: FavoriteType) => fav.song !== null)
+          );
         }
       } catch (error) {
         console.error(error);
@@ -78,12 +81,12 @@ const Favorites = () => {
           favoriteSongs.map((favorite) =>
             favorite.song ? (
               <PlaylistContainer key={favorite.song._id}>
-                <Song song={favorite.song} />
+                <Song isFavorites song={favorite.song} />
               </PlaylistContainer>
             ) : null
           )
         ) : (
-          <div>No tracks yet</div>
+          <EmptyTracks>No tracks yet</EmptyTracks>
         )}
       </Container>
     </Wrapper>

@@ -76,3 +76,9 @@ export const RightElement = styled.div`
 export const PlaylistContainer = styled.div`
   width: 750px;
 `;
+
+export const EmptyTracks = styled.p`
+  color: #b3b3b3;
+  font-size: 1.5rem;
+  margin-top: 4rem;
+`;
