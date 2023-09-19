@@ -338,6 +338,7 @@ const deleteFavoriteSong = async (req, res) => {
       { _id: userId },
       { $pull: { favorites: favorite._id } }
     );
+    await Favorites.deleteMany({ song: null });
 
     res.status(200).send({ success: true });
   } catch (error) {
