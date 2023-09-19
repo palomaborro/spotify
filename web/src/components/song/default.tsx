@@ -31,9 +31,10 @@ import "./song.styles.scss";
 interface SongProps {
   song: SongType;
   onDelete?: (songId: string) => void;
+  isFavorites?: boolean;
 }
 
-const Song: FC<SongProps> = ({ song, onDelete }) => {
+const Song: FC<SongProps> = ({ song, onDelete, isFavorites }) => {
   const [artist, setArtist] = useState<ArtistType>({
     _id: null,
     name: null,
@@ -273,7 +274,7 @@ const Song: FC<SongProps> = ({ song, onDelete }) => {
           <Like songId={song._id} />
           <p>{duration ? formatDuration(duration) : "Loading..."}</p>
         </RightElement>
-        {user.userRole === "ADMIN" && (
+        {user.userRole === "ADMIN" && !isFavorites && (
           <DeleteIcon
             onClick={(e) => handleDeleteClick(e, song._id)}
             fontSize="large"
