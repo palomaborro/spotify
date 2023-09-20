@@ -17,14 +17,12 @@ const song_routes = require("./routes/song");
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // base routes
 app.use("/", user_routes);
 app.use("/", artist_routes);
 app.use("/", album_routes);
 app.use("/", song_routes);
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 module.exports = app;
