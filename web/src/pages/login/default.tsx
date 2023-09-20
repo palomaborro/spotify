@@ -24,7 +24,7 @@ import {
   PASSWORD_REGEX,
   FIELD_ERROR_MESSAGES,
 } from "../../utils/constants";
-import { handleInputChange, handleInputBlur } from "../../utils/input-handlers";
+import { handleInputChange } from "../../utils/input-handlers";
 
 const Login = () => {
   const [data, setData] = useState<ProfileData>({
@@ -108,7 +108,6 @@ const Login = () => {
               value={data.email}
               error={error}
               required={true}
-              onBlur={() => handleInputBlur("email", setError)}
             />
           </InputContainer>
           <InputContainer>
@@ -130,7 +129,6 @@ const Login = () => {
               error={error}
               type="password"
               required={true}
-              onBlur={() => handleInputBlur("newPassword", setError)}
             />
           </InputContainer>
           {error.message && <ErrorMessage>{error.message}</ErrorMessage>}

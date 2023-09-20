@@ -28,7 +28,7 @@ import {
   FIELD_ERROR_MESSAGES,
 } from "../../utils/constants";
 import { ProfileData } from "../../utils/types";
-import { handleInputChange, handleInputBlur } from "../../utils/input-handlers";
+import { handleInputChange } from "../../utils/input-handlers";
 
 const Profile = () => {
   const [data, setData] = useState<ProfileData>({
@@ -83,7 +83,7 @@ const Profile = () => {
           });
         } else {
           const userImage = responseData.user.image
-            ? `http://localhost:3977/${responseData.user.image}`
+            ? `http://localhost:3977/uploads/users/${responseData.user.image}`
             : undefined;
 
           setData({
@@ -165,6 +165,10 @@ const Profile = () => {
     }
   }, [formState]);
 
+  const hasErrors = (errors: Errors): boolean => {
+    return Object.values(errors).some((error) => !!error);
+  };
+
   return (
     <Container>
       <LogoWrapper>
@@ -198,7 +202,6 @@ const Profile = () => {
             value={data.email}
             error={error}
             required={false}
-            onBlur={() => handleInputBlur("email", setError)}
           />
         </Input>
         <Input>
@@ -219,7 +222,6 @@ const Profile = () => {
             value={data.name}
             error={error}
             required={false}
-            onBlur={() => handleInputBlur("name", setError)}
           />
         </Input>
         <Input>
@@ -240,7 +242,6 @@ const Profile = () => {
             value={data.surname}
             error={error}
             required={false}
-            onBlur={() => handleInputBlur("surname", setError)}
           />
         </Input>
         <Input>
@@ -262,7 +263,6 @@ const Profile = () => {
             error={error}
             type="password"
             required={false}
-            onBlur={() => handleInputBlur("newPassword", setError)}
           />
         </Input>
         <Input isImage>
@@ -291,7 +291,11 @@ const Profile = () => {
           <SuccessMessage>{successMessage}</SuccessMessage>
         )}
         <ButtonWrapper>
-          <Button label="Update" type="submit" disabled={isSubmitting} />
+          <Button
+            label="Update"
+            type="submit"
+            disabled={isSubmitting || hasErrors(error)}
+          />
         </ButtonWrapper>
       </Form>
     </Container>

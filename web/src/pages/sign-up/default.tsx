@@ -24,7 +24,7 @@ import {
   PASSWORD_REGEX,
   FIELD_ERROR_MESSAGES,
 } from "../../utils/constants";
-import { handleInputChange, handleInputBlur } from "../../utils/input-handlers";
+import { handleInputChange } from "../../utils/input-handlers";
 
 const SignUp = () => {
   const [data, setData] = useState<SignUpData>({
@@ -100,7 +100,6 @@ const SignUp = () => {
             value={data.email}
             error={error}
             required={true}
-            onBlur={() => handleInputBlur("email", setError)}
           />
         </InputContainer>
         <InputContainer>
@@ -122,7 +121,6 @@ const SignUp = () => {
             error={error}
             type="password"
             required={true}
-            onBlur={() => handleInputBlur("newPassword", setError)}
           />
         </InputContainer>
         <InputContainer>
@@ -143,7 +141,6 @@ const SignUp = () => {
             value={data.name}
             error={error}
             required={true}
-            onBlur={() => handleInputBlur("name", setError)}
           />
         </InputContainer>
         <InputContainer>
@@ -164,7 +161,6 @@ const SignUp = () => {
             value={data.surname}
             error={error}
             required={true}
-            onBlur={() => handleInputBlur("surname", setError)}
           />
         </InputContainer>
         <InputContainer isImage>
