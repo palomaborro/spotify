@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const Favorites = require("../models/favorites");
 
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("../services/auth-service");
 const fs = require("fs");
 const path = require("path");
