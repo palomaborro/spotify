@@ -6,9 +6,7 @@ import Main from "./pages/main/default.tsx";
 import NotFound from "./pages/not-found/default.tsx";
 import SignUp from "./pages/sign-up/default";
 import Login from "./pages/login/default";
-import Search from "./pages/search/default";
 import Favorites from "./pages/favorites/default";
-import Playlist from "./pages/playlist/default";
 import Profile from "./pages/profile/default";
 import Users from "./pages/users/default";
 import Artists from "./pages/artists/default";
@@ -24,7 +22,6 @@ const App = () => {
       <Route path="/" element={<Main />} />
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/search" element={<Search />} />
       <Route path="/artists/:page?" element={<Artists />} />
       <Route path="/artist/:id" element={<Artist />} />
       <Route path="/album/:id" element={<Album />} />
@@ -41,7 +38,6 @@ const App = () => {
         element={<AdminRoute path="*" element={<Users />} />}
       />
       <Route path="/favorites/*" element={<Favorites />} />
-      <Route path="/playlist" element={<Playlist />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
