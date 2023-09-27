@@ -37,7 +37,14 @@ const App = () => {
         path="/users/*"
         element={<AdminRoute path="*" element={<Users />} />}
       />
-      <Route path="/favorites/*" element={<Favorites />} />
+      <Route
+        path="/users/*"
+        element={<AdminRoute path="*" element={<Users />} />}
+      />
+      <Route
+        path="/favorites/*"
+        element={<AdminRoute path="*" element={<Favorites />} />}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
