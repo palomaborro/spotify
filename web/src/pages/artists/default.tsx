@@ -292,7 +292,9 @@ const Artists = () => {
               <Button
                 label="Add artist"
                 type="submit"
-                disabled={isSubmitting}
+                disabled={
+                  isSubmitting || !data.name || !data.description || !data.image
+                }
               />
             </ButtonWrapper>
           </Form>

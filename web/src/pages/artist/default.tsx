@@ -470,7 +470,17 @@ const Artist = () => {
             )}
             {showErrorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
             <ButtonWrapper>
-              <Button label="Add album" type="submit" disabled={isSubmitting} />
+              <Button
+                label="Add album"
+                type="submit"
+                disabled={
+                  isSubmitting ||
+                  !data.title ||
+                  !data.year ||
+                  !data.description ||
+                  !data.image
+                }
+              />
             </ButtonWrapper>
           </Form>
         </FormContainer>
