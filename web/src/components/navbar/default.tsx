@@ -18,7 +18,9 @@ const Navbar = () => {
         ? { name: "Profile", link: "/profile" }
         : { name: "Sign up", link: "/sign-up" },
       { name: "Artists", link: "/artists" },
-      { name: "Favorite Songs", link: "/favorites" },
+      user.isAuthenticated
+        ? { name: "Favorite Songs", link: "/favorites" }
+        : null,
       user.isAuthenticated
         ? { name: "Log out", link: "/login", onClick: logoutUser }
         : { name: "Log in", link: "/login" },
@@ -56,16 +58,19 @@ const Navbar = () => {
         <WhiteLogoIcon width={150} />
       </Link>
       <NavLinks isMenuOpen={isMenuOpen}>
-        {navLinks.map((link, index) => (
-          <Link
-            key={index}
-            to={link.link}
-            className="links"
-            onClick={link.onClick}
-          >
-            {link.name}
-          </Link>
-        ))}
+        {navLinks.map(
+          (link, index) =>
+            link && (
+              <Link
+                key={index}
+                to={link.link}
+                className="links"
+                onClick={link.onClick}
+              >
+                {link.name}
+              </Link>
+            )
+        )}
       </NavLinks>
 
       <div className="menu-icon" onClick={handleMenuToggle}>
