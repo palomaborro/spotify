@@ -24,9 +24,13 @@ const ArtistCard: FC<ArtistCardProps> = ({ artist, onDelete }) => {
     onDelete(artistId);
   };
 
+  const isUserRedirect = user.isAuthenticated
+    ? `/artist/${artist._id}`
+    : "/sign-up";
+
   return (
     <Container>
-      <Link to={`/artist/${artist._id}`}>
+      <Link to={isUserRedirect}>
         <img
           src={`http://localhost:3977${artist.image}`}
           alt={artist.name ?? "Artist"}
