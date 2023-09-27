@@ -14,10 +14,7 @@ export const Container = styled.div`
     border-radius: 1rem;
     margin-top: 3rem;
     cursor: pointer;
-
-    @media (max-width: 500px) {
-      max-width: 300px;
-    }
+    max-width: 300px;
   }
 `;
 
