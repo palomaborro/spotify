@@ -27,7 +27,7 @@ export const Image = styled.img`
   }
 
   @media (max-width: 850px) {
-    width: 500px;
+    width: 600px;
   }
 `;
 
@@ -58,7 +58,7 @@ export const ArtistDescription = styled.p`
   }
 
   @media (max-width: 850px) {
-    width: 500px;
+    width: 600px;
   }
 `;
 
@@ -122,6 +122,10 @@ export const DiscographyWrapper = styled.div`
   @media (max-width: 500px) {
     max-width: 300px;
   }
+
+  @media (max-width: 850px) {
+    width: 600px;
+  }
 `;
 
 export const Discography = styled.h1`
@@ -145,7 +149,6 @@ export const AlbumsWrapper = styled.div`
   > * {
     flex: 1;
     margin-bottom: 1rem;
-    padding: 0 2rem;
   }
 `;
 

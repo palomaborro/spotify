@@ -1,12 +1,9 @@
 import styled from "styled-components";
 
-export const MainContainer = styled.div`
-  overflow-x: hidden;
-`;
+export const MainContainer = styled.div``;
 
 export const Container = styled.main`
   width: 100vw;
-  min-height: 85rem;
   background-color: var(--blue);
   display: flex;
   align-items: center;
@@ -15,7 +12,10 @@ export const Container = styled.main`
   background-image: url(https://www-growth.scdn.co/static/home/bursts.svg);
   background-size: 175%;
   background-position: 46% 4%;
-  -webkit-box-pack: center;
+
+  @media (max-width: 500px) {
+    background-position: 100% 4%;
+  }
 `;
 
 export const Wrapper = styled.div`
@@ -48,7 +48,7 @@ export const Wrapper = styled.div`
 
   p {
     font-size: 1.8rem;
-    font-weight: 400;
+    font-weight: 300;
     color: var(--primary);
     padding-bottom: 3rem;
 

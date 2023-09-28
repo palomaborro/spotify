@@ -11,6 +11,10 @@ export const Container = styled.div`
     height: 20rem;
     margin-top: 1rem;
   }
+
+  @media (max-width: 850px) {
+    padding-right: 15px;
+  }
 `;
 
 export const TextWrapper = styled.div`

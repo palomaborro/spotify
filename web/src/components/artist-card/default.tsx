@@ -30,7 +30,7 @@ const ArtistCard: FC<ArtistCardProps> = ({ artist, onDelete }) => {
 
   return (
     <Container>
-      <Link to={isUserRedirect}>
+      <Link className="artist-link" to={isUserRedirect}>
         <img
           src={`http://localhost:3977${artist.image}`}
           alt={artist.name ?? "Artist"}

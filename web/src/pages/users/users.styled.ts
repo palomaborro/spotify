@@ -60,7 +60,6 @@ export const MiddleElement = styled.div`
 export const RightElement = styled.div`
   flex: 1;
   display: flex;
-  justify-content: center;
   padding-right: 4rem;
 
   svg {

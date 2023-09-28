@@ -39,6 +39,10 @@ export const AlbumDescription = styled.p`
   @media (max-width: 500px) {
     max-width: 300px;
   }
+
+  @media (max-width: 850px) {
+    max-width: 600px;
+  }
 `;
 
 export const TextContainer = styled.div`
@@ -165,5 +169,9 @@ export const TrackWrapper = styled.div`
 
   @media (max-width: 500px) {
     max-width: 300px;
+  }
+
+  @media (max-width: 850px) {
+    max-width: 600px;
   }
 `;
