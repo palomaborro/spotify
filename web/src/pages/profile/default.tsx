@@ -83,7 +83,7 @@ const Profile = () => {
           });
         } else {
           const userImage = responseData.user.image
-            ? `http://localhost:3977/uploads/users/${responseData.user.image}`
+            ? `${responseData.user.image}`
             : undefined;
 
           setData({
