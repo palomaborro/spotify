@@ -31,7 +31,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("http://localhost:3977/users", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
           method: "GET",
         });
 
@@ -52,12 +52,15 @@ const Users = () => {
     try {
       const token = user.token;
 
-      const response = await fetch(`http://localhost:3977/users/${userId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/${userId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const responseData = await response.json();
 
@@ -82,14 +85,17 @@ const Users = () => {
       if (!currentUser) return;
       const newRole = checkUserRole(currentUser.role);
 
-      const response = await fetch(`http://localhost:3977/users/${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ role: newRole }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/users/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ role: newRole }),
+        }
+      );
 
       const responseData = await response.json();
 

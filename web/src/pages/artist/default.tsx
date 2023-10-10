@@ -133,9 +133,12 @@ const Artist = () => {
   useEffect(() => {
     const getArtist = async () => {
       try {
-        const response = await fetch(`http://localhost:3977/artist/${id}`, {
-          method: "GET",
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/artist/${id}`,
+          {
+            method: "GET",
+          }
+        );
 
         const responseData = await response.json();
 
@@ -143,7 +146,7 @@ const Artist = () => {
           throw new Error(responseData.message);
         } else {
           const artistImage = responseData.artist.image
-            ? `http://localhost:3977${responseData.artist.image}`
+            ? `${process.env.REACT_APP_API_URL}${responseData.artist.image}`
             : undefined;
           setArtist(responseData.artist);
           setTitleImageURL(artistImage);
@@ -166,7 +169,7 @@ const Artist = () => {
         const token = user.token;
 
         const response = await fetch(
-          `http://localhost:3977/albums/${artist._id}`,
+          `${process.env.REACT_APP_API_URL}/albums/${artist._id}`,
           {
             method: "GET",
             headers: {
@@ -206,13 +209,16 @@ const Artist = () => {
         }
       }
 
-      const response = await fetch(`http://localhost:3977/artist/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/artist/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       const responseData = await response.json();
 
@@ -253,7 +259,7 @@ const Artist = () => {
         }
       }
 
-      const response = await fetch(`http://localhost:3977/album`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/album`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -305,12 +311,15 @@ const Artist = () => {
     try {
       const token = user.token;
 
-      const response = await fetch(`http://localhost:3977/album/${albumId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/album/${albumId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const responseData = await response.json();
 

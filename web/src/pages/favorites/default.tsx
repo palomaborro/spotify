@@ -31,7 +31,7 @@ const Favorites = () => {
         const token = user.token;
 
         const response = await fetch(
-          `http://localhost:3977/favorites/${user.userId}`,
+          `${process.env.REACT_APP_API_URL}/favorites/${user.userId}`,
           {
             method: "GET",
             headers: {

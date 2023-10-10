@@ -63,7 +63,7 @@ const Song: FC<SongProps> = ({ song, onDelete, isFavorites }) => {
         }
 
         const response = await fetch(
-          `http://localhost:3977/artist/${song.artist}`,
+          `${process.env.REACT_APP_API_URL}/artist/${song.artist}`,
           {
             method: "GET",
           }
@@ -90,12 +90,15 @@ const Song: FC<SongProps> = ({ song, onDelete, isFavorites }) => {
       try {
         const token = user.token;
 
-        const response = await fetch(`http://localhost:3977/song/${song._id}`, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/song/${song._id}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const responseData = await response.json();
 
@@ -119,7 +122,7 @@ const Song: FC<SongProps> = ({ song, onDelete, isFavorites }) => {
     });
 
     if (typeof song.song === "string") {
-      audioElement.src = `http://localhost:3977${song.song}`;
+      audioElement.src = `${process.env.REACT_APP_API_URL}${song.song}`;
     }
 
     return () => {
@@ -134,7 +137,7 @@ const Song: FC<SongProps> = ({ song, onDelete, isFavorites }) => {
   };
 
   const audioRef = React.useRef<HTMLAudioElement>(
-    new Audio(`http://localhost:3977${song.song}`)
+    new Audio(`${process.env.REACT_APP_API_URL}${song.song}`)
   );
 
   const handlePlay = () => {
@@ -204,13 +207,16 @@ const Song: FC<SongProps> = ({ song, onDelete, isFavorites }) => {
       formData.append("name", editedSongName);
 
       const token = user.token;
-      const response = await fetch(`http://localhost:3977/song/${song._id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/song/${song._id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       const responseData = await response.json();
 

@@ -72,7 +72,7 @@ const Artists = () => {
       const token = user.token;
 
       const response = await fetch(
-        `http://localhost:3977/artists/${nextPage}`,
+        `${process.env.REACT_APP_API_URL}/artists/${nextPage}`,
         {
           method: "GET",
           headers: {
@@ -100,7 +100,7 @@ const Artists = () => {
         const token = user.token;
 
         const response = await fetch(
-          `http://localhost:3977/artists/${page || 1}`,
+          `${process.env.REACT_APP_API_URL}/artists/${page || 1}`,
           {
             method: "GET",
             headers: {
@@ -110,6 +110,7 @@ const Artists = () => {
         );
 
         const responseData = await response.json();
+        console.log(responseData);
 
         if (!response.ok) {
           throw new Error(responseData.message);
@@ -158,7 +159,7 @@ const Artists = () => {
         }
       }
 
-      const response = await fetch("http://localhost:3977/artists", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/artists`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -197,12 +198,15 @@ const Artists = () => {
     try {
       const token = user.token;
 
-      const response = await fetch(`http://localhost:3977/artist/${artistId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/artist/${artistId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const responseData = await response.json();
 

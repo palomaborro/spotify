@@ -64,7 +64,7 @@ const Profile = () => {
         const userId = user.userId;
 
         const response = await fetch(
-          `http://localhost:3977/profile/${userId}`,
+          `${process.env.REACT_APP_API_URL}/profile/${userId}`,
           {
             method: "GET",
             headers: {
@@ -122,13 +122,16 @@ const Profile = () => {
       const token = user.token;
       const userId = user.userId;
 
-      const response = await fetch(`http://localhost:3977/profile/${userId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/profile/${userId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       setFormState("submitting");
 

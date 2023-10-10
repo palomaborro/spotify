@@ -24,7 +24,7 @@ const Like: FC<LikeProps> = ({ songId }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3977/favorites/${user.userId}`,
+        `${process.env.REACT_APP_API_URL}/favorites/${user.userId}`,
         {
           method: "GET",
           headers: {
@@ -58,7 +58,7 @@ const Like: FC<LikeProps> = ({ songId }) => {
     if (like) {
       try {
         const response = await fetch(
-          `http://localhost:3977/users/${user.userId}/favorites/${songId}`,
+          `${process.env.REACT_APP_API_URL}/users/${user.userId}/favorites/${songId}`,
           {
             method: "DELETE",
             headers: {
@@ -88,7 +88,7 @@ const Like: FC<LikeProps> = ({ songId }) => {
       }
       try {
         const response = await fetch(
-          `http://localhost:3977/users/${user.userId}/favorites`,
+          `${process.env.REACT_APP_API_URL}/users/${user.userId}/favorites`,
           {
             method: "POST",
             headers: {

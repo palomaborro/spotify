@@ -52,7 +52,7 @@ const SignUp = () => {
         formData.append("image", data.image);
       }
 
-      const response = await fetch("http://localhost:3977/sign-up", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/sign-up`, {
         method: "POST",
         body: formData,
       });

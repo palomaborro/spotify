@@ -176,9 +176,12 @@ const Album = () => {
   useEffect(() => {
     const getAlbum = async () => {
       try {
-        const response = await fetch(`http://localhost:3977/album/${id}`, {
-          method: "GET",
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/album/${id}`,
+          {
+            method: "GET",
+          }
+        );
 
         const data = await response.json();
 
@@ -186,7 +189,7 @@ const Album = () => {
           throw new Error(data.message);
         } else {
           const albumImage = data.album.image
-            ? `http://localhost:3977${data.album.image}`
+            ? `${process.env.REACT_APP_API_URL}${data.album.image}`
             : undefined;
           setAlbum(data.album);
           setSong((prevData) => ({
@@ -206,9 +209,12 @@ const Album = () => {
   useEffect(() => {
     const getSongs = async () => {
       try {
-        const response = await fetch(`http://localhost:3977/songs/${id}`, {
-          method: "GET",
-        });
+        const response = await fetch(
+          `${process.env.REACT_APP_API_URL}/songs/${id}`,
+          {
+            method: "GET",
+          }
+        );
 
         const data = await response.json();
         if (!response.ok) {
@@ -227,12 +233,15 @@ const Album = () => {
     try {
       const token = user.token;
 
-      const response = await fetch(`http://localhost:3977/song/${songId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/song/${songId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const responseData = await response.json();
 
@@ -261,13 +270,16 @@ const Album = () => {
       }
 
       const token = user.token;
-      const response = await fetch(`http://localhost:3977/album/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/album/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       const responseData = await response.json();
 
@@ -312,13 +324,16 @@ const Album = () => {
         }
       }
 
-      const response = await fetch(`http://localhost:3977/song/${id}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/song/${id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
 
       const responseData = await response.json();
 

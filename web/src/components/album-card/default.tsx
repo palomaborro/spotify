@@ -35,7 +35,10 @@ const AlbumCard: FC<AlbumCardProps> = ({ album, artist, onDelete }) => {
   return (
     <Container>
       <Link to={`/album/${album._id}`}>
-        <img src={`http://localhost:3977${album.image}`} alt={artistName} />
+        <img
+          src={`${process.env.REACT_APP_API_URL}${album.image}`}
+          alt={artistName}
+        />
         <TextWrapper>
           <TitleAndYearWrapper>
             <Title>{album.title}</Title>

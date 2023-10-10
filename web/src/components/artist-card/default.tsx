@@ -32,7 +32,7 @@ const ArtistCard: FC<ArtistCardProps> = ({ artist, onDelete }) => {
     <Container>
       <Link className="artist-link" to={isUserRedirect}>
         <img
-          src={`http://localhost:3977${artist.image}`}
+          src={`${process.env.REACT_APP_API_URL}${artist.image}`}
           alt={artist.name ?? "Artist"}
         />
         <ArtistNameWrapper>
