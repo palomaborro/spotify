@@ -6,4 +6,5 @@ build:
     NODE_ENV: production
 
 run:
-  web: npm start
+  web: npm run start
+  api: npm run start
