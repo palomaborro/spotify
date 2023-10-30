@@ -2,8 +2,8 @@ import React from "react";
 
 import { Routes, Route } from "react-router-dom";
 
-import Main from "./pages/main/default.tsx";
-import NotFound from "./pages/not-found/default.tsx";
+import Main from "./pages/main/default";
+import NotFound from "./pages/not-found/default";
 import SignUp from "./pages/sign-up/default";
 import Login from "./pages/login/default";
 import Favorites from "./pages/favorites/default";
